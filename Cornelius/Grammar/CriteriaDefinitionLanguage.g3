@@ -1,0 +1,105 @@
+﻿grammar CriteriaDefinitionLanguage;
+
+options { language=CSharp3; }
+@header { using Cornelius.Criteria.Expression; using Cornelius.Data; }
+@lexer::modifier{internal}
+@lexer::namespace{Cornelius.Grammar}
+@parser::modifier{internal}
+@parser::namespace{Cornelius.Grammar}
+
+public
+definition returns [MatchGroup value]
+	@after { value.PassWeight = true; value.EvaluateAll = true; }
+	: c = criteria ';' EOF { value = c; }
+	;
+
+criteria returns [MatchGroup value]
+	@init { value = new MatchGroup(); }
+	: 'KRITÉRIUM' name = type_string? { value.Name = name; } ('(' criteria_option[value] (',' criteria_option[value])* ')')? '{' a1 = criteria_and { value.Children.Add(a1); } (',' a2 = criteria_and { value.Children.Add(a2); })* '}'
+	;
+
+criteria_option [MatchGroup value]
+	: number = type_int ('.' 'FÉLÉV' { value.Semester = number; } | 'KREDIT' { value.Credit = number; } | 'KELL' { value.Requirement = number; } | 'HIÁNYOZHAT'  { value.Requirement = -1 * number; })
+	| 'MIND' 'KELL' { value.Requirement = 0; }
+	| 'CSAK' 'CSOPORT' { value.PassWeight = true; }
+	| 'KÉPZÉS' origin = type_group { value.Origin = origin; }
+	;
+
+criteria_and returns [IExpression expression]
+	@init { MatchGroup value = new MatchGroup(); }
+	@after { if (value.Children.Count == 1) {expression = value.Children[0];} else {value.Requirement = value.Children.Count; expression = value;} }
+	: c1 = criteria_atom { value.Children.Add(c1); } ('&&' c2 = criteria_atom { value.Children.Add(c2); })*
+	;
+
+criteria_atom returns [IExpression expression]
+	: (signature = '@' | useup = '#')? code = type_id name = type_string { expression = new MatchCourse(code, name, signature != null, useup != null); }
+	| c = criteria { expression = c; }
+	;
+
+type_id returns [string value]
+	: TOKEN_ID { value = $TOKEN_ID.Text; }
+	;
+
+type_int returns [int value]
+	: TOKEN_INT { value = System.Int32.Parse($TOKEN_INT.Text); }
+	;
+
+type_string returns [string value]
+	: TOKEN_STRING { value = System.Text.RegularExpressions.Regex.Unescape($TOKEN_STRING.Text.Substring(1, $TOKEN_STRING.Text.Length - 2)); }
+	;
+
+type_group returns [string value]
+	: TOKEN_GROUP { value = $TOKEN_GROUP.Text; }
+	;
+
+TOKEN_GROUP
+	: ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9') '-' ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9')
+	;
+
+TOKEN_STRING
+	: '\"' (ESC_SEQ | ~('\\'|'\"'))+ '\"'
+	;
+
+TOKEN_ID
+	: ('a'..'z'|'A'..'Z'|'_'|CHAR_ACCENTED) ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|CHAR_ACCENTED)*
+	;
+
+TOKEN_INT
+	: '0'..'9'+
+	;
+
+fragment CHAR_ACCENTED
+	: 'Á' | 'É' | 'Í' | 'Ó' | 'Ö' | 'Ő' | 'Ú' | 'Ü' | 'Ű'
+	| 'á' | 'é' | 'í' | 'ó' | 'ö' | 'ő' | 'ú' | 'ü' | 'ű'
+	;
+
+fragment HEX_DIGIT
+	: '0'..'9'
+	| 'a'..'f'
+	| 'A'..'F'
+	;
+
+fragment ESC_SEQ
+	: '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\') 
+	| UNICODE_ESC 
+	| OCTAL_ESC
+	;
+
+fragment OCTAL_ESC 
+	: '\\' ('0'..'3') ('0'..'7') ('0'..'7') 
+	| '\\' ('0'..'7') ('0'..'7') 
+	| '\\' ('0'..'7')
+	;
+
+fragment UNICODE_ESC 
+	: '\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+	;
+
+COMMENT
+	: '//' ~('\n'|'\r')* '\r'? '\n' { $channel = TokenChannels.Hidden; }
+	| '/*' ( options {greedy=false;} : . )* '*/' { $channel = TokenChannels.Hidden; }
+	;
+
+WS
+	: ( ' ' | '\t' | '\r' | '\n' ) { $channel = TokenChannels.Hidden; }
+	;

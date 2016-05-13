@@ -1,0 +1,69 @@
+﻿grammar MapDefinitionLanguage;
+
+options { language=CSharp3; }
+@header { using System.Text; using System.Text.RegularExpressions; using Cornelius.IO.Mapping; }
+
+@lexer::modifier{internal}
+@parser::modifier{internal}
+@lexer::namespace{Cornelius.Grammar}
+@parser::namespace{Cornelius.Grammar}
+
+public definition returns [Map map]
+	@init { map = new Map(); }
+	: table[map] enum[map]*
+	;
+
+table [Map map]
+	: 'TÁBLÁZAT' '(' table_signature[map] (',' table_signature[map])* ')' '{' table_map[map] (',' table_map[map])* '}' ';'
+	;
+
+table_signature [Map map]
+	: file = type_string { map.Files.Add(file); }
+	;
+
+table_map [Map map]
+	: key = type_string '=>' value = type_id { map.Columns.Add(key, value); }
+	;
+
+enum [Map map]
+	@init { Translation translation = new Translation(); }
+	@after { map.Enums.Add(symbol, translation); }
+	: 'FELSOROLÁS'  symbol = type_id '{' enum_statement[translation] (',' enum_statement[translation])* '}' ';'
+	;
+
+enum_statement [Translation translation]
+	: str = type_string '=' id = type_id { translation.Add(str, id); }
+	;
+
+type_id returns [string value]
+	: TOKEN_ID { value = $TOKEN_ID.Text; }
+	;
+
+type_int returns [int value]
+	: TOKEN_INT { value = System.Int32.Parse($TOKEN_INT.Text); }
+	;
+
+type_string returns [string value]
+	: TOKEN_STRING { value = Regex.Unescape($TOKEN_STRING.Text.Substring(1, $TOKEN_STRING.Text.Length - 2)); }
+	;
+
+TOKEN_STRING
+	: '\"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')  | ~('\\'|'\"') )+ '\"'
+	;
+
+TOKEN_ID
+	: ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
+	;
+
+TOKEN_INT
+	: '0'..'9'+
+	;
+
+COMMENT
+	: '//' ~('\n'|'\r')* '\r'? '\n' { $channel = TokenChannels.Hidden; }
+	| '/*' ( options {greedy=false;} : . )* '*/' { $channel = TokenChannels.Hidden; }
+	;
+
+WS
+	: ( ' ' | '\t' | '\r' | '\n' ) { $channel = TokenChannels.Hidden; }
+	;

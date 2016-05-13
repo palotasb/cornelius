@@ -1,0 +1,112 @@
+﻿grammar WorkflowDefinitionLanguage;
+
+options { language=CSharp3; }
+@header { using Cornelius.Criteria.Workflow; using Cornelius.Data; }
+@lexer::modifier{internal}
+@lexer::namespace{Cornelius.Grammar}
+@parser::modifier{internal}
+@parser::namespace{Cornelius.Grammar}
+
+public
+definition returns [List<AbstractWorkflow> list]
+	@init { list = new List<AbstractWorkflow>(); }
+    : 'KÉPZÉSEK' '{' first = workflow { list.Add(first); } (',' element = workflow { list.Add(element); } )* '}' ';' EOF
+    ;
+
+workflow returns [AbstractWorkflow workflow]
+	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } | 'ÖTÉVES' { workflow = new FiveyearWorkflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
+	;
+
+workflow_parameters [AbstractWorkflow workflow]
+	: '(' first = type_requirement { workflow.GroupCriteria = first; } ( ',' element = type_requirement { workflow.SummaCriteria.Add(element); } )* ')'
+	;
+
+workflow_body [AbstractWorkflow workflow]
+	: '{' workflow_statement[workflow] ( ',' workflow_statement[workflow] )* '}'
+	;
+
+workflow_statement [AbstractWorkflow workflow]
+	: 'KÉPZÉSKÓD' group = type_group ('(' fromSemester = type_semester? '-' toSemester = type_semester? ')')? { workflow.SetStudentCriteria(group, fromSemester, toSemester); }
+	| 'KRITÉRIUMOK' criteriaPath = type_string { workflow.SetCourseCriteria(criteriaPath); }
+	| 'CSOPORTOSÍTÁS' groupingPath = type_string { workflow.SetDefaultGrouping(groupingPath); }
+	;
+
+type_requirement returns [GroupRequirement requirement]
+	: identifier = type_id '=>' amount = type_int { requirement = new GroupRequirement(identifier, amount); }
+	;
+
+type_group returns [string value]
+	: TOKEN_GROUP { value = $TOKEN_GROUP.Text; }
+	;
+
+type_id returns [string value]
+	: TOKEN_ID { value = $TOKEN_ID.Text; }
+	;
+
+type_int returns [int value]
+	: TOKEN_INT { value = System.Int32.Parse($TOKEN_INT.Text); }
+	;
+
+type_string returns [string value]
+	: TOKEN_STRING { value = System.Text.RegularExpressions.Regex.Unescape($TOKEN_STRING.Text.Substring(1, $TOKEN_STRING.Text.Length - 2)); }
+	;
+
+type_semester returns [Semester? value]
+	: TOKEN_SEMESTER { value = $TOKEN_SEMESTER.Text; }
+	;
+
+TOKEN_SEMESTER
+	: ('0'..'9') ('0'..'9') ('0'..'9') ('0'..'9') '/' ('1'|'2')
+	;
+
+TOKEN_GROUP
+	: ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9') '-' ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9')
+	;
+
+TOKEN_STRING
+	: '\"' (ESC_SEQ | ~('\\'|'\"'))+ '\"'
+	;
+
+TOKEN_ID
+	: ('a'..'z'|'A'..'Z'|'_'|CHAR_ACCENTED) ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|CHAR_ACCENTED)*
+	;
+
+TOKEN_INT
+	: '0'..'9'+
+	;
+	
+fragment CHAR_ACCENTED
+	: 'Á' | 'É' | 'Í' | 'Ó' | 'Ö' | 'Ő' | 'Ú' | 'Ü' | 'Ű'
+	| 'á' | 'é' | 'í' | 'ó' | 'ö' | 'ő' | 'ú' | 'ü' | 'ű'
+	;
+
+fragment HEX_DIGIT
+	: '0'..'9'
+	| 'a'..'f'
+	| 'A'..'F'
+	;
+
+fragment ESC_SEQ
+	: '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\') 
+	| UNICODE_ESC 
+	| OCTAL_ESC
+	;
+
+fragment OCTAL_ESC 
+	: '\\' ('0'..'3') ('0'..'7') ('0'..'7') 
+	| '\\' ('0'..'7') ('0'..'7') 
+	| '\\' ('0'..'7')
+	;
+
+fragment UNICODE_ESC 
+	: '\\' 'u' HEX_DIGIT HEX_DIGIT HEX_DIGIT HEX_DIGIT
+	;
+
+COMMENT
+	: '//' ~('\n'|'\r')* '\r'? '\n' { $channel = TokenChannels.Hidden; }
+	| '/*' ( options {greedy=false;} : . )* '*/' { $channel = TokenChannels.Hidden; }
+	;
+
+WS
+	: ( ' ' | '\t' | '\r' | '\n' ) { $channel = TokenChannels.Hidden; }
+	;

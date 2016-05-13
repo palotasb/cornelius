@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B26957EF-FD54-453D-BEE7-B6EB89702BB1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cornelius</RootNamespace>
+    <AssemblyName>Cornelius</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\Reference\Antlr\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\Reference\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\Reference\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Builder.cs" />
+    <Compile Include="Criteria\Credit\IGroupMatch.cs" />
+    <Compile Include="Criteria\Evaluator.cs" />
+    <Compile Include="Criteria\Credit\MatchAny.cs" />
+    <Compile Include="Criteria\Credit\MatchCourse.cs" />
+    <Compile Include="Criteria\Credit\Subgroup.cs" />
+    <Compile Include="Criteria\Credit\Grouping.cs" />
+    <Compile Include="Criteria\Expression\MatchCourse.cs" />
+    <Compile Include="Criteria\Expression\Proxy.cs" />
+    <Compile Include="Criteria\Expression\MatchGroup.cs" />
+    <Compile Include="Criteria\Expression\IExpression.cs" />
+    <Compile Include="Criteria\Workflow\BachelorWorkflow.cs" />
+    <Compile Include="Criteria\Workflow\FiveyearWorkflow.cs" />
+    <Compile Include="Criteria\Result.cs" />
+    <Compile Include="Criteria\Workflow\AbstractWorkflow.cs" />
+    <Compile Include="Criteria\Workflow\GroupRequirement.cs" />
+    <Compile Include="Data\Course.cs" />
+    <Compile Include="Data\Specialization.cs" />
+    <Compile Include="Grammar\GroupingDefinitionLanguageParser.cs" />
+    <Compile Include="Grammar\WorkflowDefinitionLanguageParser.cs" />
+    <Compile Include="Grammar\MapDefinitionLanguageParser.cs" />
+    <Compile Include="Grammar\CriteriaDefinitionLanguageParser.cs" />
+    <Compile Include="IO\Drivers\Driver.cs" />
+    <Compile Include="IO\Drivers\ExcelDriver.cs" />
+    <Compile Include="IO\Drivers\ExcelEnumerator.cs" />
+    <Compile Include="IO\Drivers\ExcelReader.cs" />
+    <Compile Include="IO\Drivers\ExcelRecord.cs" />
+    <Compile Include="IO\Drivers\ExcelWriter.cs" />
+    <Compile Include="IO\Drivers\IDriver.cs" />
+    <Compile Include="IO\Drivers\IInputReader.cs" />
+    <Compile Include="IO\Drivers\Record.cs" />
+    <Compile Include="IO\Drivers\RecordExtensions.cs" />
+    <Compile Include="IO\Drivers\SeparatedTextDriver.cs" />
+    <Compile Include="IO\Drivers\SeparatedTextEnumerator.cs" />
+    <Compile Include="IO\Drivers\SeparatedTextReader.cs" />
+    <Compile Include="IO\Drivers\SeparatedTextRecord.cs" />
+    <Compile Include="IO\Drivers\SeparatedTextWriter.cs" />
+    <Compile Include="IO\Drivers\StructuredQueryDriver.cs" />
+    <Compile Include="IO\Drivers\StructuredQueryWriter.cs" />
+    <Compile Include="IO\Mapping\Recognizer.cs" />
+    <Compile Include="IO\Primitives\XBase.cs" />
+    <Compile Include="IO\Primitives\XChoice.cs" />
+    <Compile Include="IO\Primitives\XEntry.cs" />
+    <Compile Include="IO\Primitives\XIdentity.cs" />
+    <Compile Include="IO\Drivers\IInputDriver.cs" />
+    <Compile Include="IO\Drivers\IRecord.cs" />
+    <Compile Include="IO\MapAttribute.cs" />
+    <Compile Include="IO\Primitives\XSpecialization.cs" />
+    <Compile Include="Import.cs" />
+    <Compile Include="IO\Mapping\Assignment.cs" />
+    <Compile Include="IO\Mapping\Map.cs" />
+    <Compile Include="IO\Mapping\MappedReader.cs" />
+    <Compile Include="IO\Mapping\Translation.cs" />
+    <Compile Include="IO\Reports\XHistogram.cs" />
+    <Compile Include="IO\Reports\XSumma.cs" />
+    <Compile Include="IO\Reports\XStudent.cs" />
+    <Compile Include="IO\TableReader.cs" />
+    <Compile Include="IO\Tables\XChoice.cs" />
+    <Compile Include="IO\Transform.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Export.cs" />
+    <Compile Include="IO\Provision.cs" />
+    <Compile Include="IO\AbstractRow.cs" />
+    <Compile Include="IO\ColumnAttribute.cs" />
+    <Compile Include="IO\Drivers\IOutputDriver.cs" />
+    <Compile Include="IO\Drivers\IOutputWriter.cs" />
+    <Compile Include="IO\TableAttribute.cs" />
+    <Compile Include="IO\TableWriter.cs" />
+    <Compile Include="IO\Tables\XAssociation.cs" />
+    <Compile Include="IO\Tables\XAvarage.cs" />
+    <Compile Include="IO\Tables\XCourse.cs" />
+    <Compile Include="IO\Tables\XEmail.cs" />
+    <Compile Include="IO\Tables\XResult.cs" />
+    <Compile Include="IO\Tables\XUser.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\Student.cs" />
+    <Compile Include="Semester.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Antlr3 Include="Grammar\MapDefinitionLanguage.g3">
+      <Generator>MSBuild:Compile</Generator>
+    </Antlr3>
+  </ItemGroup>
+  <ItemGroup>
+    <Antlr3 Include="Grammar\CriteriaDefinitionLanguage.g3">
+      <Generator>MSBuild:Compile</Generator>
+    </Antlr3>
+  </ItemGroup>
+  <ItemGroup>
+    <Antlr3 Include="Grammar\GroupingDefinitionLanguage.g3">
+      <Generator>MSBuild:Compile</Generator>
+    </Antlr3>
+  </ItemGroup>
+  <ItemGroup>
+    <Antlr3 Include="Grammar\WorkflowDefinitionLanguage.g3">
+      <Generator>MSBuild:Compile</Generator>
+    </Antlr3>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <AntlrBuildTaskPath>$(ProjectDir)..\Reference\Antlr</AntlrBuildTaskPath>
+    <AntlrToolPath>$(ProjectDir)..\Reference\Antlr\Antlr3.exe</AntlrToolPath>
+  </PropertyGroup>
+  <Import Project="$(ProjectDir)..\Reference\Antlr\Antlr3.targets" />
+</Project>

@@ -1,0 +1,60 @@
+﻿grammar GroupingDefinitionLanguage;
+
+options { language=CSharp3; }
+@header { using Cornelius.Criteria.Credit; using Cornelius.Data; }
+@lexer::modifier{internal}
+@lexer::namespace{Cornelius.Grammar}
+@parser::modifier{internal}
+@parser::namespace{Cornelius.Grammar}
+
+public
+definition returns [Grouping value]
+	: g = grouping EOF { value = g; }
+	;
+
+grouping returns [Grouping value]
+	@init { value = new Grouping(); }
+	: 'CSOPORTOSÍTÁS' '{' grouping_statement[value] (',' grouping_statement[value])* '}' ';'
+	;
+
+grouping_statement [Grouping value]
+	@init { var group = new Subgroup(); }
+	@after { value.Add(group); }
+	: 'CSOPORT' identifier = type_id '{' grouping_course[group] (',' grouping_course[group])* '}' { group.Identifier = identifier; }
+	| 'ALAPÉRTELMEZETT' 'CSOPORT' identifier = type_id { group.Identifier = identifier; group.Add(new MatchAny()); }
+	| 'TÚLCSORDULÓ' 'CSOPORT' identifier = type_id '{' grouping_course[group] (',' grouping_course[group])* '}' { group.Identifier = identifier; group.Overflow = true; }
+	;
+
+grouping_course [Subgroup value]
+	: identifier = type_id ('(' from = type_semester? '-' to = type_semester? ')')? { value.Add(new MatchCourse(identifier, from, to)); }
+	;
+
+type_id returns [string value]
+	: TOKEN_ID { value = $TOKEN_ID.Text; }
+	;
+
+type_semester returns [Semester? value]
+	: TOKEN_SEMESTER { value = $TOKEN_SEMESTER.Text; }
+	;
+
+TOKEN_SEMESTER
+	: ('0'..'9') ('0'..'9') ('0'..'9') ('0'..'9') '/' ('1'|'2')
+	;
+
+TOKEN_ID
+	: ('a'..'z'|'A'..'Z'|'_'|CHAR_ACCENTED) ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|CHAR_ACCENTED)*
+	;
+	
+fragment CHAR_ACCENTED
+	: 'Á' | 'É' | 'Í' | 'Ó' | 'Ö' | 'Ő' | 'Ú' | 'Ü' | 'Ű'
+	| 'á' | 'é' | 'í' | 'ó' | 'ö' | 'ő' | 'ú' | 'ü' | 'ű'
+	;
+
+COMMENT
+	: '//' ~('\n'|'\r')* '\r'? '\n' { $channel = TokenChannels.Hidden; }
+	| '/*' ( options {greedy=false;} : . )* '*/' { $channel = TokenChannels.Hidden; }
+	;
+
+WS
+	: ( ' ' | '\t' | '\r' | '\n' ) { $channel = TokenChannels.Hidden; }
+	;
