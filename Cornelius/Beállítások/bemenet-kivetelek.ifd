@@ -1,0 +1,5 @@
+﻿TÁBLÁZAT ("kivetelek") {
+	"Képzés" => BaseGroup,
+	"Neptun kód" => BaseNeptun,
+	"Nyomtatási név" => BaseName
+};

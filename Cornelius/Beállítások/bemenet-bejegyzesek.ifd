@@ -1,0 +1,41 @@
+﻿TÁBLÁZAT ("eredmeny", "eredmények", "BSc_Inf", "BSc_Vill", "Eredmények") {
+	"Képzés" => BaseGroup,
+	"Neptun kód" => BaseNeptun,
+	"Nyomtatási név" => BaseName,
+	"Kód" => Code,
+	"Név" => Name, 
+	"Kredit" => Credit,
+	"Követelmény típusa" => Requirement,
+	"Bejegyzés dátuma" => EntryDate,
+	"Bejegyzés típusa" => EntryType,
+	"Bejegyzés értéke" => EntryValue,
+	"Beírás dátuma" => Timestamp,
+	"Félév" => Semester
+};
+
+FELSOROLÁS EntryType {
+	"Vizsgajegy" = Vizsga,
+	"Aláírás" = Alairas,
+	"Évközi jegy" = Evkozi,
+	"Szigorlat" = Szigorlat,
+	"Letiltva" = Letiltva
+};
+
+FELSOROLÁS Requirement {
+	"Vizsga" = Vizsga,
+	"Aláírás megszerzése" = Alairas,
+	"Évközi jegy" = Evkozi,
+	"Szigorlat" = Szigorlat
+};
+
+FELSOROLÁS EntryValue {
+	"0" = Letiltva,
+	"Aláírva" = Alairva,
+	"Megtagadva" = Megtagadva,
+	"Nem teljesítette" = NemTeljesitette,
+	"Elégtelen" = Elegtelen,
+	"Elégséges" = Elegseges,
+	"Közepes" = Kozepes,
+	"Jó" = Jo,
+	"Jeles" = Jeles
+};

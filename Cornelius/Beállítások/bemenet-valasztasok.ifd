@@ -1,0 +1,8 @@
+﻿TÁBLÁZAT ("sorrend", "jelentkezes") {
+	"Képzés" => BaseGroup,
+	"Neptun kód" => BaseNeptun,
+	"Nyomtatási név" => BaseName,
+	"Választás sorszáma" => Number,
+	"Szakirány/Ágazat" => Name,
+	"Név" => Name
+};
