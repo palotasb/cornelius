@@ -5,14 +5,15 @@ using Cornelius.Data;
 
 namespace Cornelius.Criteria.Workflow
 {
-    /*
-     * BSc kritériumellenőrzés
-     */
+    /// <summary>
+    /// 2014 előtti BSc szerinti kritériumellenőrzés.
+    /// </summary>
     class BachelorWorkflow : AbstractWorkflow
     {
-        /*
-         * KötVál tárgyak ellenőrzése. Az átlagba nem szabad, hogy beleszámítson.
-         */
+        /// <summary>
+        /// Kötelezően választható tárgyak ellenőrzése. Az átlagba nem szabad, hogy beleszámítsanak.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
         protected override void ProcessGroupCriteria(Student student)
         {
             Result result = new Result("Kötelezően választható tárgyak");
@@ -37,9 +38,10 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Csoportkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        /*
-         * Szumma kreditszám ellenőrzése. Az átlagba nem szabad, hogy beleszámítson.
-         */
+        /// <summary>
+        /// Szumma kreditszám ellenőrzése. Az átlagba nem szabad, hogy beleszámítson.
+        /// </summary>
+        /// <param name="student">A hallgató</param>
         protected override void ProcessSummaCriteria(Student student)
         {
             Result result = new Result("Kreditkritérium");
@@ -117,10 +119,13 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Kreditkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        /*
-         * Ez a KötVál tárgyaknál bővíti ki a szűrést oly módon, hogy az átsorolt hallgatók
-         * az eredeti szakjuknak megfelelően tudjanak beszámítani közismeretiket.
-         */
+        // TODO: ennek egy többet mondó nevet adni.
+        /// <summary>
+        /// Ez a kötelezően választható tárgyaknál bővíti ki a szűrést oly módon, hogy az átsorolt hallgatók
+        /// az eredeti szakjuknak megfelelően tudjanak beszámítani közismeretiket.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
+        /// <returns></returns>
         public override IEnumerable<Course> FilterGroupCriteriaCourses(Student student)
         {
             if (student.Origin == student.EduProgramCode)
@@ -134,9 +139,10 @@ namespace Cornelius.Criteria.Workflow
             }
         }
 
-        /*
-         * A besorolási körök kiszámítása.
-         */
+        /// <summary>
+        /// A besorolási körök kiszámítása.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
         protected override void ProcessFinalResult(Student student)
         {
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount + 1 - student.Result.Weight;

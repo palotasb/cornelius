@@ -10,14 +10,14 @@ using Cornelius.Criteria;
 
 namespace Cornelius.Data
 {
-    /*
-     * Egy szakirányra jelentkezett hallgató.
-     */
+    /// <summary>
+    /// Egy hallgatót reprezentáló osztály.
+    /// </summary>
     class Student
     {
-        /*
-         * Egyedi azonosító az adatok egymáshoz kapcsolásához
-         */
+        /// <summary>
+        /// Egyedi azonosító az adatok egymáshoz kapcsolásához
+        /// </summary>
         public string OriginKey
         {
             get
@@ -26,9 +26,9 @@ namespace Cornelius.Data
             }
         }
 
-        /*
-         * Egyedi azonosító exportáláskor a kulcsok társításához
-         */
+        /// <summary>
+        /// Egyedi azonosító exportáláskor a kulcsok társításához
+        /// </summary>
         public string GroupKey
         {
             get
@@ -37,69 +37,71 @@ namespace Cornelius.Data
             }
         }
 
-        /*
-         * Az eredeti, mindenféle átsorolás előtti képzéskód
-         */
+        // TODO: átnevezni.
+        /// <summary>
+        /// Az eredeti, mindenféle átsorolás előtti képzéskód.
+        /// </summary>
         public string Origin;
 
-        /*
-         * Az aktív képzéskód, ami alapján a kritériumokat számoljuk
-         */
+        /// <summary>
+        /// Az aktív képzéskód, ami alapján a kritériumokat számoljuk.
+        /// </summary>
         public string EduProgramCode;
 
-        /*
-         * A hallgató Neptun kódja
-         */
+        /// <summary>
+        /// A hallgató Neptun-kódja.
+        /// </summary>
         public string Neptun;
 
-        /*
-         * A hallgató neve
-         */
+        /// <summary>
+        /// A hallgató neve.
+        /// </summary>
         public string Name;
 
-        /*
-         * Felvétel éve
-         */
+        /// <summary>
+        /// Felvétel éve.
+        /// </summary>
         public Semester EffectiveSemester;
 
-        /*
-         * A hallgató kurzusai
-         */
+        /// <summary>
+        /// A hallgató kurzusai.
+        /// </summary>
         public Course[] Courses;
 
-        /*
-         * A hallgató személyes adatai
-         */
+        /// <summary>
+        /// A hallgató elérhetőségei.
+        /// </summary>
         public string[] Emails;
 
-        /*
-         * A hallgató szakirányjelentkezései
-         */
+        /// <summary>
+        /// A hallgató jelentkezési sorrendje.
+        /// </summary>
         public string[] Choices;
 
-        /*
-         * A hallgató kreditjeinek száma az egyes csoportokban
-         */
+        // TODO: Ez milyen group?
+        /// <summary>
+        /// A hallgató kreditjeinek száma az egyes csoportokban.
+        /// </summary>
         public Dictionary<string, double> CreditPerGroup;
 
-        /*
-         * A kritériumellenőrzés eredménye
-         */
+        /// <summary>
+        /// A kritériumellenőrzés eredménye.
+        /// </summary>
         public Result Result;
 
-        /*
-         * Hiányzó kritériumok száma
-         */
+        /// <summary>
+        /// Hiányzó kritériumok száma.
+        /// </summary>
         public int MissingCriteria;
         
-        /*
-         * Hanyadik körben lehet besorolni 
-         */
+        /// <summary>
+        /// Hanyadik körben lehet besorolni a hallgatót.
+        /// </summary>
         public int Round;
 
-        /*
-         * A besorolás eredménye, a hallgató szakiránya
-         */
+        /// <summary>
+        /// A besorolás eredménye, a hallgató specializációja (vagy null, ha - még - nem került besorolásra).
+        /// </summary>
         public Specialization Specialization;
     }
 }

@@ -7,21 +7,21 @@ using Cornelius.Grammar;
 
 namespace Cornelius.Criteria
 {
-    /*
-     * Ez az osztály betölti, tárolja és társítja a kritériumrendszerekt, majd
-     * tömegével kiértékeli a hallgatókon őket.
-     */
+    /// <summary>
+    /// Ez az osztály betölti, tárolja és társítja a kritériumrendszereket, majd
+    /// tömegével kiértékeli a hallgatókon őket.
+    /// </summary>
     static class Evaluator
     {
-        /*
-         * A betöltött kritériumrendszerek.
-         */
+        /// <summary>
+        /// A betöltött kritériumrendszerek.
+        /// </summary>
         private static List<AbstractWorkflow> Workflows;
 
-        /*
-         * Létrehozáskor betöltődik a beállítás fájl, ami
-         * definiálja a kritériumrendszereket.
-         */
+        /// <summary>
+        /// Létrehozáskor betöltődik a beállításfájl, ami
+        /// definiálja a kritériumrendszereket.
+        /// </summary>
         static Evaluator()
         {
             Evaluator.Workflows = WorkflowDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "kepzesek.wd"));
@@ -34,9 +34,11 @@ namespace Cornelius.Criteria
             Log.LeaveBlock();
         }
 
-        /*
-         * Hallgatók tömeges kritériummegfeleltetése.
-         */
+        /// <summary>
+        /// Hallgatók tömeges kritériummegfeleltetése.
+        /// </summary>
+        /// <param name="students">A hallgatók listája.</param>
+        /// <param name="exceptions">A kritériumkivételek listája.</param>
         public static void ProcessStudents(IEnumerable<Student> students, IEnumerable<Cornelius.IO.Primitives.XBase> exceptions)
         {
             Log.Write("Kritériumrendszerek kiértékelése...");
@@ -48,10 +50,13 @@ namespace Cornelius.Criteria
             Log.LeaveBlock();
         }
 
-        /*
-         * A hallgatóra vonatkozó kritériumrendszer kikeresése. Speciális
-         * esetben az átsorolás figyelmen kívül hagyásával.
-         */
+        /// <summary>
+        /// A hallgatóra vonatkozó kritériumrendszer kikeresése. Speciális
+        /// esetben az átsorolás figyelmen kívül hagyásával.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
+        /// <param name="original">Beállítja, hogy az eredeti képzése szerinti követelményeket nézzük-e a hallgatónál.</param>
+        /// <returns></returns>
         public static AbstractWorkflow Match(Student student, bool original)
         {
             return Evaluator.Workflows.First(workflow => workflow.Match(student, original));

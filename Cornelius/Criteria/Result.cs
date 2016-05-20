@@ -4,55 +4,55 @@ using Cornelius.Data;
 
 namespace Cornelius.Criteria
 {
-    /*
-     * Egy kritériumellenőrzés eredményét tárolja 
-     * mindenféle ember által olvasható adattal együtt.
-     */
+    /// <summary>
+    /// Egy kritériumellenőrzés eredményét tárolja 
+    /// mindenféle ember által olvasható adattal együtt.
+    /// </summary>
     class Result
     {
-        /*
-         * A kritérium végeredménye.
-         */
+        /// <summary>
+        /// A kritérium végeredménye.
+        /// </summary>
         public bool Value;
 
-        /*
-         * A kritérium neve.
-         */
+        /// <summary>
+        /// A kritérium neve.
+        /// </summary>
         public string Name;
 
-        /*
-         * Aleredmények, amiknek a következménye ez.
-         */
+        /// <summary>
+        /// Aleredmények, amiknek a következménye ez.
+        /// </summary>
         public List<Result> Subresults = new List<Result>();
 
-        /*
-         * Nem teljesült kritérium esetén ennyi hiányzó kritériumnak számít.
-         */
+        /// <summary>
+        /// Nem teljesült kritérium esetén ennyi hiányzó kritériumnak számít.
+        /// </summary>
         public int Weight;
 
-        /*
-         * Kreditek száma (összegyájti a megfelelően hozzáadott aleredmények kreditjeit is).
-         */
+        /// <summary>
+        /// Kreditek száma (összegyájti a megfelelően hozzáadott aleredmények kreditjeit is).
+        /// </summary>
         public double Credit = 0;
 
-        /*
-         * Pontok (kredit x jegy) száma (összegyájti a megfelelően hozzáadott aleredmények pontjait is).
-         */
+        /// <summary>
+        /// Pontok (kredit x jegy) száma (összegyájti a megfelelően hozzáadott aleredmények pontjait is).
+        /// </summary>
         public double Points = 0;
 
-        /*
-         * Kurzusok, amiket ez, vagy valamelyik aleredmény felhasznált.
-         */
+        /// <summary>
+        /// Kurzusok, amiket ez, vagy valamelyik aleredmény felhasznált.
+        /// </summary>
         public List<Course> Courses = new List<Course>();
 
-        /*
-         * Rendezéshez a kritériumhoz tartozó félév.
-         */
+        /// <summary>
+        /// Rendezéshez a kritériumhoz tartozó félév.
+        /// </summary>
         public int? Semester;
 
-        /*
-         * A kritériumfából számolható súlyozott átlag.
-         */
+        /// <summary>
+        /// A kritériumfából számolható súlyozott átlag.
+        /// </summary>
         public double Avarage
         {
             get
@@ -61,18 +61,21 @@ namespace Cornelius.Criteria
             }
         }
 
-        /*
-         * Neve van, de még nem teljesült.
-         */
+        /// <summary>
+        /// Még nem teljesült, de névvel rendelkező kritérium.
+        /// </summary>
+        /// <param name="name"></param>
         public Result(string name)
         {
             this.Name = name;
         }
 
-        /*
-         * Kurzus adja az alapját a teljesülésnek,
-         * ami külön rendelkezés hiányában beleszámít az átlagba is.
-         */
+        /// <summary>
+        /// Kurzus adja az alapját a teljesülésnek,
+        /// ami külön rendelkezés hiányában beleszámít az átlagba is.
+        /// </summary>
+        /// <param name="course">A kurzus</param>
+        /// <param name="excludeFromAvarage">Igaz, ha az átlagszámításban nem vesszük figyelembe a kurzust.</param>
         public Result(Course course, bool excludeFromAvarage = false)
         {
             this.Name = course.Name + " (" + course.Code + ")";
@@ -86,9 +89,11 @@ namespace Cornelius.Criteria
             this.Courses.Add(course);
         }
 
-        /*
-         * Kritérium, ami vagy teljesült vagy nem.
-         */
+        /// <summary>
+        /// Kritérium, ami vagy teljesült vagy nem.
+        /// </summary>
+        /// <param name="name">A kritérium neve.</param>
+        /// <param name="value">A teljesülés (igaz/hamis).</param>
         public Result(string name, bool value)
         {
             this.Name = name;
@@ -96,10 +101,13 @@ namespace Cornelius.Criteria
             this.Weight = value ? 1 : 0;
         }
 
-        /*
-         * Alkritériumok hozzáadása, az átlagszámításhoz 
-         * szükséges adatok összegyűjtésével együtt.
-         */
+        /// <summary>
+        /// Alkritériumok hozzáadása, az átlagszámításhoz 
+        /// szükséges adatok összegyűjtésével együtt.
+        /// </summary>
+        /// <param name="result">A kritérium, amihez alkritérium adódik.</param>
+        /// <param name="subresult">A hozzáadandó alkritérium.</param>
+        /// <returns></returns>
         public static Result operator+(Result result, Result subresult)
         {
             result.Subresults.Add(subresult);
@@ -109,17 +117,19 @@ namespace Cornelius.Criteria
             return result;
         }
 
-        /*
-         * Kiértékelhetővé teszi a feltételt különböző helyeken.
-         */
+        /// <summary>
+        /// Kiértékelhetővé teszi a feltételt különböző helyeken.
+        /// </summary>
+        /// <param name="result">A kritériumeredmény.</param>
         public static implicit operator bool(Result result)
         {
             return result.Value;
         }
 
-        /*
-         * Segíti a debuggolást.
-         */
+        /// <summary>
+        /// Kritérium részleges szöveges reprezentációja.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.Name + " (weight: " + this.Weight.ToString() + ", value: " + this.Value.ToString() + ")";

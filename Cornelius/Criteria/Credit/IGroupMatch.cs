@@ -6,14 +6,16 @@ using Cornelius.Data;
 
 namespace Cornelius.Criteria.Credit
 {
-    /*
-     * A tárgyak csoportokba rendezése ezen az interfészen keresztül működik.
-     */
+    /// <summary>
+    /// A tárgyak csoportokba rendezése ezen az interfészen keresztül működik.
+    /// </summary>
     interface IGroupMatch
     {
-        /*
-         * Igaz, ha a csoportba tartozik a tárgy. 
-         */
+        /// <summary>
+        /// Igaz, ha a csoportba tartozik a tárgy.
+        /// </summary>
+        /// <param name="course">A vizsgált tárgy.</param>
+        /// <returns>A tárgy csoportba tartozósága.</returns>
         bool Match(Course course);
     }
 }
