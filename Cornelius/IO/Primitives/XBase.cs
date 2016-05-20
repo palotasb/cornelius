@@ -7,7 +7,7 @@ namespace Cornelius.IO.Primitives
         {
             get
             {
-                return this.BaseGroup + " / " + this.BaseNeptun;
+                return this.BaseEducationProgram + " / " + this.BaseNeptun;
             }
         }
 
@@ -15,7 +15,7 @@ namespace Cornelius.IO.Primitives
         public string BaseNeptun;
 
         [Map]
-        public string BaseGroup;
+        public string BaseEducationProgram;
 
         [Map(Required = false)]
         public string BaseName;
@@ -36,14 +36,14 @@ namespace Cornelius.IO.Primitives
         {
             return
                 this.BaseNeptun == obj.BaseNeptun &&
-                this.BaseGroup == obj.BaseGroup &&
+                this.BaseEducationProgram == obj.BaseEducationProgram &&
                 this.BaseName == obj.BaseName;
         }
 
         public override int GetHashCode()
         {
             return this.BaseNeptun.GetHashCode() ^
-                (this.BaseGroup == null ? 0 : this.BaseGroup.GetHashCode()) ^
+                (this.BaseEducationProgram == null ? 0 : this.BaseEducationProgram.GetHashCode()) ^
                 (this.BaseName == null ? 0 : this.BaseName.GetHashCode());
         }
     }

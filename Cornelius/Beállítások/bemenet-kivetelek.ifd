@@ -1,5 +1,5 @@
 ﻿TÁBLÁZAT ("kivetelek") {
-	"Képzés" => BaseGroup,
+	"Képzés" => BaseEducationProgram,
 	"Neptun kód" => BaseNeptun,
 	"Nyomtatási név" => BaseName
 };

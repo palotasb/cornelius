@@ -4,14 +4,15 @@ using Cornelius.Data;
 
 namespace Cornelius.Criteria.Workflow
 {
-    /*
-     * Ötéves kritériumellenőrzés. 
-     */
+    /// <summary>
+    /// Ötéves kritériumellenőrzés. 
+    /// </summary>
     class FiveyearWorkflow : AbstractWorkflow
     {
-        /*
-         * Közismereti tárgyak ellenőrzése. Ezek beleszámítanak az átlagba.
-         */
+        /// <summary>
+        ///  Közismereti tárgyak ellenőrzése. Ezek beleszámítanak az átlagba.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
         protected override void ProcessGroupCriteria(Student student)
         {
             Result result = new Result("Közismereti tárgyak");
@@ -40,14 +41,20 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Csoportkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        /*
-         * Csak a kétkredites tárgyak lehetnek közismeretik.
-         */
+        /// <summary>
+        /// A közismereti (kétkredites) tárgyak kiszűrése.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
+        /// <returns>A közismereti tárgyak listája.</returns>
         public override IEnumerable<Course> FilterGroupCriteriaCourses(Student student)
         {
             return base.FilterGroupCriteriaCourses(student).Where(c => c.Credit == 2);
         }
 
+        /// <summary>
+        /// Végső eredmény előállítása.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
         protected override void ProcessFinalResult(Student student)
         {
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount - student.Result.Weight;

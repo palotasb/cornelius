@@ -21,8 +21,8 @@ namespace Cornelius.IO.Tables
         [Column(Name = "name", Number = 5)]
         public string Name;
 
-        [Column(Name = "group", Number = 6)]
-        public string Group;
+        [Column(Name = "educationprogram", Number = 6)]
+        public string EducationProgram;
 
         [Column(Name = "accepted", Number = 7)]
         public bool Accepted;
@@ -37,7 +37,7 @@ namespace Cornelius.IO.Tables
             this.Avarage = student.Result.Avarage;
             this.Specialization = student.Specialization == null ? null : student.Specialization.Name;
             this.Name = student.Name;
-            this.Group = student.Group;
+            this.EducationProgram = student.EducationProgram;
             this.Accepted = student.Result;
         }
     }

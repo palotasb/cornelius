@@ -1,5 +1,5 @@
 ﻿TÁBLÁZAT ("sorrend", "jelentkezes") {
-	"Képzés" => BaseGroup,
+	"Képzés" => BaseEducationProgram,
 	"Neptun kód" => BaseNeptun,
 	"Nyomtatási név" => BaseName,
 	"Választás sorszáma" => Number,

@@ -52,9 +52,9 @@ namespace Cornelius
                     var identities = import.Identities.Parse(path);
                     foreach (var identity in identities)
                     {
-                        if (identity.Origin == null)
+                        if (identity.OriginalEducationProgram == null)
                         {
-                            identity.Origin = identity.BaseGroup;
+                            identity.OriginalEducationProgram = identity.BaseEducationProgram;
                         }
                     }
                     if (File.Exists(path + ".kepzes"))
@@ -63,7 +63,7 @@ namespace Cornelius
                         Log.Write("A kurzuskód felülírásra kerül (" + specified + ").");
                         foreach (var identity in identities)
                         {
-                            identity.BaseGroup = specified;
+                            identity.BaseEducationProgram = specified;
                         }
                     }
                 }

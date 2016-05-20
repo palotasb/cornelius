@@ -5,45 +5,45 @@ using System.Text;
 
 namespace Cornelius.Data
 {
-    /*
-     * Egy szakiránybesorolási fiókot valósít meg, ahová
-     * be lehet sorolni a hallgatókat.
-     */
+    /// <summary>
+    /// Egy specializáció, ahová
+    /// be lehet sorolni a hallgatókat.
+    /// </summary>
     class Specialization
     {
-        /*
-         * A képzés, ahol elindul a szakirány.
-         */
-        public string Group;
+        /// <summary>
+        /// A képzés kódja, ahol elindul a szakirány.
+        /// </summary>
+        public string EducationProgram;
 
-        /*
-         * A szakirány neve.
-         */
+        /// <summary>
+        /// A specializáció neve.
+        /// </summary>
         public string Name;
 
-        /*
-         * Kezdeti helyek aránya az összes jelentkezőhöz
-         */
+        /// <summary>
+        /// Kezdeti helyek aránya az összes jelentkezőhöz
+        /// </summary>
         public double Ratio;
 
-        /*
-         * Szabad helyek száma.
-         */
+        /// <summary>
+        /// A specializáció maximális létszáma.
+        /// </summary>
         public int Capacity;
 
-        /*
-         * Az utolsó besorolt hallgató köre.
-         */
+        /// <summary>
+        /// Az utolsó besorolt hallgató köre.
+        /// </summary>
         public int Round;
 
-        /*
-         * Besorolt hallgatók.
-         */
+        /// <summary>
+        /// Besorolt hallgatók.
+        /// </summary>
         public List<Student> Students = new List<Student>();
 
-        /*
-         * Minimális szakirányátlag.
-         */
+        /// <summary>
+        /// Minimális rangsorátlag, ami a bekerüléshez kell.
+        /// </summary>
         public double Minimum
         {
             get
@@ -59,9 +59,9 @@ namespace Cornelius.Data
             }
         }
 
-        /*
-         * Tele van-e a szakirány?
-         */
+        /// <summary>
+        /// A specializáció megtelt.
+        /// </summary>
         public bool Full
         {
             get
@@ -70,9 +70,12 @@ namespace Cornelius.Data
             }
         }
 
-        /*
-         * Hallgató hozzáadása a szakirányhoz.
-         */
+        /// <summary>
+        /// Hallgató besorolása a specializációra.
+        /// </summary>
+        /// <param name="slot">A specializáció, amire a hallgató besorolódik.</param>
+        /// <param name="student">A hallgató, aki besorolásra kerül.</param>
+        /// <returns>A </returns>
         public static Specialization operator +(Specialization slot, Student student)
         {
             slot.Students.Add(student);

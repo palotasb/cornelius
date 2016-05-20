@@ -21,20 +21,20 @@ namespace Cornelius
             List<Specialization> specializations = Builder.ExtractSpecializations(import).ToList();
             Evaluator.ProcessStudents(students, import.Exceptions);
             
-            var groups = students
+            var eduPrograms = students
                 .Where(student => student.Result)
                 .OrderBy(student => student.Round)
                 .ThenByDescending(student => student.Result.Avarage)
-                .GroupBy(student => student.Group);
+                .GroupBy(student => student.EducationProgram);
 
-            foreach (var group in groups)
+            foreach (var eduProgram in eduPrograms)
             {
-                int count = group.Count();
+                int count = eduProgram.Count();
                 Dictionary<string, Specialization> shorthandDictionary = specializations
-                    .Where(specialization => specialization.Group == group.Key)
+                    .Where(specialization => specialization.EducationProgram == eduProgram.Key)
                     .ToDictionary(specialization => specialization.Name.Remove(15));
 
-                Log.Write("Maximális szakiránylétszámok a " + group.Key + " képzésen:");
+                Log.Write("Maximális szakiránylétszámok a " + eduProgram.Key + " képzésen:");
                 Log.EnterBlock(" => ");
                 foreach (var specialization in shorthandDictionary.Values)
                 {
@@ -43,9 +43,9 @@ namespace Cornelius
                 }
                 Log.LeaveBlock();
 
-                Log.Write("Besorolás a " + group.Key + " képzésen:");
+                Log.Write("Besorolás a " + eduProgram.Key + " képzésen:");
                 Log.EnterBlock();
-                foreach (var student in group)
+                foreach (var student in eduProgram)
                 {
                     Log.Write(student.OriginKey + ":");
                     Log.EnterBlock(" => ");

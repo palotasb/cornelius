@@ -65,7 +65,7 @@
     <Compile Include="Criteria\Credit\Subgroup.cs" />
     <Compile Include="Criteria\Credit\Grouping.cs" />
     <Compile Include="Criteria\Expression\MatchCourse.cs" />
-    <Compile Include="Criteria\Expression\Proxy.cs" />
+    <Compile Include="Criteria\Expression\StudentCourseProxy.cs" />
     <Compile Include="Criteria\Expression\MatchGroup.cs" />
     <Compile Include="Criteria\Expression\IExpression.cs" />
     <Compile Include="Criteria\Workflow\BachelorWorkflow.cs" />

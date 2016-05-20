@@ -2,42 +2,42 @@
 
 namespace Cornelius.Criteria.Expression
 {
-    /*
-     * Tárgykritériumot definiáló osztály. Ellenőrzi, hogy egy adott tárgyból
-     * megvan-e a teljesítés vagy az aláírás. Rendezőelvként a kreditsúlyozott 
-     * osztályzatot használja, a kizárásos tárgyakat a végére dobva negatív értékekkel.
-     */
+    /// <summary>
+    /// Tárgykritériumot definiáló osztály. Ellenőrzi, hogy egy adott tárgyból
+    /// megvan-e a teljesítés vagy az aláírás. Rendezőelvként a kreditsúlyozott
+    /// osztályzatot használja, a kizárásos tárgyakat a végére dobva negatív értékekkel.
+    /// </summary>
     class MatchCourse : IExpression
     {
-        /*
-         * A tárgy neve.
-         */
+        /// <summary>
+        /// A tárgy neve.
+        /// </summary>
         public string Name 
             { get; set; }   
      
-        /*
-         * A tárgy kódja.
-         */
+        /// <summary>
+        /// A tárgy kódja.
+        /// </summary>
         public string Code 
             { get; set; }
 
-        /*
-         * Elegendő-e csak az aláírás.
-         */
+        /// <summary>
+        /// Elegendő-e csak az aláírás.
+        /// </summary>
         public bool Signature 
             { get; set; }
 
-        /*
-         * Kizárásos tárgy, vagyis csak egyetlen kritériumba számíthat egyszerre.
-         * (Vigyázzat, a kizárásos tárgyak csak egymást zárják ki, az azonos
-         * tárgykódú, de nem kizárásos feltételek nem érintik egymást!)
-         */
+        /// <summary>
+        /// Kizárásos tárgy, vagyis csak egyetlen kritériumba számíthat egyszerre.
+        /// (Vigyázzat, a kizárásos tárgyak csak egymást zárják ki, az azonos
+        /// tárgykódú, de nem kizárásos feltételek nem érintik egymást!)
+        /// </summary>
         public bool Exclusive
             { get; set; }
 
-        /*
-         * A tárgy hosszú neve TÁRGYNÉV (TÁRGYKÓD) formátumban.
-         */
+        /// <summary>
+        /// A tárgy hosszú neve TÁRGYNÉV (TÁRGYKÓD) formátumban.
+        /// </summary>
         public string LongName
         {
             get
@@ -46,11 +46,13 @@ namespace Cornelius.Criteria.Expression
             }
         }
 
-        /*
-         * A sorbarendezéshez a kreditsúlyozott osztályzatot használjuk. Az aláírás értéke, ahogy a nem
-         * teljesített tárgyé is, nulla. A kizárásos tárgyak súlyozása negatív.
-         */
-        public double Order(Proxy proxy)
+        /// <summary>
+        /// A sorbarendezéshez a kreditsúlyozott osztályzatot használjuk. Az aláírás értéke, ahogy a nem
+        /// teljesített tárgyé is, nulla. A kizárásos tárgyak súlyozása negatív.
+        /// </summary>
+        /// <param name="proxy">A hallgatókat kurzusokkal összekötő proxy.</param>
+        /// <returns>Kreditsúlyozott átlag mint rendezőszám. [?]</returns>
+        public double Order(StudentCourseProxy proxy)
         {
             if (!this.Signature)
             {
@@ -63,10 +65,12 @@ namespace Cornelius.Criteria.Expression
             return 0;
         }
 
-        /*
-         * Feltétel kiértékelése.
-         */
-        public Result Evaluate(Proxy proxy)
+        /// <summary>
+        /// Feltétel kiértékelése.
+        /// </summary>
+        /// <param name="proxy">A hallgatót és kurzusokat összekötő proxy.</param>
+        /// <returns>A kiértékelés eredménye.</returns>
+        public Result Evaluate(StudentCourseProxy proxy)
         {
             Course course = proxy.Check(this.Code);
             if (course == null)
@@ -94,6 +98,13 @@ namespace Cornelius.Criteria.Expression
             }
         }
 
+        /// <summary>
+        /// Tárgykritériumot definiáló osztály.
+        /// </summary>
+        /// <param name="code">Tárgykód</param>
+        /// <param name="name">Tárgynév</param>
+        /// <param name="signature">Csak aláírás kell-e</param>
+        /// <param name="exclusive">Exkluzív követelmény-e</param>
         public MatchCourse(string code, string name, bool signature, bool exclusive)
         {
             this.Code = code;
@@ -102,7 +113,9 @@ namespace Cornelius.Criteria.Expression
             this.Exclusive = exclusive;
         }
 
-
+        /// <summary>
+        /// A kiértékelhető feltétel súlya.
+        /// </summary>
         public int Weight
         {
             get { return 1; }
