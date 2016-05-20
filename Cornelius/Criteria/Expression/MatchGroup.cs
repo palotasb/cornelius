@@ -88,7 +88,7 @@ namespace Cornelius.Criteria.Expression
         /*
          * Kiértékelés
          */
-        public Result Evaluate(Proxy proxy)
+        public Result Evaluate(StudentCourseProxy proxy)
         {
             Result result = new Result(this.Name);
             result.Semester = this.Semester > 0 ? this.Semester : null;
@@ -139,7 +139,7 @@ namespace Cornelius.Criteria.Expression
             return result;
         }
 
-        public double Order(Proxy source)
+        public double Order(StudentCourseProxy source)
         {
             return 0;
         }

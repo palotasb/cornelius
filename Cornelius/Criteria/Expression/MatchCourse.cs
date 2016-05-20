@@ -50,7 +50,7 @@ namespace Cornelius.Criteria.Expression
          * A sorbarendezéshez a kreditsúlyozott osztályzatot használjuk. Az aláírás értéke, ahogy a nem
          * teljesített tárgyé is, nulla. A kizárásos tárgyak súlyozása negatív.
          */
-        public double Order(Proxy proxy)
+        public double Order(StudentCourseProxy proxy)
         {
             if (!this.Signature)
             {
@@ -66,7 +66,7 @@ namespace Cornelius.Criteria.Expression
         /*
          * Feltétel kiértékelése.
          */
-        public Result Evaluate(Proxy proxy)
+        public Result Evaluate(StudentCourseProxy proxy)
         {
             Course course = proxy.Check(this.Code);
             if (course == null)

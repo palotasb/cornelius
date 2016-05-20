@@ -9,7 +9,7 @@ namespace Cornelius.Criteria.Expression
      * hogy melyik tárgyakat számítottuk bele az átlagba és hogy melyeket nem
      * lehet többször felhasználni.
      */
-    class Proxy
+    class StudentCourseProxy
     {
         /*
          * A képzés, ahol a hallgató elkezdte a tanulmányait
@@ -74,7 +74,7 @@ namespace Cornelius.Criteria.Expression
             return _courses.FirstOrDefault(c => c.Code == code);
         }
 
-        public Proxy(IEnumerable<Course> courses, string origin)
+        public StudentCourseProxy(IEnumerable<Course> courses, string origin)
         {
             this.Origin = origin;
             _courses = courses;

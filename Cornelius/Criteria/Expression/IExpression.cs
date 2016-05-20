@@ -10,12 +10,12 @@
          * A feltétel rendezőszáma. Ez valósítja meg a jegyalapú súlyozást, így mindig 
          * a legelőnyösebb kritériumok kerülnek befogadásra.
          */
-        double Order(Proxy source);
+        double Order(StudentCourseProxy source);
 
         /*
          *  Feltétel kiértékelése és az eredmények, aleredmények összegyűjtése.
          */
-        Result Evaluate(Proxy source);
+        Result Evaluate(StudentCourseProxy source);
 
         int Weight { get; }
     }

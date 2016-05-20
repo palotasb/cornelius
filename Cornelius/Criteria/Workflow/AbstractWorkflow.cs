@@ -133,7 +133,7 @@ namespace Cornelius.Criteria.Workflow
          */
         protected virtual void ProcessCourseRequirements(Student student)
         {
-            student.Result = this.CourseCriteria.Evaluate(new Proxy(student.Courses, student.Origin));
+            student.Result = this.CourseCriteria.Evaluate(new StudentCourseProxy(student.Courses, student.Origin));
             Log.Write("Tárgyteljesítési kritérium " + (student.Result ? "elfogadva" : "elutasítva") + ".");
         }
 
