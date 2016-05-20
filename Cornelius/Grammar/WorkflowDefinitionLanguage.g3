@@ -14,7 +14,7 @@ definition returns [List<AbstractWorkflow> list]
     ;
 
 workflow returns [AbstractWorkflow workflow]
-	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } | 'ÖTÉVES' { workflow = new FiveyearWorkflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
+	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
 	;
 
 workflow_parameters [AbstractWorkflow workflow]

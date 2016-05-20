@@ -16,32 +16,5 @@
 		KÉPZÉSKÓD 5N-A7,
 		KRITÉRIUMOK "kriterium-villamosmernok-bsc.cd",
 		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
-	},
-	
-	/* 
-	 * Ötéves képzések, a paraméter a gazdhumán beszámíthatóság csoportját definiálja. 
-	 * A csoporton belül a kétkredites tárgyak tudnak gazdhumánnak számítani. Csak a 
-	 * megadott számú tárgy számít bele az átlagba.
-	 */
-	
-	/* Műszaki Informatikus 5 éves képzés */
-	KÉPZÉS ÖTÉVES (Lehet => 0) {
-		KÉPZÉSKÓD 5N-08,
-		KRITÉRIUMOK "kriterium-informatikus-oteves.cd",
-		CSOPORTOSÍTÁS "csoportositas-oteves.gd"
-	},
-	
-	/* Villamosmérnöki 5 éves képzés, 2002 előtt */
-	KÉPZÉS ÖTÉVES (Lehet => 3) {
-		KÉPZÉSKÓD 5N-07 (       - 2001/2),
-		KRITÉRIUMOK "kriterium-villamosmernok-2002.cd",
-		CSOPORTOSÍTÁS "csoportositas-oteves.gd"
-	},
-	
-	/* Villamosmérnöki 5 éves képzés, 2002-ben és utána */
-	KÉPZÉS ÖTÉVES (Lehet => 3) {
-		KÉPZÉSKÓD 5N-07 (2002/1 -       ),
-		KRITÉRIUMOK "kriterium-villamosmernok-oteves.cd",
-		CSOPORTOSÍTÁS "csoportositas-oteves.gd"
 	}
 };

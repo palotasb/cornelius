@@ -69,7 +69,6 @@
     <Compile Include="Criteria\Expression\MatchGroup.cs" />
     <Compile Include="Criteria\Expression\IExpression.cs" />
     <Compile Include="Criteria\Workflow\BachelorWorkflow.cs" />
-    <Compile Include="Criteria\Workflow\FiveyearWorkflow.cs" />
     <Compile Include="Criteria\Result.cs" />
     <Compile Include="Criteria\Workflow\AbstractWorkflow.cs" />
     <Compile Include="Criteria\Workflow\GroupRequirement.cs" />
@@ -175,9 +174,6 @@
     <None Include="Beállítások\csoportositas-informatikus-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\csoportositas-oteves.gd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Beállítások\csoportositas-villamosmernok-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -187,16 +183,7 @@
     <None Include="Beállítások\kriterium-informatikus-bsc.cd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-informatikus-oteves.cd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Beállítások\kriterium-villamosmernok-2002.cd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Beállítások\kriterium-villamosmernok-bsc.cd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Beállítások\kriterium-villamosmernok-oteves.cd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
