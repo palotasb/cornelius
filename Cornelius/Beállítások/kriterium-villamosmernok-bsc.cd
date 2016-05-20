@@ -40,7 +40,7 @@
 		BMEVIIIA104 "Digitális technika I.",
 		BMEVIIIA105 "Digitális technika 1",
 		BMEVIFO1503 "Digitaltechnik",
-		BMEVIIIAA01 "Digitális technika 1",
+		BMEVIIIAA01 "Digitális technika 1"
 	},
 	KRITÉRIUM "Digitális technika 2" (2. FÉLÉV, 6 KREDIT) {
 		BMEVIFO1020 "Digitális technika II. (Digital Design)",
@@ -48,7 +48,7 @@
 		BMEVIIIA108 "Digitális technika II.",
 		BMEVIIIA106 "Digitális technika 2",
 		BMEVIFO1504 "Digitaltechnik",
-		BMEVIIIAA02 "Digitális technika 2",
+		BMEVIIIAA02 "Digitális technika 2"
 	},
 	KRITÉRIUM "Matematika A2" (2. FÉLÉV, 6 KREDIT) {
 		BMETE90AX02 "Matematika A2a - Vektorfüggvények",
