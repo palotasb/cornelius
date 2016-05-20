@@ -10,7 +10,7 @@ namespace Cornelius
 {
     class Program
     {
-        public const string CONFIG_DIRECTORY = "Beállítások";
+        public const string CONFIG_DIRECTORY = "Config";
         public const string INPUT_DIRECTORY = "Bemenet";
         public const string OUTPUT_DIRECTORY = "Kimenet";
 
