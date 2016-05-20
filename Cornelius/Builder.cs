@@ -36,7 +36,7 @@ namespace Cornelius
                 Student student = Builder.MergeIdentities(primitive);
                 Log.Write(student.Name);
                 Log.Write("Eredeti képzés: " + student.Origin);
-                Log.Write("Jelentkezés szerinti: " + student.Group);
+                Log.Write("Jelentkezés szerinti: " + student.EduProgramCode);
 
                 student.Choices = import.Choices
                     .Where(choice => choice.Key == student.OriginKey)
@@ -69,7 +69,7 @@ namespace Cornelius
             Student student = new Student();
             student.Neptun = first.BaseNeptun;
             student.Name = first.BaseName;
-            student.Group = first.BaseGroup;
+            student.EduProgramCode = first.BaseGroup;
             student.Origin = first.Origin;
             student.EffectiveSemester = first.EffectiveSemester;
             student.Emails = primitives

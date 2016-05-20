@@ -33,7 +33,7 @@ namespace Cornelius.Data
         {
             get
             {
-                return this.Group + " / " + this.Neptun;
+                return this.EduProgramCode + " / " + this.Neptun;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Cornelius.Data
         /*
          * Az aktív képzéskód, ami alapján a kritériumokat számoljuk
          */
-        public string Group;
+        public string EduProgramCode;
 
         /*
          * A hallgató Neptun kódja

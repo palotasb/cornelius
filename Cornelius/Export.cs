@@ -237,15 +237,15 @@ namespace Cornelius
             filters["MIND"] = s => true;
             filters["PASS"] = s => s.Specialization != null;
             filters["FAIL"] = s => s.Specialization == null;
-            foreach (var code in students.Select(s => s.Group).Distinct())
+            foreach (var code in students.Select(s => s.EduProgramCode).Distinct())
             {
                 foreach (var filter in filters)
                 {
                     Dictionary<string, XHistogram[]> histograms = new Dictionary<string, XHistogram[]>();
-                    string[] groups = students.Where(s => s.Group == code).SelectMany(s => s.CreditPerGroup.Keys).Distinct().ToArray();
+                    string[] groups = students.Where(s => s.EduProgramCode == code).SelectMany(s => s.CreditPerGroup.Keys).Distinct().ToArray();
                     foreach (string group in groups)
                     {
-                        var values = students.Where(s => s.Group == code).Where(s => filter.Value(s)).Where(s => s.CreditPerGroup.Sum(e => e.Value) > 0).Select(student => student.CreditPerGroup[group]);
+                        var values = students.Where(s => s.EduProgramCode == code).Where(s => filter.Value(s)).Where(s => s.CreditPerGroup.Sum(e => e.Value) > 0).Select(student => student.CreditPerGroup[group]);
                         var histogram = values.GroupBy(i => i).OrderBy(e => e.Key).Select(e => new XHistogram(e.Key, e.Count()));
                         histograms.Add(group, histogram.ToArray());
                     }

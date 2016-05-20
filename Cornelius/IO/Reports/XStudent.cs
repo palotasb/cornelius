@@ -40,7 +40,7 @@ namespace Cornelius.IO.Reports
         public XStudent(Student student)
         {
             this.Origin = student.Origin;
-            this.Group = student.Group;
+            this.Group = student.EduProgramCode;
             this.Neptun = student.Neptun;
             this.Name = student.Name;
             this.MissingCriteria = student.MissingCriteria;

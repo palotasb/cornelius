@@ -123,7 +123,7 @@ namespace Cornelius.Criteria.Workflow
          */
         public override IEnumerable<Course> FilterGroupCriteriaCourses(Student student)
         {
-            if (student.Origin == student.Group)
+            if (student.Origin == student.EduProgramCode)
             {
                 return base.FilterGroupCriteriaCourses(student);
             }
@@ -142,7 +142,7 @@ namespace Cornelius.Criteria.Workflow
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount + 1 - student.Result.Weight;
             if (this.CourseCriteria.Requirement < 0) student.MissingCriteria -= this.CourseCriteria.Requirement;
             if (student.MissingCriteria < 0) student.MissingCriteria = 0;
-            if (student.Origin == student.Group)
+            if (student.Origin == student.EduProgramCode)
             {
                 student.Round = 1;
             }

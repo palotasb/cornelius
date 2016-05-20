@@ -94,7 +94,7 @@ namespace Cornelius.Criteria.Workflow
          */
         public bool Match(Student student, bool original = false)
         {
-            return (original ? student.Origin : student.Group) == this.Group && Semester.InInterval(student.EffectiveSemester, this.From, this.To);
+            return (original ? student.Origin : student.EduProgramCode) == this.Group && Semester.InInterval(student.EffectiveSemester, this.From, this.To);
         }
 
         /*

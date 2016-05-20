@@ -37,7 +37,7 @@ namespace Cornelius.IO.Tables
             this.Avarage = student.Result.Avarage;
             this.Specialization = student.Specialization == null ? null : student.Specialization.Name;
             this.Name = student.Name;
-            this.Group = student.Group;
+            this.Group = student.EduProgramCode;
             this.Accepted = student.Result;
         }
     }
