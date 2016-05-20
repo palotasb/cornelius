@@ -11,10 +11,10 @@ namespace Cornelius.Criteria.Expression
     /// </summary>
     class StudentCourseProxy
     {
-        public string Origin
         /// <summary>
         /// A képzés, ahol a hallgató elkezdte a tanulmányait
         /// </summary>
+        public string OriginalEduProgramCode
             { get; protected set; }
 
         /// <summary>
@@ -80,14 +80,14 @@ namespace Cornelius.Criteria.Expression
             return _courses.FirstOrDefault(c => c.Code == code);
         }
 
-        public StudentCourseProxy(IEnumerable<Course> courses, string origin)
         /// <summary>
         /// A hallgató tárgyainak használatát nyilvántartó osztály.
         /// </summary>
         /// <param name="courses">A hallgató kurzusai.</param>
         /// <param name="origEduProgramCode">A hallgató eredeti képzéskódja.</param>
+        public StudentCourseProxy(IEnumerable<Course> courses, string origEduProgramCode)
         {
-            this.Origin = origin;
+            this.OriginalEduProgramCode = origEduProgramCode;
             _courses = courses;
         }
     }

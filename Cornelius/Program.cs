@@ -25,13 +25,13 @@ namespace Cornelius
                 .Where(student => student.Result)
                 .OrderBy(student => student.Round)
                 .ThenByDescending(student => student.Result.Avarage)
-                .GroupBy(student => student.EduProgramCode);
+                .GroupBy(student => student.EducationProgram);
 
             foreach (var eduProgram in eduPrograms)
             {
                 int count = eduProgram.Count();
                 Dictionary<string, Specialization> shorthandDictionary = specializations
-                    .Where(specialization => specialization.Group == eduProgram.Key)
+                    .Where(specialization => specialization.EducationProgram == eduProgram.Key)
                     .ToDictionary(specialization => specialization.Name.Remove(15));
 
                 Log.Write("Maximális szakiránylétszámok a " + eduProgram.Key + " képzésen:");

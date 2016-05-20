@@ -16,10 +16,10 @@ namespace Cornelius
             foreach (var primitive in import.Specializations)
             {
                 Specialization specialization = new Specialization();
-                specialization.Group = primitive.Group;
+                specialization.EducationProgram = primitive.EducationProgram;
                 specialization.Name = primitive.Name;
                 specialization.Ratio = primitive.Ratio;
-                Log.Write(specialization.Group + " - " + specialization.Name + ": " + specialization.Ratio.ToString("#.00%"));
+                Log.Write(specialization.EducationProgram + " - " + specialization.Name + ": " + specialization.Ratio.ToString("#.00%"));
                 yield return specialization;
             }
             Log.LeaveBlock();
@@ -35,8 +35,8 @@ namespace Cornelius
                 Log.EnterBlock(" => ");
                 Student student = Builder.MergeIdentities(primitive);
                 Log.Write(student.Name);
-                Log.Write("Eredeti képzés: " + student.Origin);
-                Log.Write("Jelentkezés szerinti: " + student.EduProgramCode);
+                Log.Write("Eredeti képzés: " + student.OriginalEducationProgram);
+                Log.Write("Jelentkezés szerinti: " + student.EducationProgram);
 
                 student.Choices = import.Choices
                     .Where(choice => choice.Key == student.OriginKey)
@@ -58,8 +58,8 @@ namespace Cornelius
             if (primitives.Count() > 1 && !(
                     primitives.All(primitive => primitive.BaseName == first.BaseName) &&
                     primitives.All(primitive => primitive.BaseNeptun == first.BaseNeptun) &&
-                    primitives.All(primitive => primitive.BaseGroup == first.BaseGroup) &&
-                    primitives.All(primitive => primitive.Origin == first.Origin) &&
+                    primitives.All(primitive => primitive.BaseEducationProgram == first.BaseEducationProgram) &&
+                    primitives.All(primitive => primitive.OriginalEducationProgram == first.OriginalEducationProgram) &&
                     primitives.All(primitive => primitive.EffectiveSemester == first.EffectiveSemester
                 )))
             {
@@ -69,8 +69,8 @@ namespace Cornelius
             Student student = new Student();
             student.Neptun = first.BaseNeptun;
             student.Name = first.BaseName;
-            student.EduProgramCode = first.BaseGroup;
-            student.Origin = first.Origin;
+            student.EducationProgram = first.BaseEducationProgram;
+            student.OriginalEducationProgram = first.OriginalEducationProgram;
             student.EffectiveSemester = first.EffectiveSemester;
             student.Emails = primitives
                 .Select(primitive => primitive.Email)

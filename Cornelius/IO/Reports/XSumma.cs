@@ -10,7 +10,7 @@ namespace Cornelius.IO.Reports
     class XSumma
     {
         [Column(Name = "Képzéskód", Number = 1, Sort = true)]
-        public string Group;
+        public string EducationProgram;
 
         [Column(Name = "Szakirány neve", Number = 2)]
         public string Name;
@@ -29,7 +29,7 @@ namespace Cornelius.IO.Reports
 
         public XSumma(Specialization specialization)
         {
-            this.Group = specialization.Group;
+            this.EducationProgram = specialization.EducationProgram;
             this.Name = specialization.Name;
             this.Capacity = specialization.Capacity;
             this.NumberOfStudents = specialization.Students.Count;

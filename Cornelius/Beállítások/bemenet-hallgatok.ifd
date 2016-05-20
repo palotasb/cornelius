@@ -1,5 +1,5 @@
 ﻿TÁBLÁZAT ("adat") {
-	"Képzés" => BaseGroup,
+	"Képzés" => BaseEducationProgram,
 	"Neptun kód" => BaseNeptun,
 	"Nyomtatási név" => BaseName,
 	"Átjelentkezés éve_Felvétel dátuma" => EffectiveSemester,

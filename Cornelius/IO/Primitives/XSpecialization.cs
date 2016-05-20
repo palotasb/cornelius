@@ -8,7 +8,7 @@ namespace Cornelius.IO.Primitives
     class XSpecialization
     {
         [Map]
-        public string Group;
+        public string EducationProgram;
 
         [Map]
         public string Name;
@@ -31,14 +31,14 @@ namespace Cornelius.IO.Primitives
         public bool Equals(XSpecialization obj)
         {
             return
-                this.Group == obj.Group &&
+                this.EducationProgram == obj.EducationProgram &&
                 this.Name == obj.Name &&
                 this.Ratio == obj.Ratio;
         }
 
         public override int GetHashCode()
         {
-            return this.Group.GetHashCode() ^
+            return this.EducationProgram.GetHashCode() ^
                 this.Name.GetHashCode() ^
                 this.Ratio.GetHashCode();
         }

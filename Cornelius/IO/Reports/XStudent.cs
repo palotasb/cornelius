@@ -11,10 +11,10 @@ namespace Cornelius.IO.Reports
     class XStudent
     {
         [Column(Name = "Eredeti képzés", Number = 1)]
-        public string Origin;
+        public string OriginalEducationProgram;
 
         [Column(Name = "Besorolva mint", Number = 2)]
-        public string Group;
+        public string EducationProgram;
 
         [Column(Name = "Neptun kód", Number = 3, Sort = true)]
         public string Neptun;
@@ -39,8 +39,8 @@ namespace Cornelius.IO.Reports
 
         public XStudent(Student student)
         {
-            this.Origin = student.Origin;
-            this.Group = student.EduProgramCode;
+            this.OriginalEducationProgram = student.OriginalEducationProgram;
+            this.EducationProgram = student.EducationProgram;
             this.Neptun = student.Neptun;
             this.Name = student.Name;
             this.MissingCriteria = student.MissingCriteria;

@@ -15,11 +15,10 @@ namespace Cornelius.Criteria.Workflow
     /// </summary>
     abstract class AbstractWorkflow
     {
-        // TODO: EduProgramCode-ra átírni.
         /// <summary>
         /// A képzés, amihez a kritériumrendszer tartozik.
         /// </summary>
-        public string Group
+        public string EducationProgram
             { get; protected set; }
 
         /// <summary>
@@ -67,12 +66,12 @@ namespace Cornelius.Criteria.Workflow
         /// A hallgatókra vonatkozó kritérium beállítása, ami megmondja,
         /// mikor tartozik valakihez ez a kritériumrendszer.
         /// </summary>
-        /// <param name="group"></param>
+        /// <param name="educationProgram"></param>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        public void SetStudentCriteria(string group, Semester? from, Semester? to)
+        public void SetStudentCriteria(string educationProgram, Semester? from, Semester? to)
         {
-            this.Group = group;
+            this.EducationProgram = educationProgram;
             this.From = from;
             this.To = to;
         }
@@ -103,7 +102,7 @@ namespace Cornelius.Criteria.Workflow
         /// <returns></returns>
         public bool Match(Student student, bool original = false)
         {
-            return (original ? student.Origin : student.EduProgramCode) == this.Group && Semester.InInterval(student.EffectiveSemester, this.From, this.To);
+            return (original ? student.OriginalEducationProgram : student.EducationProgram) == this.EducationProgram && Semester.InInterval(student.EffectiveSemester, this.From, this.To);
         }
 
         /// <summary>
@@ -145,7 +144,7 @@ namespace Cornelius.Criteria.Workflow
         /// <param name="student">A hallgató</param>
         protected virtual void ProcessCourseRequirements(Student student)
         {
-            student.Result = this.CourseCriteria.Evaluate(new StudentCourseProxy(student.Courses, student.Origin));
+            student.Result = this.CourseCriteria.Evaluate(new StudentCourseProxy(student.Courses, student.OriginalEducationProgram));
             Log.Write("Tárgyteljesítési kritérium " + (student.Result ? "elfogadva" : "elutasítva") + ".");
         }
 
@@ -176,13 +175,12 @@ namespace Cornelius.Criteria.Workflow
         {
             return this.FilterCriteriaCourses(student, this.GroupCriteria.Identifier).Except(student.Result.Courses);
         }
-
-        // TODO: Group
+        
         /// <summary>
         ///  Nem 0 kredites tárgyak kiválasztása.
         /// </summary>
         /// <param name="student">A hallgató</param>
-        /// <param name="group">???</param>
+        /// <param name="group">A csoportazonosító.</param>
         /// <returns>A kurzusok listája.</returns>
         public virtual IEnumerable<Course> FilterSummaCriteriaCourses(Student student, string group)
         {
@@ -192,8 +190,8 @@ namespace Cornelius.Criteria.Workflow
         /// <summary>
         /// Teljesített tárgyak kiválasztása eredmény szerint rendezve.
         /// </summary>
-        /// <param name="student">A hallgató</param>
-        /// <param name="group">???</param>
+        /// <param name="student">A hallgató.</param>
+        /// <param name="group">A csoportazonosító.</param>
         /// <returns>A kurzusok listája.</returns>
         public virtual IEnumerable<Course> FilterCriteriaCourses(Student student, string group)
         {

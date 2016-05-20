@@ -54,7 +54,7 @@ namespace Cornelius.Criteria.Expression
         /// A feltétel azokra vonatkozik csak, akik a megadott képzésben
         /// kezdték mag tanulmányaikat.
         /// </summary>
-        public string Origin
+        public string OriginalEducationProgram
             { get; set; }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Cornelius.Criteria.Expression
             Result result = new Result(this.Name);
             result.Semester = this.Semester > 0 ? this.Semester : null;
 
-            if (this.Origin != null && proxy.Origin != this.Origin)
+            if (this.OriginalEducationProgram != null && proxy.OriginalEduProgramCode != this.OriginalEducationProgram)
             {
                 // Ilyenkor nincs meg a kritérium, mégis úgy számít, mintha meglenne
                 result.Weight = this.Weight;

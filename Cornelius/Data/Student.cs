@@ -22,18 +22,18 @@ namespace Cornelius.Data
         {
             get
             {
-                return this.Origin + " / " + this.Neptun;
+                return this.OriginalEducationProgram + " / " + this.Neptun;
             }
         }
 
         /// <summary>
         /// Egyedi azonosító exportáláskor a kulcsok társításához
         /// </summary>
-        public string GroupKey
+        public string Key
         {
             get
             {
-                return this.EduProgramCode + " / " + this.Neptun;
+                return this.EducationProgram + " / " + this.Neptun;
             }
         }
 
@@ -41,12 +41,12 @@ namespace Cornelius.Data
         /// <summary>
         /// Az eredeti, mindenféle átsorolás előtti képzéskód.
         /// </summary>
-        public string Origin;
+        public string OriginalEducationProgram;
 
         /// <summary>
         /// Az aktív képzéskód, ami alapján a kritériumokat számoljuk.
         /// </summary>
-        public string EduProgramCode;
+        public string EducationProgram;
 
         /// <summary>
         /// A hallgató Neptun-kódja.
@@ -78,7 +78,6 @@ namespace Cornelius.Data
         /// </summary>
         public string[] Choices;
 
-        // TODO: Ez milyen group?
         /// <summary>
         /// A hallgató kreditjeinek száma az egyes csoportokban.
         /// </summary>

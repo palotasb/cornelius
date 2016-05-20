@@ -11,9 +11,8 @@
         /// </summary>
         public string Identifier;
 
-        // TODO: ezt konkrétabban leírni.
         /// <summary>
-        /// Mennyiség.
+        /// Csoportkövetelményhez társított általános mennyiség.
         /// </summary>
         public int Amount;
 

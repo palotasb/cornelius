@@ -11,11 +11,10 @@ namespace Cornelius.Data
     /// </summary>
     class Specialization
     {
-        // TODO: átnevezni.
         /// <summary>
-        /// A képzés, ahol elindul a szakirány.
+        /// A képzés kódja, ahol elindul a szakirány.
         /// </summary>
-        public string Group;
+        public string EducationProgram;
 
         /// <summary>
         /// A specializáció neve.
@@ -27,9 +26,8 @@ namespace Cornelius.Data
         /// </summary>
         public double Ratio;
 
-        // TODO: Ha ez tényleg a szabad helyek száma, akkor ezt is átnevezni.
         /// <summary>
-        /// Szabad helyek száma.
+        /// A specializáció maximális létszáma.
         /// </summary>
         public int Capacity;
 
