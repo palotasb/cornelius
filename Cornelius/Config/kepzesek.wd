@@ -4,6 +4,8 @@
 	 * paraméter a kreditkritériumot definiálja, a legnagyobb közülük lesz az abszolutkritérium.
 	 */
 	
+	/* Régi, 2016 előtt érvényes kritériumok / besorolás */
+
 	/* Mérnök Informatikus BSc képzés */
 	KÉPZÉS BSC (KötelezőenVálasztható => 2, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
 		KÉPZÉSKÓD 5N-A8,
@@ -15,6 +17,22 @@
 	KÉPZÉS BSC (KötelezőenVálasztható => 1, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
 		KÉPZÉSKÓD 5N-A7,
 		KRITÉRIUMOK "kriterium-villamosmernok-bsc.cd",
+		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
+	}
+
+	/* Új, 2016 nyarától érvényes kritériumok / besorolás */
+
+	/* Mérnök Informatikus BSc képzés */
+	KÉPZÉS BSC2016 (KötelezőenVálasztható => 0, Kötelező => 90, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
+		KÉPZÉSKÓD 5N-A8,
+		KRITÉRIUMOK "kriterium-informatikus-bsc-2016.cd",
+		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc.gd"
+	},
+	
+	/* Villamosmérnöki BSc képzés */
+	KÉPZÉS BSC2016 (KötelezőenVálasztható => 2, Kötelező => 90, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
+		KÉPZÉSKÓD 5N-A7,
+		KRITÉRIUMOK "kriterium-villamosmernok-bsc-2016.cd",
 		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
 	}
 };
