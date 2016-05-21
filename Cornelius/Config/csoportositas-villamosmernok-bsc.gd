@@ -88,7 +88,7 @@
 		BMEVIVEA207, /* Villamos energetika */
 		BMEVIVM3025, /* Villamos energetika */
 
-		TE90AX00 , /* Matematika A1 */
+		TE90AX00, /* Matematika A1 */
 		TE90AX26, /* Matematika A2 */
 		TE90AX09, /* Matematika A3 */
 		TE90AX51, /* Matematika A4 */
