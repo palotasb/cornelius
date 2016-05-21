@@ -19,7 +19,12 @@ criteria returns [MatchGroup value]
 	;
 
 criteria_option [MatchGroup value]
-	: number = type_int ('.' 'FÉLÉV' { value.Semester = number; } | 'KREDIT' { value.Credit = number; } | 'KELL' { value.Requirement = number; } | 'HIÁNYOZHAT'  { value.Requirement = -1 * number; })
+	: number = type_int	(
+		'.' 'FÉLÉV' { value.Semester = number; } 
+		| 'KREDIT' { value.Credit = number; } 
+		| 'KELL' { value.Requirement = number; } 
+		| 'HIÁNYOZHAT'  { value.Requirement = -1 * number; }
+	)
 	| 'MIND' 'KELL' { value.Requirement = 0; }
 	| 'CSAK' 'CSOPORT' { value.PassWeight = true; }
 	| 'KÉPZÉS' origin = type_education_program { value.OriginalEducationProgram = origin; }
