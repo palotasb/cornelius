@@ -156,34 +156,34 @@
     </Antlr3>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Beállítások\bemenet-bejegyzesek.ifd">
+    <None Include="Config\bemenet-bejegyzesek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-hallgatok.ifd">
+    <None Include="Config\bemenet-hallgatok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-helyek.ifd">
+    <None Include="Config\bemenet-helyek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-kivetelek.ifd">
+    <None Include="Config\bemenet-kivetelek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-valasztasok.ifd">
+    <None Include="Config\bemenet-valasztasok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\csoportositas-informatikus-bsc.gd">
+    <None Include="Config\csoportositas-informatikus-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\csoportositas-villamosmernok-bsc.gd">
+    <None Include="Config\csoportositas-villamosmernok-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kepzesek.wd">
+    <None Include="Config\kepzesek.wd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-informatikus-bsc.cd">
+    <None Include="Config\kriterium-informatikus-bsc.cd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-villamosmernok-bsc.cd">
+    <None Include="Config\kriterium-villamosmernok-bsc.cd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
