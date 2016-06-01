@@ -17,7 +17,7 @@ namespace Cornelius.Criteria.Credit
         /// </summary>
         /// <param name="course">A keresett kurzus.</param>
         /// <returns>A csoport azonosítója.</returns>
-        public string Match(Course course)
+        protected string Match(Course course)
         {
             return this.First(group => group.Match(course)).Identifier;
         }
