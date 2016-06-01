@@ -52,7 +52,7 @@ namespace Cornelius.Criteria.Workflow
             foreach (var criteria in this.SummaCriteria)
             {
                 // A CamelCase csoportneveket szavakra bontjuk
-                string name = Regex.Matches(criteria.Identifier, @"[A-Z][^A-Z]+").OfType<Match>().Select(match => match.Value).Aggregate((acc, b) => acc + " " + b.ToLower()).TrimStart(' ');
+                string name = Regex.Matches(criteria.Identifier, @"[A-Z][^A-Z]+").OfType<Match>().Select(match => match.Value).Aggregate((acc, b) => acc + " " + b.ToLower()).TrimStart(' ').Replace('_', ' ');
                 Result subresult = new Result(name, true);
 
                 // Következő túlcsorduló elemek

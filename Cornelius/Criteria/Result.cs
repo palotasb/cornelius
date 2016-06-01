@@ -26,7 +26,7 @@ namespace Cornelius.Criteria
         public List<Result> Subresults = new List<Result>();
 
         /// <summary>
-        /// Nem teljesült kritérium esetén ennyi hiányzó kritériumnak számít.
+        /// Nem teljesült kritérium esetén ennyi hiányzó kritériumnak (kredit vagy tantárgy) számít.
         /// </summary>
         public int Weight;
 
@@ -102,12 +102,11 @@ namespace Cornelius.Criteria
         }
 
         /// <summary>
-        /// Alkritériumok hozzáadása, az átlagszámításhoz 
-        /// szükséges adatok összegyűjtésével együtt.
+        /// Alkritériumok hozzáadása, az átlagszámításhoz szükséges adatok összegyűjtésével együtt.
         /// </summary>
         /// <param name="result">A kritérium, amihez alkritérium adódik.</param>
         /// <param name="subresult">A hozzáadandó alkritérium.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="Result"/> eredmény a hozzáadott aleredménnyel.</returns>
         public static Result operator+(Result result, Result subresult)
         {
             result.Subresults.Add(subresult);

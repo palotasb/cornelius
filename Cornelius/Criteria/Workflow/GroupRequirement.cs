@@ -26,5 +26,11 @@
             this.Identifier = identifier;
             this.Amount = amount;
         }
+
+        public GroupRequirement()
+        {
+            Identifier = "";
+            Amount = 0;
+        }
     }
 }
