@@ -157,6 +157,7 @@
     </Antlr3>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Main.cd" />
     <None Include="Config\bemenet-bejegyzesek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -181,16 +182,18 @@
     <None Include="Config\kepzesek.wd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\kriterium-informatikus-bsc-2016.cd">
+    <None Include="Config\kriterium-informatikus-bsc-2016.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\kriterium-informatikus-bsc.cd">
+    <None Include="Config\kriterium-informatikus-bsc.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\kriterium-villamosmernok-bsc-2016.cd">
+    <None Include="Config\kriterium-villamosmernok-bsc-2016.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\kriterium-villamosmernok-bsc.cd" />
+    <None Include="Config\kriterium-villamosmernok-bsc.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

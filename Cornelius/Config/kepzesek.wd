@@ -9,14 +9,14 @@
 	/* Mérnök Informatikus BSc képzés */
 	KÉPZÉS BSC (KötelezőenVálasztható => 2, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
 		KÉPZÉSKÓD 5N-A8,
-		KRITÉRIUMOK "kriterium-informatikus-bsc.cd",
+		KRITÉRIUMOK "kriterium-informatikus-bsc.crd",
 		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc.gd"
 	},
 	
 	/* Villamosmérnöki BSc képzés */
 	KÉPZÉS BSC (KötelezőenVálasztható => 1, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
 		KÉPZÉSKÓD 5N-A7,
-		KRITÉRIUMOK "kriterium-villamosmernok-bsc.cd",
+		KRITÉRIUMOK "kriterium-villamosmernok-bsc.crd",
 		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
 	}
 
@@ -25,14 +25,27 @@
 	/* Mérnök Informatikus BSc képzés */
 	KÉPZÉS BSC2016 (KötelezőenVálasztható => 0, Kötelező => 90, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
 		KÉPZÉSKÓD 5N-A8,
-		KRITÉRIUMOK "kriterium-informatikus-bsc-2016.cd",
-		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc.gd"
+		KRITÉRIUMOK "kriterium-informatikus-bsc-2016.crd",
+		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc-2016.gd"
 	},
 	
 	/* Villamosmérnöki BSc képzés */
-	KÉPZÉS BSC2016 (KötelezőenVálasztható => 2, Kötelező => 90, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
+	KÉPZÉS BSC2016 (
+		KötelezőenVálasztható => 2,
+		Kötelező_1_2_Félév => 60,
+		Kötelező_3_x_Félév => 20,
+		Tanköri => 2,
+		Szigorlat => 1,
+		KötelezőenVálasztható => 10,
+		SzabadonVálasztható => 10
+	) {
 		KÉPZÉSKÓD 5N-A7,
-		KRITÉRIUMOK "kriterium-villamosmernok-bsc-2016.cd",
-		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
+		KRITÉRIUMOK "kriterium-villamosmernok-bsc-2016.crd",
+		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc-2016.gd"
 	}
+
+	/**	KÉPZÉS [Workflow Típus] ([Paraméterek])
+	 *		1. paraméter:               workflow.GroupCriteria propertyt határozza meg. 
+	 *		2-x. további paraméterek:   workflow.SummaCriteria paraméterhez adódnak.
+	**/
 };

@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cornelius.Criteria.Credit.Grouping">
+    <Position X="8.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Credit\Grouping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Credit.MatchAny" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Credit\MatchAny.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.237" />
+  </Class>
+  <Class Name="Cornelius.Criteria.Credit.MatchCourse" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAgAAAAAAAAAAAAAgAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Credit\MatchCourse.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Cornelius.Criteria.Credit.Subgroup">
+    <Position X="8.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Criteria\Credit\Subgroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Evaluator">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAgAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Evaluator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Result">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAgAAFYAAAAAQAAKAAQAAAAAAgABAAAAA=</HashCode>
+      <FileName>Criteria\Result.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Expression.MatchCourse" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEACAAAAAEAAAAAAAAgAgQAACAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Criteria\Expression\MatchCourse.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.339" />
+  </Class>
+  <Class Name="Cornelius.Criteria.Expression.MatchGroup" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAABIAAEAgQAACIgAACAAAAAAAIAAAA=</HashCode>
+      <FileName>Criteria\Expression\MatchGroup.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Cornelius.Criteria.Expression.StudentCourseProxy">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAQAAgAAAAAAAAACAAAAAAAAAIkAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Expression\StudentCourseProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Workflow.AbstractWorkflow">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <AssociationLine Name="GroupCriteria" Type="Cornelius.Criteria.Workflow.GroupRequirement" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="7.812" />
+        <Point X="4.5" Y="7.812" />
+        <Point X="4.5" Y="8.901" />
+        <Point X="5.375" Y="8.901" />
+        <Point X="5.375" Y="9.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AyggAgAAAAAgAAAgggAAQQgAAIAIASgAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Workflow\AbstractWorkflow.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="GroupCriteria" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Cornelius.Criteria.Workflow.Bachelor2016Workflow">
+    <Position X="1" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAQAIAAAQRCAAICAwgAAAACYCQAAAAA=</HashCode>
+      <FileName>Criteria\Workflow\Bachelor2016Workflow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Workflow.BachelorWorkflow">
+    <Position X="3" Y="10" Width="1.5" />
+    <InheritanceLine Type="Cornelius.Criteria.Workflow.AbstractWorkflow" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="8.824" />
+        <Point X="3.25" Y="9.625" />
+        <Point X="3.688" Y="9.625" />
+        <Point X="3.688" Y="10" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQQgAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Workflow\BachelorWorkflow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Criteria.Workflow.GroupRequirement">
+    <Position X="4.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Criteria\Workflow\GroupRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Data.Course">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAEAABAAAgAAQAAAgAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Data\Course.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Data.Specialization">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAACAAAAgAAAAQAAAAAQCAAAAACAAAgAAAAIAAAA=</HashCode>
+      <FileName>Data\Specialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cornelius.Data.Student">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACCgAAwABAAAIAQAAAAgAQAAAAAAABIAAEA=</HashCode>
+      <FileName>Data\Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Cornelius.Criteria.Credit.IGroupMatch">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Credit\IGroupMatch.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Cornelius.Criteria.Expression.IExpression">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAgAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Criteria\Expression\IExpression.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

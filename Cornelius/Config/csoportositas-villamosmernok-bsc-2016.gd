@@ -1,5 +1,5 @@
 ﻿CSOPORTOSÍTÁS {
-	CSOPORT Kötelező {
+	CSOPORT Kötelező_1_2_Félév {
 
 		// 1. félév
 
@@ -12,10 +12,6 @@
 		BMEVISZAA02, // A számítástudomány alapjai
 		BMEVISZAA02, // A számítástudomány alapjai
 		BMEVIMA2555, // Grundlagen der theoretischen Informatik
-
-		BMEGEMTAV01, // Anyagtudomány
-		BMEGEMT1532, // Anyagtudomány
-		BMEGEMT1107, // Werkstoffkunde für Elektroingenieure
 
 		BMEVIET1015, // Programtervezés I.
 		BMEVIMH1506, // Programmplanung I.
@@ -30,6 +26,17 @@
 		BMEVIIIA105, // Digitális technika 1
 		BMEVIIIAA01, // Digitális technika 1
 
+		BMETE111820, // Fizika C1
+		BMETE11AX01, // Fizika 1
+		BMETE11AX21, // Fizika 1
+
+		BMEGT52A400, // Mérnök leszek
+
+		// Bevezető tárgyak
+
+		BMETE11AX12, // Bevezető fizika
+		BMETE90AX40  // Bevezető matematika
+
 		// 2. félév
 
 		BMEVIFO1020, // Digitális technika II. (Digital Design)
@@ -43,10 +50,6 @@
 		BMETE90AX26, // Matematika A2
 		BMETE90AX02, // Matematika A2a - Vektorfüggvények
 
-		BMETE111820, // Fizika C1
-		BMETE11AX01, // Fizika 1
-		BMETE11AX21, // Fizika 1
-
 		BMEVIAUA116, // A programozás alapjai 2
 		BMEVIHIA107, // A programozás alapjai 2.
 		BMEVIAUAA00, // A programozás alapjai 2
@@ -57,7 +60,21 @@
 		BMEVIHVA109, // Jelek és rendszerek 1.
 		BMEVIHVAA00, // Jelek és rendszerek 1
 
+		BMETE111821, // Fizika C2
+		BMETE11AX02, // Fizika 2
+		BMETE11AX22, // Fizika 2
+	},
+
+	CSOPORT Kötelező_3_x_Félév {
+
 		// 3. félév
+
+		BMEGEMTAV01, // Anyagtudomány
+		BMEGEMT1532, // Anyagtudomány
+		BMEGEMT1107, // Werkstoffkunde für Elektroingenieure
+		BMEVIET3029, // Elektronikai technológia
+		BMEVIETA302, // Elektronikai technológia 
+		BMEVIETAB00, // Elektronikai technológia és anyagismeret
 
 		BMETE90AX09, // Matematika A3 villamosmérnököknek
 		BMETE922246, // Matematika B3*
@@ -67,10 +84,6 @@
 		BMETE902923, // Matematika B4
 		BMEVIMA2512, // Wahrscheinlichkeitsrechnung
 		BMETE90AX51, // Matematika A4
-
-		BMETE111821, // Fizika C2
-		BMETE11AX02, // Fizika 2
-		BMETE11AX22, // Fizika 2
 
 		BMEVIEV2015, // Hálózatok és rendszerek 2. (Networks and Systems 2.)
 		BMEVIEV2021, // Hálózatok és rendszerek II.
@@ -83,20 +96,17 @@
 		BMEVIVEA201, // Elektrotechnika
 		BMEVIVEAB00, // Elektrotechnika
 
+		BMEVIEE2019, // Elektronika I.
+		BMEVIHIA205, // Elektronika 1
+		BMEVIHIAB02, // Elektronika 1 
+
+		// 4. félév
+
 		BMEVIFO2023, // Informatika I.
 		BMEVIAU2023, // Informatika I.
 		BMEVIMM2508, // Informatik IC1
 		BMEVIIIA202, // Informatika 1
 		BMEVIIIAB04, // Informatika 1 
-
-		// 4. félév
-
-		BMEVIEE2019, // Elektronika I.
-		BMEVIHIA205, // Elektronika 1
-		BMEVIHIAB02, // Elektronika 1 
-
-		BMETE111822, // Fizika C3
-		BMETE11MX01, // Fizika 3
 
 		BMEVIAU2024, // Informatika II.
 		BMEVIMM2554, // Informatik IC2
@@ -104,38 +114,24 @@
 		BMEVIAUA203, // Informatika 2.
 		BMEVIAUAB01, // Informatika 2 
 
-		BMEVIVM3025, // Villamos energetika
-		BMEVIVEA207, // Villamos energetika
-		BMEVIVEAB01, // Villamos energetika 
+		BMETE111822, // Fizika C3
+		BMETE11MX01, // Fizika 3
 
 		BMEVIFO2553, // Messtechnik
 		BMEVIMM2022, // Méréstechnika
 		BMEVIMIA206, // Méréstechnika
 		BMEVIMIAB01, // Méréstechnika 
 
+		// 5. félév
+
 		BMEVIEV2018, // Elektromágneses terek
 		BMEVIHVA201, // Elektromágneses terek alapjai
 		BMEVIHVA204, // Elektromágneses terek alapjai
 		BMEVIHVAC03, // Elektromágneses terek alapjai 
 
-		// 5. félév
-
 		BMEVIHI3020, // Elektronika II.
 		BMEVIAUA300, // Elektronika 2
 		BMEVIAUAC05, // Elektronika 2
-
-		BMEVIEEA306, // Mikroelektronika
-		BMEVIEEAB00, // Mikroelektronika 
-
-		BMEVIET3029, // Elektronikai technológia
-		BMEVIETA302, // Elektronikai technológia 
-
-		BMEVIIIA303, // Szabályozástechnika
-		BMEVIIIAB05, // Szabályozástechnika 
-
-		BMEVITT3026, // Híradástechnika
-		BMEVITMA301, // Infokommunikáció
-		BMEVITMAB03, // Infokommunikáció 
 
 		BMEVIMIA304, // Laboratórium 1.
 		BMEVIMIAC05, // Laboratórium 1
@@ -156,17 +152,43 @@
 		BMEGT55A001, // Üzleti jog
 
 		// Régi szigorlati tárgyak
-
-		BMETE921568, // Matematika szigorlat villamosmérnököknek
 		BMEVIEV2007, // Hálózatok és rendszerek szigorlat
 		BMEVIEV2513, // Netzwerke und Systeme szigorlat
 		BMEVIFO2006, // Digitális technika szigorlat
 		BMEVIFO2511, // Digitaltechnik szigorlat
+	},
 
-		// Bevezető tárgyak
+	CSOPORT Szigorlat {
+		BMETE921568, // Matematika szigorlat villamosmérnököknek
+		BMETE90AX16 // Matematika szigorlat A2
+	},
 
-		BMETE11AX12, // Bevezető fizika
-		BMETE90AX40  // Bevezető matematika
+	CSOPORT Tanköri {
+		BMEVIDHKONV, // Tanköri foglalkozás 1.
+		BMEVIDHKONI, // Tanköri foglalkozás 1.
+		BMEVIDHTF02  // Tanköri foglalkozás 2.
+	},
+
+	CSOPORT Előkészítő_Beágy {
+		BMEVIIIA303, // Szabályozástechnika
+		BMEVIIIAB05  // Szabályozástechnika 
+	},
+
+	CSOPORT Előkészítő_Infokomm {
+		BMEVITT3026, // Híradástechnika
+		BMEVITMA301, // Infokommunikáció
+		BMEVITMAB03  // Infokommunikáció 
+	},
+
+	CSOPORT Előkészítő_EETT {
+		BMEVIEEA306, // Mikroelektronika
+		BMEVIEEAB00  // Mikroelektronika 
+	},
+
+	CSOPORT Előkészítő_Villenerg {
+		BMEVIVM3025, // Villamos energetika
+		BMEVIVEA207, // Villamos energetika
+		BMEVIVEAB01  // Villamos energetika
 	},
 
 	TÚLCSORDULÓ CSOPORT KötelezőenVálasztható {
