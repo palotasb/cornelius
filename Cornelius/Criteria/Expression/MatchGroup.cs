@@ -93,7 +93,7 @@ namespace Cornelius.Criteria.Expression
             Result result = new Result(this.Name);
             result.Semester = this.Semester > 0 ? this.Semester : null;
 
-            if (this.OriginalEducationProgram != null && proxy.OriginalEduProgramCode != this.OriginalEducationProgram)
+            if (this.OriginalEducationProgram != null && proxy.OriginalEducationProgram != this.OriginalEducationProgram)
             {
                 // Ilyenkor nincs meg a kritérium, mégis úgy számít, mintha meglenne
                 result.Weight = this.Weight;

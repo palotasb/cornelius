@@ -6,15 +6,15 @@ namespace Cornelius.Criteria.Expression
 {
     /// <summary>
     /// A hallgató tárgyainak használatát nyilvántartó osztály. Tárolja,
-    /// hogy melyik tárgyakat számítottuk bele az átlagba és hogy melyeket nem
-    /// lehet többször felhasználni.
+    /// hogy melyik tárgyakat használtuk fel a rangsorszámításhoz és hogy
+    /// melyeket zártuk le anélkül, hogy felhasználtuk volna.
     /// </summary>
     class StudentCourseProxy
     {
         /// <summary>
         /// A képzés, ahol a hallgató elkezdte a tanulmányait
         /// </summary>
-        public string OriginalEduProgramCode
+        public string OriginalEducationProgram
             { get; protected set; }
 
         /// <summary>
@@ -23,12 +23,12 @@ namespace Cornelius.Criteria.Expression
         protected IEnumerable<Course> _courses;
 
         /// <summary>
-        /// A többször fel nem használható tárgyak listája.
+        /// A többször fel nem használható lezárt tárgyak listája.
         /// </summary>
         protected List<string> _locked = new List<string>();
 
         /// <summary>
-        /// A már felhasznált tárgyak listája.
+        /// A már felhasznált és rangsorszámításhoz figyelembe vett tárgyak listája.
         /// </summary>
         protected List<string> _used = new List<string>();
 
@@ -84,10 +84,10 @@ namespace Cornelius.Criteria.Expression
         /// A hallgató tárgyainak használatát nyilvántartó osztály.
         /// </summary>
         /// <param name="courses">A hallgató kurzusai.</param>
-        /// <param name="origEduProgramCode">A hallgató eredeti képzéskódja.</param>
-        public StudentCourseProxy(IEnumerable<Course> courses, string origEduProgramCode)
+        /// <param name="originalEducationProgram">A hallgató eredeti képzéskódja.</param>
+        public StudentCourseProxy(IEnumerable<Course> courses, string originalEducationProgram)
         {
-            this.OriginalEduProgramCode = origEduProgramCode;
+            this.OriginalEducationProgram = originalEducationProgram;
             _courses = courses;
         }
     }
