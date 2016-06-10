@@ -19,6 +19,9 @@ namespace Cornelius
         public Recognizer<XSpecialization> Specializations
             { get; protected set; }
 
+        public Recognizer<XSpecializationGrouping> SpecializationGroupings
+            { get; protected set; }
+
         public Recognizer<XEntry> Entries
             { get; protected set; }
 
@@ -31,7 +34,8 @@ namespace Cornelius
         protected Import()
         {
             this.Identities = new Recognizer<XIdentity>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-hallgatok.ifd")));
-            this.Specializations = new Recognizer<XSpecialization>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-helyek.ifd")));
+            this.Specializations = new Recognizer<XSpecialization>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-specializaciok.ifd")));
+            this.SpecializationGroupings = new Recognizer<XSpecializationGrouping>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-specializacio-csoportok.ifd")));
             this.Entries = new Recognizer<XEntry>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-bejegyzesek.ifd")));
             this.Choices = new Recognizer<XChoice>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-valasztasok.ifd")));
             this.Exceptions = new Recognizer<XBase>(MapDefinitionLanguageParser.Parse(Path.Combine(Program.CONFIG_DIRECTORY, "bemenet-kivetelek.ifd")));

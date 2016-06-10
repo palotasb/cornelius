@@ -1,0 +1,8 @@
+﻿TÁBLÁZAT ("helyek") {
+	"Szak" => EducationProgram,
+	"Csoport" => Name,
+	"Elokeszito" => PrespecializationCourseGroup,
+	"MinRat" => MinRatio,
+	"MaxRat" => MaxRatio,
+	"MaxCnt" => MaxCount
+};

@@ -5,7 +5,7 @@ using System.Linq;
 #pragma warning disable 0649
 namespace Cornelius.IO.Primitives
 {
-    class XSpecialization
+    class XSpecializationGrouping
     {
         [Map]
         public string EducationProgram;
@@ -14,22 +14,22 @@ namespace Cornelius.IO.Primitives
         public string Name;
 
         [Map]
-        public string SpecializationGroup;
-
-        [Map]
-        public double MaxRatio;
+        public string PreSpecializationCourseGroup;
 
         [Map]
         public double MinRatio;
+        
+        [Map]
+        public double MaxRatio;
 
         [Map]
         public int Capacity;
 
         public override bool Equals(object obj)
         {
-            if (obj is XSpecialization)
+            if (obj is XSpecializationGrouping)
             {
-                return this.Equals((XSpecialization)obj);
+                return this.Equals((XSpecializationGrouping)obj);
             }
             else
             {
@@ -37,12 +37,12 @@ namespace Cornelius.IO.Primitives
             }
         }
 
-        public bool Equals(XSpecialization obj)
+        public bool Equals(XSpecializationGrouping obj)
         {
             return
                 this.EducationProgram == obj.EducationProgram &&
                 this.Name == obj.Name &&
-                this.SpecializationGroup == obj.SpecializationGroup &&
+                this.PreSpecializationCourseGroup == obj.PreSpecializationCourseGroup &&
                 this.MaxRatio == obj.MaxRatio &&
                 this.MinRatio == obj.MinRatio &&
                 this.Capacity == obj.Capacity;
@@ -53,7 +53,7 @@ namespace Cornelius.IO.Primitives
             return
                 this.EducationProgram.GetHashCode() ^
                 this.Name.GetHashCode() ^
-                this.SpecializationGroup.GetHashCode() ^
+                this.PreSpecializationCourseGroup.GetHashCode() ^
                 this.MaxRatio.GetHashCode() ^
                 this.MinRatio.GetHashCode() ^
                 this.Capacity.GetHashCode();

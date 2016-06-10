@@ -36,8 +36,7 @@ namespace Cornelius.Data
                 return this.EducationProgram + " / " + this.Neptun;
             }
         }
-
-        // TODO: átnevezni.
+        
         /// <summary>
         /// Az eredeti, mindenféle átsorolás előtti képzéskód.
         /// </summary>

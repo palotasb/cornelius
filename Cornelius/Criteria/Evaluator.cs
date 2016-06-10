@@ -39,13 +39,13 @@ namespace Cornelius.Criteria
         /// </summary>
         /// <param name="students">A hallgatók listája.</param>
         /// <param name="exceptions">A kritériumkivételek listája.</param>
-        public static void ProcessStudents(IEnumerable<Student> students, IEnumerable<Cornelius.IO.Primitives.XBase> exceptions)
+        public static void ProcessStudents(IEnumerable<Student> students, IEnumerable<Cornelius.IO.Primitives.XBase> exceptions, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             Log.Write("Kritériumrendszerek kiértékelése...");
             Log.EnterBlock();
             foreach (var student in students)
             {
-                Evaluator.Match(student, false).ProcessStudent(student, exceptions.Any(s => s.Key == student.OriginKey));
+                Evaluator.Match(student, false).ProcessStudent(student, exceptions.Any(s => s.Key == student.OriginKey), specializationGroupings);
             }
             Log.LeaveBlock();
         }

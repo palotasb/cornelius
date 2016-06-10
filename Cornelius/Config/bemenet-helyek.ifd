@@ -1,5 +1,0 @@
-﻿TÁBLÁZAT ("helyek") {
-	"Szak" => EducationProgram,
-	"Szakirány" => Name,
-	"Hely" => Ratio
-};

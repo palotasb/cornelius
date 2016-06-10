@@ -31,12 +31,14 @@
 	
 	/* Villamosmérnöki BSc képzés */
 	KÉPZÉS BSC2016 (
-		KötelezőenVálasztható => 2,
+		x => 0,
 		Kötelező_1_2_Félév => 60,
-		Kötelező_3_x_Félév => 20,
+		Kötelező_3_Félév => 20,
+		Kötelező_4_Félév => 0,
+		Kötelező_5_x_Félév => 0,
 		Tanköri => 2,
 		Szigorlat => 1,
-		KötelezőenVálasztható => 10,
+		KötelezőenVálasztható => 2,
 		SzabadonVálasztható => 10
 	) {
 		KÉPZÉSKÓD 5N-A7,

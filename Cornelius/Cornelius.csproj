@@ -75,6 +75,7 @@
     <Compile Include="Criteria\Workflow\GroupRequirement.cs" />
     <Compile Include="Data\Course.cs" />
     <Compile Include="Data\Specialization.cs" />
+    <Compile Include="Data\SpecializationGrouping.cs" />
     <Compile Include="Grammar\GroupingDefinitionLanguageParser.cs" />
     <Compile Include="Grammar\WorkflowDefinitionLanguageParser.cs" />
     <Compile Include="Grammar\MapDefinitionLanguageParser.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="IO\Drivers\IInputDriver.cs" />
     <Compile Include="IO\Drivers\IRecord.cs" />
     <Compile Include="IO\MapAttribute.cs" />
+    <Compile Include="IO\Primitives\XSpecializationGrouping.cs" />
     <Compile Include="IO\Primitives\XSpecialization.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="IO\Mapping\Assignment.cs" />
@@ -157,6 +159,15 @@
     </Antlr3>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\bemenet-specializacio-csoportok.ifd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\csoportositas-informatikus-bsc-2016.gd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Main.cd" />
     <None Include="Config\bemenet-bejegyzesek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -164,7 +175,7 @@
     <None Include="Config\bemenet-hallgatok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\bemenet-helyek.ifd">
+    <None Include="Config\bemenet-specializaciok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Config\bemenet-kivetelek.ifd">

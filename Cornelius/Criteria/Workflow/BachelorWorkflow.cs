@@ -119,7 +119,6 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Kreditkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        // TODO: ennek egy többet mondó nevet adni.
         /// <summary>
         /// Ez a kötelezően választható tárgyaknál bővíti ki a szűrést oly módon, hogy az átsorolt hallgatók
         /// az eredeti szakjuknak megfelelően tudjanak beszámítani közismeretiket.
@@ -143,7 +142,7 @@ namespace Cornelius.Criteria.Workflow
         /// A besorolási körök kiszámítása.
         /// </summary>
         /// <param name="student">A hallgató.</param>
-        protected override void ProcessFinalResult(Student student)
+        protected override void ProcessFinalResult(Student student, IEnumerable<SpecializationGrouping> _)
         {
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount + 1 - student.Result.Weight;
             if (this.CourseCriteria.Requirement < 0) student.MissingCriteria -= this.CourseCriteria.Requirement;

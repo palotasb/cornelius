@@ -110,7 +110,7 @@ namespace Cornelius.Criteria.Workflow
         /// </summary>
         /// <param name="student">A hallgató</param>
         /// <param name="exception">Jelzi, ha a hallgató kriérium alól fel van mentve (ekkor az eredmény [Result] igaz lesz).</param>
-        public virtual void ProcessStudent(Student student, bool exception)
+        public virtual void ProcessStudent(Student student, bool exception, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             Log.Write(student.OriginKey + ":");
             Log.EnterBlock(" => ");
@@ -127,7 +127,7 @@ namespace Cornelius.Criteria.Workflow
             {
                 this.ProcessSummaCriteria(student);
             }
-            this.ProcessFinalResult(student);
+            this.ProcessFinalResult(student, specializationGroupings);
             if (exception)
             {
                 Log.Write("Kritériumok alól felmentve.");
@@ -200,12 +200,12 @@ namespace Cornelius.Criteria.Workflow
                 .OrderByDescending(c => c.Grade);
         }
 
-
         /// <summary>
         /// A végső eredmény feldolgozása, a szakirányra sorolás lehetőségének megteremtése/elvétele.
         /// </summary>
-        /// <param name="student"></param>
-        protected abstract void ProcessFinalResult(Student student);
+        /// <param name="student">A hallgató, akin a művelet elvégzendő.</param>
+        /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
+        protected abstract void ProcessFinalResult(Student student, IEnumerable<SpecializationGrouping> specializationGroupings);
 
         /// <summary>
         /// Kritériumellenőrzés folyamatát megvalósító alaposztály.

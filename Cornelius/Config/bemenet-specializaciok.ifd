@@ -1,0 +1,7 @@
+﻿TÁBLÁZAT ("helyek") {
+	"MinRat" => MinRatio,
+	"MaxRat" => MaxRatio,
+	"MaxCnt" => MaxCount,
+	"Specializacio" => Name,
+	"Csoport" => SpecializationGroup
+};

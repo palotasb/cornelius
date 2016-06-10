@@ -65,7 +65,7 @@
 		BMETE11AX22, // Fizika 2
 	},
 
-	CSOPORT Kötelező_3_x_Félév {
+	CSOPORT Kötelező_3_Félév {
 
 		// 3. félév
 
@@ -98,8 +98,10 @@
 
 		BMEVIEE2019, // Elektronika I.
 		BMEVIHIA205, // Elektronika 1
-		BMEVIHIAB02, // Elektronika 1 
+		BMEVIHIAB02  // Elektronika 1
+	}
 
+	CSOPORT Kötelező_4_Félév {
 		// 4. félév
 
 		BMEVIFO2023, // Informatika I.
@@ -120,8 +122,10 @@
 		BMEVIFO2553, // Messtechnik
 		BMEVIMM2022, // Méréstechnika
 		BMEVIMIA206, // Méréstechnika
-		BMEVIMIAB01, // Méréstechnika 
+		BMEVIMIAB01  // Méréstechnika
+	},
 
+	CSOPORT Kötelező_5_x_Félév {
 		// 5. félév
 
 		BMEVIEV2018, // Elektromágneses terek
@@ -180,7 +184,7 @@
 		BMEVITMAB03  // Infokommunikáció 
 	},
 
-	CSOPORT Előkészítő_EETT {
+	CSOPORT Előkészítő_Mikroel {
 		BMEVIEEA306, // Mikroelektronika
 		BMEVIEEAB00  // Mikroelektronika 
 	},
