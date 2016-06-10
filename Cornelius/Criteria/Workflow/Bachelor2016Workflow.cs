@@ -140,9 +140,7 @@ namespace Cornelius.Criteria.Workflow
                         .Concat(preSpecCourses);
 
             // Kreditek összeszámolása (kötelezőek)
-            var credits = (from c in allCourses
-                           select c.Credit)
-                          .Sum();
+            var credits = allCourses.Sum(course => course.Credit);
 
             // Kötválok és szabválok számítása max 10 kredit értékig.
             credits += Math.Min(10, FilterCriteriaCourses(student, FreeChoiceCourseGroup).Sum(c => c.Credit));
@@ -293,9 +291,7 @@ namespace Cornelius.Criteria.Workflow
         private void AddMissingSpecializations(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             // Szűrés képzés alapján.
-            var allValidSpecGroups = from sg in specializationGroupings
-                                     where sg.EducationProgram == student.EducationProgram
-                                     select sg;
+            var allValidSpecGroups = specializationGroupings.Where(sg => sg.EducationProgram == student.EducationProgram);
             // Konkrét specializációk, amikre nem jelentkezett a hallgató (fix kapacitássorrendben)
             var missingSpecs = allValidSpecGroups.SelectMany(specGroup => specGroup)
                                                     .OrderBy(spec => spec.Capacity)
@@ -356,9 +352,7 @@ namespace Cornelius.Criteria.Workflow
 
             // A rangsorátlag számlálója
             // TODO átgondolni, hogy lehet-e olyan helyettesítés, hogy ne 120 kredittel osszunk
-            student.Result.Points = (from c in allCourses
-                                     select (c.Credit * c.Grade))
-                                    .Sum();
+            student.Result.Points = allCourses.Sum(course => course.Credit * course.Grade);
 
             // Fixen 120 kredittel osztunk és egy körben végzünk besorolást.
             student.Result.Credit = 120;

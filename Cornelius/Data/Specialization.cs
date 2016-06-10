@@ -11,11 +11,6 @@ namespace Cornelius.Data
     class Specialization
     {
         /// <summary>
-        /// A képzés kódja, ahol elindul a specializáció.
-        /// </summary>
-        public string EducationProgram;
-
-        /// <summary>
         /// A specializáció neve.
         /// </summary>
         public string Name;

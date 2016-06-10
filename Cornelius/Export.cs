@@ -259,11 +259,12 @@ namespace Cornelius
             Log.Write(Export.PATH_HISTOGRAM);
         }
 
-        public static void ExportReports(IEnumerable<Student> students, IEnumerable<Specialization> specializations)
+        public static void ExportReports(IEnumerable<Student> students, IEnumerable<Specialization> specializations, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             var driver = new ExcelDriver();
             TableWriter.Write<XStudent>(Export.PATH_REPORT, students.Select(student => new XStudent(student)), driver);
-            TableWriter.Write<XSumma>(Export.PATH_REPORT, specializations.Select(specialization => new XSumma(specialization)), driver);
+            TableWriter.Write<XSumma>(Export.PATH_REPORT, specializations.Select(specialization =>
+                new XSumma(specialization, specializationGroupings.First(sg => sg.Contains(specialization)))), driver);
             Log.Write(Export.PATH_REPORT);
         }
     }

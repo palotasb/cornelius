@@ -16,13 +16,12 @@ namespace Cornelius
             foreach (var primitive in import.Specializations)
             {
                 Specialization specialization = new Specialization();
-                specialization.EducationProgram = primitive.EducationProgram;
                 specialization.Name = primitive.Name;
                 specialization.SpecializationGroup = primitive.SpecializationGroup;
                 specialization.MaxRatio = primitive.MaxRatio;
                 specialization.MinRatio = primitive.MinRatio;
                 specialization.Capacity = primitive.Capacity;
-                Log.Write(specialization.EducationProgram + " - " + specialization.Name + " (" + specialization.SpecializationGroup + "): " + specialization.MinRatio + "-" + specialization.MaxRatio.ToString("#.00%"));
+                Log.Write(specialization.Name + " (" + specialization.SpecializationGroup + "): " + specialization.MinRatio + "-" + specialization.MaxRatio.ToString("#.00%"));
                 yield return specialization;
             }
             Log.LeaveBlock();

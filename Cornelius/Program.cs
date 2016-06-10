@@ -103,7 +103,7 @@ namespace Cornelius
                 Directory.CreateDirectory(Program.OUTPUT_DIRECTORY);
             }
             Export.ExportDatabases(allStudents);
-            Export.ExportReports(allStudents, specializations);
+            Export.ExportReports(allStudents, specializations, specGroupings);
             Export.ExportCreditStatistics(allStudents);
             Log.LeaveBlock();
         }
@@ -144,6 +144,7 @@ namespace Cornelius
             foreach (var student in students)
             {
                 // Preferenciasorrendben ellenőrizzük, hogy besorolható-e, és az első helyre besoroljuk.
+                // TODO kezelni az azonos átlagú hallgatókat.
                 bool studentPlaced = false;
                 foreach (var choice in student.Choices)
                 {

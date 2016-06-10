@@ -27,9 +27,9 @@ namespace Cornelius.IO.Reports
         [Column(Name = "Átlag", Number = 6)]
         public double Avarage;
 
-        public XSumma(Specialization specialization)
+        public XSumma(Specialization specialization, SpecializationGrouping specializationGroup)
         {
-            this.EducationProgram = specialization.EducationProgram;
+            this.EducationProgram = specializationGroup.EducationProgram;
             this.Name = specialization.Name;
             this.Capacity = specialization.Capacity;
             this.NumberOfStudents = specialization.Students.Count;
