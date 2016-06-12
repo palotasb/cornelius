@@ -35,7 +35,7 @@
 		// Bevezető tárgyak
 
 		BMETE11AX12, // Bevezető fizika
-		BMETE90AX40  // Bevezető matematika
+		BMETE90AX40, // Bevezető matematika
 
 		// 2. félév
 
@@ -62,7 +62,7 @@
 
 		BMETE111821, // Fizika C2
 		BMETE11AX02, // Fizika 2
-		BMETE11AX22, // Fizika 2
+		BMETE11AX22  // Fizika 2
 	},
 
 	CSOPORT Kötelező_3_Félév {
@@ -99,7 +99,7 @@
 		BMEVIEE2019, // Elektronika I.
 		BMEVIHIA205, // Elektronika 1
 		BMEVIHIAB02  // Elektronika 1
-	}
+	},
 
 	CSOPORT Kötelező_4_Félév {
 		// 4. félév
@@ -126,6 +126,7 @@
 	},
 
 	CSOPORT Kötelező_5_x_Félév {
+
 		// 5. félév
 
 		BMEVIEV2018, // Elektromágneses terek
@@ -159,18 +160,20 @@
 		BMEVIEV2007, // Hálózatok és rendszerek szigorlat
 		BMEVIEV2513, // Netzwerke und Systeme szigorlat
 		BMEVIFO2006, // Digitális technika szigorlat
-		BMEVIFO2511, // Digitaltechnik szigorlat
+		BMEVIFO2511  // Digitaltechnik szigorlat
 	},
 
 	CSOPORT Szigorlat {
 		BMETE921568, // Matematika szigorlat villamosmérnököknek
-		BMETE90AX16 // Matematika szigorlat A2
+		BMETE90AX16  // Matematika szigorlat A2
 	},
 
 	CSOPORT Tanköri {
 		BMEVIDHKONV, // Tanköri foglalkozás 1.
 		BMEVIDHKONI, // Tanköri foglalkozás 1.
-		BMEVIDHTF02  // Tanköri foglalkozás 2.
+		BMEVIDHTF02, // Tanköri foglalkozás 2.
+		BMEVIDHTF03, // Tanköri foglalkozás 3.
+		BMEVIDHTF04  // Tanköri foglalkozás 4.
 	},
 
 	CSOPORT Előkészítő_Beágy {
