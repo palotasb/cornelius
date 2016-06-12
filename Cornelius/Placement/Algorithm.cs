@@ -302,14 +302,14 @@ namespace Cornelius.Placement
         /// <summary>
         /// Alaposztály egy specializációcsoport vagy ágazat létszámainak nyilvántartásához.
         /// </summary>
-        private class HeadCount
+        private class Headcount
         {
             public int MinimumCount;
             public int MaximumCount;
             public int CurrentCount;
             public bool Closed;
 
-            public HeadCount()
+            public Headcount()
             {
                 CurrentCount = 0;
                 Closed = false;
@@ -328,7 +328,7 @@ namespace Cornelius.Placement
         /// <summary>
         /// Egy specializáció (ágazat) létszámait tartja nyilván, figyelembe véve azt, hogy azonos átlagú hallgatók nem szoríthatják ki egymást.
         /// </summary>
-        private class SpecializationHeadcount : HeadCount
+        private class SpecializationHeadcount : Headcount
         {
             public int AboveMinimumCount;
             public double MinimumRankAverage;
@@ -355,7 +355,7 @@ namespace Cornelius.Placement
         /// <summary>
         /// Egy specializációcsoport létszámait tartja nyilván.
         /// </summary>
-        private class SpecializationGroupingHeadcount : HeadCount
+        private class SpecializationGroupingHeadcount : Headcount
         {
             public SpecializationGroupingHeadcount(SpecializationGrouping specGroup, int totalCount)
             {
