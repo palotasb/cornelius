@@ -72,8 +72,9 @@ namespace Cornelius.Placement
             // Besorolási kísérletek. Ha közben találunk kritériumhiányosnak találunk egy hallgatót, akkor a újra kell indítani a besorolást.
             var specLimits = new Dictionary<Specialization, int>();
             bool restart = true;
-            while (restart)
+            while (restart && tries < Students.Count())
             {
+                tries++;
                 Log.Write("Info: " + tries.ToString() + ". besorolási próbálkozás a képzésen.");
                 Log.EnterBlock();
                 if (TryPlaceStudents(studentList, specLimits, out placements, out unplaceableStudent, out restart))
@@ -84,13 +85,14 @@ namespace Cornelius.Placement
                 Log.Write("Info: Sikertelen besorolás, egy kritériumhiányos hallgató (" + unplaceableStudent.OriginKey + ") kiszűrve.");
                 if (unplaceableStudent != null)
                 {
-                    Log.Write("Info: Kritériumhiányos hallgató (" + unplaceableStudent.OriginKey + ") kiszűrve.");
+                    Log.Write("Info: Kritériumhiányos hallgató (" + unplaceableStudent.OriginKey + ") kizárva.");
                     studentList.Remove(unplaceableStudent);
                     unplaceableStudent.Result.Value = false;
                     unplaceableStudent.Result += new Result("Rangsorolás során kritériumhiányos az összes lehetséges specializáción.", false);
                 }
                 Log.LeaveBlock();
             }
+            Log.Write("Figyelmeztetés: a megadott bemenetek mellett nem lehetett a besorolást végrehajtani.");
             return false;
         }
 
@@ -170,7 +172,7 @@ namespace Cornelius.Placement
                         unplaceableStudent = student;
                         restart = true;
                     }
-                    break;  // student in placeableStudent :: A besorolás itt mindenképp véget ért, de kritériumhiányos hallgató esetén újraindítjuk.
+                    break;  // student in placeableStudents :: A besorolás itt mindenképp véget ért, de kritériumhiányos hallgató esetén újraindítjuk.
                 }
             }
 
@@ -248,13 +250,13 @@ namespace Cornelius.Placement
             // Figyelembe véve azt az esetet is, ha már minimumlétszám felett van egy specializáció és azt is, ha épp minimumlétszám alattira sorolnánk be a hallgatót.
             specializationGroupMinimum =
                 unplacedCount
-                < SpecializationGroupings.Sum(sg => Math.Max(0, specGroupHeadcounts[sg].CurrentCount - specGroupHeadcounts[sg].MinimumCount - (sg == currSpecGroup ? 1 : 0)));
+                < SpecializationGroupings.Sum(sg => Math.Max(0, specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount - (sg == currSpecGroup ? 1 : 0)));
             // Ágazatoknál a minimum akkor nem teljesíthető, ha [ágazatokra még besorolható hallgatók száma < ágazatok minimumra töltéséhez szükséges létszám]
             //  - [Ágazatokra még besorolható hallgatók száma == be nem sorolt hallgatók száma - többi specializációcsoport minimumra töltéséhez szükséges létszám]
             //  - Ágazat minimumra töltéséhez szükséges létszámnál figyelembe véve, hogy melyikre sorolnánk éppen a hallgatót
             specializationMinimum =
                 unplacedCount - SpecializationGroupings.Where(sg => sg != currSpecGroup).Sum(sg => Math.Max(0, specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount))
-                < currSpecGroup.Sum(spec => Math.Max(0, specHeadcounts[spec].CurrentCount - specHeadcounts[spec].MinimumCount - (spec == specialization ? 1 : 0)));
+                < currSpecGroup.Sum(spec => Math.Max(0, specHeadcounts[spec].MinimumCount - specHeadcounts[spec].CurrentCount - (spec == specialization ? 1 : 0)));
 
             bool result = specializationMinimum && specializationGroupMinimum && specializationMaximum && specializationGroupMaximum && specializationMaximumAndSameRank;
             Log.Write(string.Format("Info: A(z) {0} specializációra (ágazatra) besorolási kísérlet lehetséges: {1}", specialization.Name, result ? "igen" : "nem"));
