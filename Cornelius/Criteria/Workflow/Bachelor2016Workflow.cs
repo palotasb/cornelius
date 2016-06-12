@@ -230,10 +230,7 @@ namespace Cornelius.Criteria.Workflow
         /// <param name="student">A hallgató, akin az ellenőrzés elvégzendő.</param>
         private void ProcessSemester3Requirements(Student student, bool has26Exemption, ref bool uses26Exemption)
         {
-            var semester3Courses = FilterCriteriaCourses(student, Semester3CourseGroup);
-            var credits = (from c in semester3Courses
-                           select c.Credit)
-                           .Sum();
+            var credits = FilterCriteriaCourses(student, Semester3CourseGroup).Sum(course => course.Credit);
             // Követelmény ellenőrzése: legalább 20 kredit
             var result = new Result("Harmadik félévre vonatközó kritérium", 20 <= (int)credits);
 
@@ -322,7 +319,7 @@ namespace Cornelius.Criteria.Workflow
             }
 
             // Jelentkezési sor felülírása.
-            student.Choices = student.Choices.Where(c => validChoices.Contains(c)).ToArray();
+            student.Choices = student.Choices.Where(choice => validChoices.Contains(choice)).ToArray();
             Log.Write(string.Format("Info: {0} specializációra sorolható be a hallgató az előkészítő tárgyakat figyelembe véve.", validChoices.Count()));
         }
 
@@ -350,11 +347,9 @@ namespace Cornelius.Criteria.Workflow
                 .Concat(compHumCourses)
                 .Concat(preSpecCourses);
 
-            // A rangsorátlag számlálója
+            // A rangsorátlag számításához
             // TODO átgondolni, hogy lehet-e olyan helyettesítés, hogy ne 120 kredittel osszunk
             student.Result.Points = allCourses.Sum(course => course.Credit * course.Grade);
-
-            // Fixen 120 kredittel osztunk és egy körben végzünk besorolást.
             student.Result.Credit = 120;
             student.Round = 1;
         }
