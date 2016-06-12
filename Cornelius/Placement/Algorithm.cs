@@ -242,13 +242,12 @@ namespace Cornelius.Placement
             out bool specializationMaximumAndSameRank)
         {
             var currSpecGroup = SpecializationGroupings.First(sg => sg.Contains(specialization));
-            var unplacedCount = totalHeadcount - specGroupHeadcounts.Sum(kvSpecGroup => kvSpecGroup.Value.CurrentCount);
-
             // Maximumkritérium akkor nem teljesíthető, ha [max létszám <= aktuális], ezen felül az átlagot is ellenőrizzük.
             var specializationGroupMaximum = specGroupHeadcounts[currSpecGroup].MaximumCount <= specGroupHeadcounts[currSpecGroup].CurrentCount;
             var specializationMaximum = specHeadcounts[specialization].MaximumCount <= specHeadcounts[specialization].CurrentCount;
             specializationMaximumAndSameRank = specializationMaximum && specHeadcounts[specialization].MinimumRankAverage <= rankAverage;
 
+            var unplacedCount = totalHeadcount - specGroupHeadcounts.Sum(kvSpecGroup => kvSpecGroup.Value.CurrentCount);
             // Specializációcsoportoknál a minimum akkor nem teljesíthető, ha [be nem sorolt hallgatók száma < a minimumra töltéshez szükséges létszám]
             // Figyelembe véve azt az esetet is, ha már minimumlétszám felett van egy specializáció és azt is, ha épp minimumlétszám alattira sorolnánk be a hallgatót.
             specializationGroupMinimum =
