@@ -133,6 +133,7 @@
     <Compile Include="IO\Tables\XEmail.cs" />
     <Compile Include="IO\Tables\XResult.cs" />
     <Compile Include="IO\Tables\XUser.cs" />
+    <Compile Include="Placement\Algorithm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Student.cs" />
@@ -168,7 +169,6 @@
     <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Main.cd" />
     <None Include="Config\bemenet-bejegyzesek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -31,14 +31,14 @@ namespace Cornelius
         {
             Log.Write("Specializációcsoportok feldolgozása...");
             Log.EnterBlock();
-            var specGroups = specializations
+            var rawSpecGroups = specializations
                 .GroupBy(spec => spec.SpecializationGroup)
                 .Select(specGroup => new SpecializationGrouping(specGroup));
             foreach (var primitive in import.SpecializationGroupings)
             {
                 SpecializationGrouping specGroup;
-                if (specGroups.Any(sg => sg.Key == primitive.Name))
-                    specGroup = specGroups.First(sg => sg.Key == primitive.Name);
+                if (rawSpecGroups.Any(sg => sg.Key == primitive.Name))
+                    specGroup = rawSpecGroups.First(sg => sg.Key == primitive.Name);
                 else
                     continue;
                 specGroup.Capacity = primitive.Capacity;
