@@ -64,10 +64,11 @@ namespace Cornelius.Criteria.Workflow
 
         /// <summary>
         /// A hallgatók kritériumellenőrzését végző függvény. Ezt hívja meg az
-        /// <see cref="Evaluator.ProcessStudents(IEnumerable{Student}, IEnumerable{IO.Primitives.XBase})"/> függvény.
+        /// <see cref="Evaluator.ProcessStudents"/> függvény.
         /// </summary>
         /// <param name="student">A hallgató, akinek a kritériummegfelelőségét ellenőrizni kell.</param>
         /// <param name="exception">Igaz, ha a hallgató fel van mentve a kritériumok alól.</param>
+        /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         public override void ProcessStudent(Student student, bool exception, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             // TODO átgondolni, hogy a workflow definition fájlban kell-e SummaCriteria az összes tárgycsoporthoz vagy úgy se használjuk...
@@ -97,6 +98,7 @@ namespace Cornelius.Criteria.Workflow
         /// 2. § (6) szerinti mentesség figyelembe vételével teljesülnek-e.
         /// </summary>
         /// <param name="student">A hallgató, akinek a kritériumait ellenőrizzük.</param>
+        /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         protected override void ProcessFinalResult(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             // 2. § (6) feldolgozása
@@ -228,6 +230,8 @@ namespace Cornelius.Criteria.Workflow
         /// A harmadik félévre vonatkozó követelmény feldolgozása. Ez 20 kredit, de 5 alól tankörivel felmentés kapható.
         /// </summary>
         /// <param name="student">A hallgató, akin az ellenőrzés elvégzendő.</param>
+        /// <param name="has26Exemption">Igaz, ha a hallgató a 2. § (6) (tanköri) alapján mentesülhet 5 kredit teljesítése alól.</param>
+        /// <param name="uses26Exemption">Igaz, ha felhasználjuk a 2. § (6) alapján járó mentességet.</param>
         private void ProcessSemester3Requirements(Student student, bool has26Exemption, ref bool uses26Exemption)
         {
             var credits = FilterCriteriaCourses(student, Semester3CourseGroup).Sum(course => course.Credit);
@@ -285,6 +289,7 @@ namespace Cornelius.Criteria.Workflow
         /// Hozzáadja a hallgató jelentkezési listájához a specializációkat, amelyekre nem jelentkezett.
         /// </summary>
         /// <param name="student">A hallgató, akin a művelet végrehajtható.</param>
+        /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         private void AddMissingSpecializations(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             // Szűrés képzés alapján.
@@ -304,6 +309,7 @@ namespace Cornelius.Criteria.Workflow
         /// amelyekre előkészítő tárgy hiánya miatt nem besorolható.
         /// </summary>
         /// <param name="student">A hallgató, akin a művelet végrehajtható</param>
+        /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         private void RemoveUnattainableSpecializations(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             List<string> validChoices = new List<string>(30);
@@ -327,6 +333,7 @@ namespace Cornelius.Criteria.Workflow
         /// A hallgató rangsorátlagának kiszámítása a szabályzat 3. §-a alapján.
         /// </summary>
         /// <param name="student">A hallgató, akinek a rangsorátlagát számítjuk.</param>
+        /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         private void CalculateRank(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             var semester12Courses = FilterCriteriaCourses(student, Semester12CourseGroup);

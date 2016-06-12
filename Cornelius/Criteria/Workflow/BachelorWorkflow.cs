@@ -142,6 +142,7 @@ namespace Cornelius.Criteria.Workflow
         /// A besorolási körök kiszámítása.
         /// </summary>
         /// <param name="student">A hallgató.</param>
+        /// <param name="_">Nem használt paraméter.</param>
         protected override void ProcessFinalResult(Student student, IEnumerable<SpecializationGrouping> _)
         {
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount + 1 - student.Result.Weight;
