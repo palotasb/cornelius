@@ -166,9 +166,6 @@
     <None Include="Config\csoportositas-informatikus-bsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Config\bemenet-bejegyzesek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -187,7 +184,14 @@
     <None Include="Config\csoportositas-informatikus-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Config\csoportositas-informatikus-regibsc-2016.gd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd" />
     <None Include="Config\csoportositas-villamosmernok-bsc.gd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\csoportositas-villamosmernok-regibsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Config\kepzesek.wd">
@@ -199,10 +203,16 @@
     <None Include="Config\kriterium-informatikus-bsc.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Config\kriterium-informatikus-regibsc-2016.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config\kriterium-villamosmernok-bsc-2016.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Config\kriterium-villamosmernok-bsc.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\kriterium-villamosmernok-regibsc-2016.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
