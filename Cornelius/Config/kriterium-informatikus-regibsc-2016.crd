@@ -1,0 +1,88 @@
+﻿KRITÉRIUM "Mérnök informatikus BSc 1-2. félév" (MIND KELL) {
+    /* Lásd a tantervet itt: http://www.vik.bme.hu/page/52/
+     * Specializációválasztási szabályzat: http://www.vik.bme.hu/document/459/original/Specv%C3%A1l_szab%C3%A1lyzat_BSc.pdf
+     * Dékáni utasítás a végrehajtásáról: http://www.vik.bme.hu/document/460/original/D%C3%A9k%C3%A1ni%20utas%C3%ADt%C3%A1s%20-%20BSc%20specv%C3%A1l.pdf
+     */
+
+	// Itt csak az első két szemeszter tárgyait kell megkövetelni.
+	// A BachelorWorkflow2016-ban kell figyelni rá, hogy vagy ez vagy a szabályzat 2. § (5) c) kiváltható.
+	// A szigorlat nem kiváltható, azt is külön kell ellenőrizni.
+
+	KRITÉRIUM "Analízis 1" (1. FÉLÉV, 7 KREDIT) {
+		BMETE90AX04 "Analízis 1 informatikusoknak",
+		BMETE921244 "Analízis I.",
+		BMETE901913 "Matematika B1",
+		BMETE90AX21 "Analízis 1 informatikusoknak"
+	},
+	KRITÉRIUM "Bevezetés a számításelméletbe 1" (1. FÉLÉV, 5 KREDIT) {
+		BMEVIMA1602 "Einführung in die theoretische Informatik I.",
+		BMEVIMA1235 "Bevezetés a Számításelméletbe I.",
+		BMEVISZA103 "Bevezetés a számításelméletbe 1.",
+		BMEVISZAA00 "Bevezetés a számításelméletbe 1"
+	},
+	KRITÉRIUM "Digitális technika 1" (1. FÉLÉV, 5 KREDIT) {
+		BMEVIMIA102 "Digitális technika I.",
+		BMEVIMM1219 "Digitális technika I.",
+		BMEVIFO1503 "Digitaltechnik"
+	},
+	KRITÉRIUM "A programozás alapjai 1" (1. FÉLÉV, 5 KREDIT) {
+		BMEVIEE1239 "A programozás alapjai I.",
+		BMEVIMH1506 "Programmplanung I.",
+		BMEVIEE1226 "A programozás alapjai I.",
+		BMEVIEEA100 "A programozás alapjai I.",
+		BMEVIEEAA00 "A programozás alapjai 1"
+	},
+	KRITÉRIUM "Szoftver laboratórium 1" (1. FÉLÉV, 2 KREDIT) {
+		BMEVIEE1233 "Számítógép-laboratórium I.",
+		BMEVIEE1238 "Számítógépek programozása laboratórium l.",
+		BMEVIEEA101 "Szoftver Labor I.",
+		BMEVIEEAA00 "A programozás alapjai 1"
+	},
+	KRITÉRIUM "Mikro- és makroökonómia" (1. FÉLÉV, 4 KREDIT) {
+		BMEGT30A001 "Mikro- és makroökonómia",
+		BMEGT301920 "Közgazdaságtan I." && BMEGT301921 "Közgazdaságtan II."
+	},
+	KRITÉRIUM "Digitális technika 2" (2. FÉLÉV, 5 KREDIT) {
+		BMEVIMM1220 "Digitális technika II.",
+		BMEVIMIA111 "Digitális technika II.",
+		BMEVIIIA108 "Digitális technika II.",
+		BMEVIFO2238 "Digitaltechnik",
+		BMEVIMIAA01 "Digitális technika"
+	},
+	KRITÉRIUM "Fizika 1" (2. FÉLÉV, 4 KREDIT) {
+		BMETE111820 "Fizika C1",
+		BMETE111211 "Fizika C1i",
+		BMETE11AX03 "Fizika 1i",
+		BMETE11AX23 "Fizika 1i"
+	},
+	KRITÉRIUM "Analízis 2" (2. FÉLÉV, 6 KREDIT) {
+		BMETE901918 "Matematika B2",
+		BMETE921567 "Analízis 2 informatikusoknak",
+		BMETE90AX05 "Analízis 2 informatikusoknak",
+		BMETE90AX22 "Analízis 2 informatikusoknak"
+	},
+	KRITÉRIUM "Bevezetés a számításelméletbe 2" (2. FÉLÉV, 4 KREDIT) {
+		BMEVIMA1236 "Bevezetés a számításelméletbe II.",
+		BMEVIMA2603 "Einführung in die theoretische Information II.",
+		BMEVISZA110 "Bevezetés a számításelméletbe 2.",
+		BMEVISZAA01 "Bevezetés a számításelméletbe 2"
+	},
+	KRITÉRIUM "A programozás alapjai 2" (2. FÉLÉV, 5 KREDIT) {
+		BMEVIEE1240 "Programozás alapjai II.",
+		BMEVIIIA114 "A programozás alapjai 2",
+		BMEVIEE1227 "A programozás alapjai II.",
+		BMEVIMH1507 "Programmplanung II.",
+		BMEVIEEA112 "A programozás alapjai II.",
+		BMEVIIIAA00 "A programozás alapjai 2"
+	},
+	KRITÉRIUM "Szoftver laboratórium 2" (2. FÉLÉV, 2 KREDIT) {
+		BMEVIEEA113 "Szoftver Labor II",
+		BMEVIEE1234 "Számítógép-laboratórium II.",
+		BMEVIEE1237 "Számítógép-laboratórium II.",
+		BMEVIIIA115 "Szoftver laboratórium 2",
+		BMEVIIIAA00 "A programozás alapjai 2"
+	},
+	KRITÉRIUM "Menedzsment és vállalkozásgazdaságtan" (2. FÉLÉV, 4 KREDIT) {
+		BMEGT20A001 "Menedzsment és vállalkozásgazdaságtan"
+	}
+};

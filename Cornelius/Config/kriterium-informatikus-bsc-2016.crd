@@ -55,7 +55,7 @@
 		BMETE11AX23 "Fizika 1i"
 	},
 	KRITÉRIUM "Mérnök leszek" (1. FÉLÉV, 2 KREDIT) {
-		BMEGT52A400 "MÉRNÖK LESZEK"
+		BMEGT52A400 "Mérnök leszek"
 	},
 	KRITÉRIUM "Analízis 2" (2. FÉLÉV, 6 KREDIT) {
 		BMETE901918 "Matematika B2",
@@ -85,7 +85,7 @@
 		},
 		BMEVIIIAA00 "A programozás alapjai 2"
 	},
-	KRITÉRIUM "Fizika 2" (3. FÉLÉV, 4 KREDIT) {
+	KRITÉRIUM "Fizika 2" (2. FÉLÉV, 4 KREDIT) {
 		BMETE111212 "Fizika C2i",
 		BMETE11AX04 "Fizika 2i",
 		BMETE111821 "Fizika C2",
