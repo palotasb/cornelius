@@ -99,9 +99,10 @@ namespace Cornelius.Criteria.Workflow
         /// </summary>
         /// <param name="student">A hallgató</param>
         /// <param name="original">Igaz, ha az eredeti képzéskódját akarjuk a hallgatónak nézni, hamis, ha a jelenlegit.</param>
-        /// <returns></returns>
+        /// <returns>Igaz, ha a hallgatóra az adott kritériumrendszer vonatkozik.</returns>
         public bool Match(Student student, bool original = false)
         {
+            // TODO frissíteni a régi és az új képzés kezeléséhez (vagy nem? ha külön futtatjuk, OK?)
             return (original ? student.OriginalEducationProgram : student.EducationProgram) == this.EducationProgram && Semester.InInterval(student.EffectiveSemester, this.From, this.To);
         }
 
