@@ -78,14 +78,20 @@ namespace Cornelius
                 }
                 else if (import.Choices.Recognize(path))
                 {
-                    Log.Write("A fájlban szakirányválasztások vannak.");
+                    Log.Write("A fájlban specializációválasztások vannak.");
                     import.Choices.Parse(path);
                 }
                 else if (import.Specializations.Recognize(path))
                 {
-                    Log.Write("A fájlban a szakiránylétszámok vannak.");
+                    Log.Write("A fájlban a specializáció-ágazatok adatai vannak.");
                     import.Specializations.Clear();
                     import.Specializations.Parse(path);
+                }
+                else if (import.SpecializationGroupings.Recognize(path))
+                {
+                    Log.Write("A fájlban specializációcsoportok adatai vannak.");
+                    import.SpecializationGroupings.Clear();
+                    import.SpecializationGroupings.Parse(path);
                 }
                 else if (import.Exceptions.Recognize(path))
                 {

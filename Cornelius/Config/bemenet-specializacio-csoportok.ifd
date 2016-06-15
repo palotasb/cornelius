@@ -1,4 +1,4 @@
-﻿TÁBLÁZAT ("helyek") {
+﻿TÁBLÁZAT ("specializacio-csoportok") {
 	"Szak" => EducationProgram,
 	"Csoport" => Name,
 	"Elokeszito" => PrespecializationCourseGroup,

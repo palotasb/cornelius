@@ -1,4 +1,4 @@
-﻿TÁBLÁZAT ("helyek") {
+﻿TÁBLÁZAT ("specializaciok") {
 	"MinRat" => MinRatio,
 	"MaxRat" => MaxRatio,
 	"MaxCnt" => MaxCount,
