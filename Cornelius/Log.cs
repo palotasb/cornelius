@@ -12,8 +12,10 @@ namespace Cornelius
         {
             Log.AddConsole();
             Log.AddTarget(new StreamWriter("cornelius.log"));
-            Log.Write("Cornelius Szakiránybesoroló Rendszer");
+            Log.Write("Cornelius Specializációbesoroló Rendszer");
             Log.Write("Copyright 2011-2013 Jánvári Bálint");
+            Log.Write("Copyright 2016 BME VIK Hallgatói Képviselet");
+            Log.Write("Maintained by Boldizsár Palotás <boldizsar.palotas@gmail.com>");
             Log.Write();
         }
 
