@@ -1,0 +1,5 @@
+Szak	Csoport	Elokeszito	MinRat	MaxRat	Cap	Mintatanterv neve
+5N-A8	Rendszertervezés (régi)		0.10	0.50	999	2013
+5N-A8	Infokommunikáció (régi)		0.10	0.50	999	2013
+5N-A8	Szoftverfejlesztés (régi)		0.10	0.50	999	2013
+5N-A8	Vállalati információs rendszerek (régi)		0.05	0.15	999	2013

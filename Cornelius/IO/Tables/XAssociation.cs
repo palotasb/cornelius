@@ -12,21 +12,21 @@ namespace Cornelius.IO.Tables
         {
             get
             {
-                return this.Group + " / " + this.Neptun;
+                return this.EducationProgram + " / " + this.Neptun;
             }
         }
 
-        [Column(Name = "group", Number = 2)]
-        public string Group;
+        [Column(Name = "educationprogram", Number = 2)]
+        public string EducationProgram;
 
         [Column(Name = "neptun", Number = 3)]
         public string Neptun;
 
-        public XAssociation(string neptun, string group, int? id)
+        public XAssociation(string neptun, string educationProgram, int? id)
             : base(id)
         {
             this.Neptun = neptun;
-            this.Group = group;
+            this.EducationProgram = educationProgram;
         }
 
         public XAssociation()

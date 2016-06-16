@@ -19,10 +19,15 @@ criteria returns [MatchGroup value]
 	;
 
 criteria_option [MatchGroup value]
-	: number = type_int ('.' 'FÉLÉV' { value.Semester = number; } | 'KREDIT' { value.Credit = number; } | 'KELL' { value.Requirement = number; } | 'HIÁNYOZHAT'  { value.Requirement = -1 * number; })
+	: number = type_int	(
+		'.' 'FÉLÉV' { value.Semester = number; } 
+		| 'KREDIT' { value.Credit = number; } 
+		| 'KELL' { value.Requirement = number; } 
+		| 'HIÁNYOZHAT'  { value.Requirement = -1 * number; }
+	)
 	| 'MIND' 'KELL' { value.Requirement = 0; }
 	| 'CSAK' 'CSOPORT' { value.PassWeight = true; }
-	| 'KÉPZÉS' origin = type_group { value.Origin = origin; }
+	| 'KÉPZÉS' origin = type_education_program { value.OriginalEducationProgram = origin; }
 	;
 
 criteria_and returns [IExpression expression]
@@ -48,12 +53,12 @@ type_string returns [string value]
 	: TOKEN_STRING { value = System.Text.RegularExpressions.Regex.Unescape($TOKEN_STRING.Text.Substring(1, $TOKEN_STRING.Text.Length - 2)); }
 	;
 
-type_group returns [string value]
-	: TOKEN_GROUP { value = $TOKEN_GROUP.Text; }
+type_education_program returns [string value]
+	: TOKEN_EDUCATION_PROGRAM { value = $TOKEN_EDUCATION_PROGRAM.Text; }
 	;
 
-TOKEN_GROUP
-	: ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9') '-' ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9')
+TOKEN_EDUCATION_PROGRAM
+	: ('A'..'Z'|'0'..'9')+ '-' ('A'..'Z'|'0'..'9')+
 	;
 
 TOKEN_STRING

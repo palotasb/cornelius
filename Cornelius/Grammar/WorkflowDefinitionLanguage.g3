@@ -14,7 +14,7 @@ definition returns [List<AbstractWorkflow> list]
     ;
 
 workflow returns [AbstractWorkflow workflow]
-	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } | 'ÖTÉVES' { workflow = new FiveyearWorkflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
+	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } | 'BSC2016' { workflow = new Bachelor2016Workflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
 	;
 
 workflow_parameters [AbstractWorkflow workflow]
@@ -26,7 +26,8 @@ workflow_body [AbstractWorkflow workflow]
 	;
 
 workflow_statement [AbstractWorkflow workflow]
-	: 'KÉPZÉSKÓD' group = type_group ('(' fromSemester = type_semester? '-' toSemester = type_semester? ')')? { workflow.SetStudentCriteria(group, fromSemester, toSemester); }
+	: 'KÉPZÉSKÓD' education_program = type_education_program ('(' fromSemester = type_semester? '-' toSemester = type_semester? ')')?
+	{ workflow.SetStudentCriteria(education_program, fromSemester, toSemester); }
 	| 'KRITÉRIUMOK' criteriaPath = type_string { workflow.SetCourseCriteria(criteriaPath); }
 	| 'CSOPORTOSÍTÁS' groupingPath = type_string { workflow.SetDefaultGrouping(groupingPath); }
 	;
@@ -35,8 +36,8 @@ type_requirement returns [GroupRequirement requirement]
 	: identifier = type_id '=>' amount = type_int { requirement = new GroupRequirement(identifier, amount); }
 	;
 
-type_group returns [string value]
-	: TOKEN_GROUP { value = $TOKEN_GROUP.Text; }
+type_education_program returns [string value]
+	: TOKEN_EDUCATION_PROGRAM { value = $TOKEN_EDUCATION_PROGRAM.Text; }
 	;
 
 type_id returns [string value]
@@ -59,8 +60,8 @@ TOKEN_SEMESTER
 	: ('0'..'9') ('0'..'9') ('0'..'9') ('0'..'9') '/' ('1'|'2')
 	;
 
-TOKEN_GROUP
-	: ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9') '-' ('A'..'Z'|'0'..'9') ('A'..'Z'|'0'..'9')
+TOKEN_EDUCATION_PROGRAM
+	: ('A'..'Z'|'0'..'9')+ '-' ('A'..'Z'|'0'..'9')+ (TOKEN_ID | '-')*
 	;
 
 TOKEN_STRING

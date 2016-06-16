@@ -28,13 +28,6 @@
 		BMEVIHIA106 "A programozás alapjai I.",
 		BMEVIHIAA01 "A programozás alapjai 1"
 	},
-	/*
-	 * A jövőben itt változtatni kell majd. Azok, akik már az új
-	 * rendszerben keztek, 6-6 kreditesként élik meg ezt a két tárgyat. 
-	 * Lehetséges megoldás, hogy két külön csoportra bontjuk őket felvétel
-	 * éve szerint, de ez nem a legjobb, inkább össze kellene vonni
-	 * a két kritériumot egy közös csoportba, aminek megadjuk a kreditértékét.
-	 */
 	KRITÉRIUM "Digitális technika 1" (1. FÉLÉV, 6 KREDIT) {
 		BMEVIFO1016 "Digitális technika",
 		BMEVIIIA104 "Digitális technika I.",

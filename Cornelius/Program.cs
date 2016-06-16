@@ -10,62 +10,46 @@ namespace Cornelius
 {
     class Program
     {
-        public const string CONFIG_DIRECTORY = "Beállítások";
+        public const string CONFIG_DIRECTORY = "Config";
         public const string INPUT_DIRECTORY = "Bemenet";
         public const string OUTPUT_DIRECTORY = "Kimenet";
 
         static void Main(string[] args)
-        {
-            Import import = Import.LoadAllFiles();
-            List<Student> students = Builder.ExtractStudents(import).ToList();
-            List<Specialization> specializations = Builder.ExtractSpecializations(import).ToList();
-            Evaluator.ProcessStudents(students, import.Exceptions);
+        {            
+            /* Megjegyzés: a programban a Specialization osztály a szabályzat terminológiájában valójában ágazatot jelöl, de a programban erre
+             * specializációként (néha ágazatként) hivatkozunk. A SpecializationGrouping osztály a szabályzat terminológiájában egy specializációt
+             * jelöl, de a programban erre specializációcsoportként hivatkozunk.
+             * 
+             * A besoroló program:
+             *  - Importáljuk a beállításokat, a besorolási paramétereket, tárgylistákat, hallgatókat, tárgyeredményeket és jelentkezéseket.
+             *  - A hallgatókon mind elvégezzük a kritériumellenőrzést és az átlagszámítást a nekik megfelelő Workflow (kritériumrendszer) alapján.
+             *  - Lefuttatjuk a besorolási algoritmust (lásd Placement.Algorithm).
+             *  - Lemezre mentjük az eredményeket.
+            **/
+
+            var import = Import.LoadAllFiles();
+            var allStudents = Builder.ExtractStudents(import).ToList();
+            var specializations = Builder.ExtractSpecializations(import).ToList();
+            var specGroupings = Builder.ExtractSpecializationGroupings(import, specializations).ToList();
+            Evaluator.ProcessStudents(allStudents, import.Exceptions, specGroupings);
             
-            var groups = students
-                .Where(student => student.Result)
-                .OrderBy(student => student.Round)
-                .ThenByDescending(student => student.Result.Avarage)
-                .GroupBy(student => student.Group);
-
-            foreach (var group in groups)
+            var studentsByEduProgram = allStudents.GroupBy(student => student.EducationProgram);
+            var specGroupingsByEduProgram = specGroupings.GroupBy(sg => sg.EducationProgram);
+            
+            // Képzési programokon való iteráció
+            foreach (var studentsInProgram in studentsByEduProgram)
             {
-                int count = group.Count();
-                Dictionary<string, Specialization> shorthandDictionary = specializations
-                    .Where(specialization => specialization.Group == group.Key)
-                    .ToDictionary(specialization => specialization.Name.Remove(15));
-
-                Log.Write("Maximális szakiránylétszámok a " + group.Key + " képzésen:");
-                Log.EnterBlock(" => ");
-                foreach (var specialization in shorthandDictionary.Values)
-                {
-                    specialization.Capacity = (int)Math.Round(count * specialization.Ratio);
-                    Log.Write(specialization.Name + ": " + specialization.Capacity);
-                }
-                Log.LeaveBlock();
-
-                Log.Write("Besorolás a " + group.Key + " képzésen:");
+                Log.Write(string.Format("Besorolás a(z) {0} képzésen", studentsInProgram.Key));
                 Log.EnterBlock();
-                foreach (var student in group)
+                var algorithm = new Placement.Algorithm(studentsInProgram, specGroupingsByEduProgram.First(sg => sg.Key == studentsInProgram.Key));
+                IEnumerable<Tuple<Student, Specialization>> placements;
+                if (algorithm.Run(out placements))
                 {
-                    Log.Write(student.OriginKey + ":");
-                    Log.EnterBlock(" => ");
-                    foreach (var choice in student.Choices)
+                    foreach (var tuple in placements)
                     {
-                        var specialization = shorthandDictionary[choice.Remove(15)];
-                        Log.Write((Array.IndexOf<string>(student.Choices, choice) + 1) + ". hely: " + specialization.Name);
-                        if (!specialization.Full || specialization.Minimum == student.Result.Avarage && specialization.Round == student.Round)
-                        {
-                            Log.Write("Besorolva.");
-                            specialization += student;
-                            specialization.Round = student.Round;
-                            break;
-                        }
+                        var spec = tuple.Item2;
+                        spec += tuple.Item1;
                     }
-                    if (student.Specialization == null)
-                    {
-                        Log.Write("Sikertelen besorolás.");
-                    }
-                    Log.LeaveBlock();
                 }
                 Log.LeaveBlock();
             }
@@ -76,9 +60,9 @@ namespace Cornelius
             {
                 Directory.CreateDirectory(Program.OUTPUT_DIRECTORY);
             }
-            Export.ExportDatabases(students);
-            Export.ExportReports(students, specializations);
-            Export.ExportCreditStatistics(students);
+            Export.ExportDatabases(allStudents);
+            Export.ExportReports(allStudents, specializations, specGroupings);
+            Export.ExportCreditStatistics(allStudents);
             Log.LeaveBlock();
         }
     }

@@ -5,19 +5,20 @@ using System.Text;
 
 namespace Cornelius
 {
-    /*
-     * Egy egyetemi félév
-     */
+    /// <summary>
+    /// Egy egyetemi félévet reprezentáló struktúra.
+    /// </summary>
     public struct Semester
     {
-        /*
-         * A félév belső reprezentációja, 10 * év + félév - 1
-         */
+        /// <summary>
+        /// A félév belső reprezentációja, 10 * év + félév - 1
+        /// </summary>
+        [System.Diagnostics.DebuggerDisplay("{ToString()}")]
         private int _internal;
 
-        /*
-         * A félév év komponense
-         */
+        /// <summary>
+        /// A félév év komponense.
+        /// </summary>
         public int Year
         {
             get
@@ -26,9 +27,9 @@ namespace Cornelius
             }
         }
 
-        /*
-         * A félév fél komponense
-         */
+        /// <summary>
+        /// A félév fél komponense
+        /// </summary>
         public int Half
         {
             get
@@ -37,18 +38,21 @@ namespace Cornelius
             }
         }
 
-        /*
-         * Félév létrehozása a két komponensből
-         */
+        /// <summary>
+        /// Félév létrehozása a két komponensből
+        /// </summary>
+        /// <param name="year">Az év.</param>
+        /// <param name="half">A félév (1 vagy 2)</param>
         public Semester(int year, int half)
         {
             _internal = year * 10 + (half - 1) % 2;
         }
 
-        /*
-         * Értékadás engedélyezése szövegből. Megkísérli felismerni a formátumát,
-         * egy elég favágó, de működő módszerrel.
-         */
+        /// <summary>
+        /// Értékadás engedélyezése szövegből. Megkísérli felismerni a formátumát,
+        /// egy elég favágó, de működő módszerrel.
+        /// </summary>
+        /// <param name="text">A félév leírását tartalmazó string</param>
         public static implicit operator Semester(string text)
         {
             if (text == null || text.Length == 0)
@@ -85,25 +89,32 @@ namespace Cornelius
             }
         }
 
-        /*
-         * 2011/2012/1 formátumban adja vissza
-         */
+        /// <summary>
+        /// 2011/2012/1 formátumban adja vissza a félévet.
+        /// </summary>
+        /// <returns>A félév szöveges leírása.</returns>
         public override string ToString()
         {
             return this.Year.ToString() + "/" + (this.Year + 1).ToString() + "/" + this.Half;
         }
 
-        /*
-         * Ellenőrzi, hogy a megadott határok között van-e a félév
-         */
+        /// <summary>
+        /// Ellenőrzi, hogy a megadott határok között van-e a félév (inkluzív)
+        /// </summary>
+        /// <param name="semester">Félévet reprezentáló struktúra.</param>
+        /// <param name="from">Összehasonlítási alap (-tól)</param>
+        /// <param name="to">Összehasonlítási alap (-ig)</param>
+        /// <returns></returns>
         public static bool InInterval(Semester? semester, Semester? from, Semester? to)
         {
             return semester != null && (from == null || semester >= from) && (to == null || semester <= to);
         }
 
-        /*
-         * A dátum alapján kitalálja, melyik félév.
-         */
+        /// <summary>
+        /// Dátum objektumból készít félév struktúrát.
+        /// </summary>
+        /// <param name="date">A félévbe eső dátum.</param>
+        /// <returns></returns>
         public static Semester FromDate(DateTime date)
         {
             return new Semester(date.Month >= 8 ? date.Year : date.Year - 1, date.Month >= 8 || date.Month < 2 ? 1 : 2);

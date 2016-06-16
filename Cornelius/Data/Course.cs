@@ -6,44 +6,50 @@ using System.IO;
 
 namespace Cornelius.Data
 {
-    /*
-     * Egy hallgató által felvett kurzus.
-     */
+    /// <summary>
+    /// Egy hallgató által felvett kurzus.
+    /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Course
     {
-        /*
-         * Tantárgykód
-         */
+        /// <summary>
+        /// Tantárgykód
+        /// </summary>
         public string Code;
 
-        /*
-         * Tárgy teljes neve
-         */
+        /// <summary>
+        /// Tárgy teljes neve
+        /// </summary>
         public string Name;
 
-        /*
-         * Osztályzat
-         */
+        /// <summary>
+        /// Osztályzat
+        /// </summary>
         public int Grade;
 
-        /*
-         * Kreditérték
-         */
+        /// <summary>
+        /// Kreditérték
+        /// </summary>
         public double Credit;
 
-        /*
-         * Teljesítve van-e a tárgy
-         */
+        /// <summary>
+        /// A tantárgyat teljesítette a hallgató
+        /// </summary>
         public bool HasCompleted;
 
-        /*
-         * Van-e aláírás a tárgyból
-         */
+        /// <summary>
+        /// A tantárgyból aláírással rendelkezik a hallgató
+        /// </summary>
         public bool HasSignature;
 
-        /*
-         * Az a félév, amikor teljesítette a tárgyat.
-         */
+        /// <summary>
+        /// A teljesítés féléve.
+        /// </summary>
         public Semester? EffectiveSemester;
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}) {3} {4} Jegy:{5} {2}kr", Name, Code, Credit, HasSignature ? "@" : "-", HasCompleted ? "OK" : "no", Grade);
+        }
     }
 }

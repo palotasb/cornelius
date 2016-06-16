@@ -65,16 +65,17 @@
     <Compile Include="Criteria\Credit\Subgroup.cs" />
     <Compile Include="Criteria\Credit\Grouping.cs" />
     <Compile Include="Criteria\Expression\MatchCourse.cs" />
-    <Compile Include="Criteria\Expression\Proxy.cs" />
+    <Compile Include="Criteria\Expression\StudentCourseProxy.cs" />
     <Compile Include="Criteria\Expression\MatchGroup.cs" />
     <Compile Include="Criteria\Expression\IExpression.cs" />
+    <Compile Include="Criteria\Workflow\Bachelor2016Workflow.cs" />
     <Compile Include="Criteria\Workflow\BachelorWorkflow.cs" />
-    <Compile Include="Criteria\Workflow\FiveyearWorkflow.cs" />
     <Compile Include="Criteria\Result.cs" />
     <Compile Include="Criteria\Workflow\AbstractWorkflow.cs" />
     <Compile Include="Criteria\Workflow\GroupRequirement.cs" />
     <Compile Include="Data\Course.cs" />
     <Compile Include="Data\Specialization.cs" />
+    <Compile Include="Data\SpecializationGrouping.cs" />
     <Compile Include="Grammar\GroupingDefinitionLanguageParser.cs" />
     <Compile Include="Grammar\WorkflowDefinitionLanguageParser.cs" />
     <Compile Include="Grammar\MapDefinitionLanguageParser.cs" />
@@ -99,11 +100,13 @@
     <Compile Include="IO\Mapping\Recognizer.cs" />
     <Compile Include="IO\Primitives\XBase.cs" />
     <Compile Include="IO\Primitives\XChoice.cs" />
+    <Compile Include="IO\Primitives\XCurriculum.cs" />
     <Compile Include="IO\Primitives\XEntry.cs" />
     <Compile Include="IO\Primitives\XIdentity.cs" />
     <Compile Include="IO\Drivers\IInputDriver.cs" />
     <Compile Include="IO\Drivers\IRecord.cs" />
     <Compile Include="IO\MapAttribute.cs" />
+    <Compile Include="IO\Primitives\XSpecializationGrouping.cs" />
     <Compile Include="IO\Primitives\XSpecialization.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="IO\Mapping\Assignment.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="IO\Tables\XEmail.cs" />
     <Compile Include="IO\Tables\XResult.cs" />
     <Compile Include="IO\Tables\XUser.cs" />
+    <Compile Include="Placement\Algorithm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Student.cs" />
@@ -157,48 +161,96 @@
     </Antlr3>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Beállítások\bemenet-bejegyzesek.ifd">
+    <None Include="Config\bemenet-mintatantervek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-hallgatok.ifd">
+    <None Include="Config\bemenet-specializacio-csoportok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-helyek.ifd">
+    <None Include="Config\csoportositas-informatikus-bsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-kivetelek.ifd">
+    <None Include="Config\bemenet-bejegyzesek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\bemenet-valasztasok.ifd">
+    <None Include="Config\bemenet-hallgatok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\csoportositas-informatikus-bsc.gd">
+    <None Include="Config\bemenet-specializaciok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\csoportositas-oteves.gd">
+    <None Include="Config\bemenet-kivetelek.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\csoportositas-villamosmernok-bsc.gd">
+    <None Include="Config\bemenet-valasztasok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kepzesek.wd">
+    <None Include="Config\csoportositas-informatikus-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-informatikus-bsc.cd">
+    <None Include="Config\csoportositas-informatikus-regibsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-informatikus-oteves.cd">
+    <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-villamosmernok-2002.cd">
+    <None Include="Config\csoportositas-villamosmernok-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-villamosmernok-bsc.cd">
+    <None Include="Config\csoportositas-villamosmernok-regibsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Beállítások\kriterium-villamosmernok-oteves.cd">
+    <None Include="Config\kepzesek.wd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Config\kriterium-informatikus-bsc-2016.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\kriterium-informatikus-bsc.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\kriterium-informatikus-regibsc-2016.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\kriterium-villamosmernok-bsc-2016.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\kriterium-villamosmernok-bsc.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\kriterium-villamosmernok-regibsc-2016.crd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Bemenet\mintatantervek.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-infó-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-infó-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-vill-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-vill-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-infó-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-infó-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-vill-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-vill-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

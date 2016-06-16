@@ -13,7 +13,7 @@ namespace Cornelius.IO.Primitives
         public string Phone;
 
         [Map(Required = false)]
-        public string Origin;
+        public string OriginalEducationProgram;
 
         public bool Equals(XIdentity identity)
         {

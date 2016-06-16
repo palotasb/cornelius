@@ -3,69 +3,70 @@ using System.Linq;
 
 namespace Cornelius.Criteria.Expression
 {
-    /*
-     * Kritériumcsoport, ami akkor igaz, ha a tagkritériumaira teljesül a 
-     * megfelelő feltétel.
-     */
+    /// <summary>
+    /// Kritériumcsoport, ami akkor igaz, ha a tagkritériumaira teljesül a 
+    /// megfelelő feltétel.
+    /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class MatchGroup : IExpression
     {
-        /*
-         * Kritérium neve.
-         */
+        /// <summary>
+        /// Kritérium neve.
+        /// </summary>
         public string Name
             { get; set; }
 
-        /*
-         * Rendezéshez használt félév száma.
-         */
+        /// <summary>
+        /// Rendezéshez használt félév száma.
+        /// </summary>
         public int? Semester 
             { get; set; }
 
-        /*
-         * Elméleti kreditérték, ami hiányzik, ha nem teljesül a tárgy.
-         */
+        /// <summary>
+        /// Elméleti kreditérték, ami hiányzik, ha nem teljesül a tárgy.
+        /// </summary>
         public double Credit
             { get; set; }
 
-        /*
-         * Az alfeltételekből ennyinek kell teljesülnie. Speciális esetek:
-         *  - pozitív n: ennyi feltételnek kell teljesülnie
-         *  - nulla: ekkor minden feltételnek teljesülnie kell
-         *  - negatív n: ennyi feltétel nem teljesülése engedhető meg legfeljebb
-         */
+        /// <summary>
+        /// Az alfeltételekből ennyinek kell teljesülnie. Speciális esetek:
+        ///  - pozitív n: ennyi feltételnek kell teljesülnie
+        ///  - nulla: ekkor minden feltételnek teljesülnie kell
+        ///  - negatív n: ennyi feltétel nem teljesülése engedhető meg legfeljebb
+        /// </summary>
         public int Requirement
             { get; set; }
 
-        /*
-         * Súly továbbadása. Ha hamis, akkor a kritérium egy feltétellé
-         * "nyomódik össze" az anyakritérium szemében, ami vagy igaz vagy nem.
-         */
+        /// <summary>
+        /// Súly továbbadása. Ha hamis, akkor a kritérium egy feltétellé
+        /// "nyomódik össze" az anyakritérium szemében, ami vagy igaz vagy nem.
+        /// </summary>
         public bool PassWeight
             { get; set; }
 
-        /*
-         * Minden alfeltétel kiértékelése. Ha igaz, azután is folytatódik a kiértékelődés,
-         * ha már van elegendő feltétel az igazzá váláshoz.
-         */
+        /// <summary>
+        /// Minden alfeltétel kiértékelése. Ha igaz, azután is folytatódik a kiértékelődés,
+        /// ha már van elegendő feltétel az igazzá váláshoz.
+        /// </summary>
         public bool EvaluateAll
             { get; set; }
 
-        /*
-         * A feltétel azokra vonatkozik csak, akik a megadott képzésben
-         * kezdték mag tanulmányaikat.
-         */
-        public string Origin
+        /// <summary>
+        /// A feltétel azokra vonatkozik csak, akik a megadott képzésben
+        /// kezdték mag tanulmányaikat.
+        /// </summary>
+        public string OriginalEducationProgram
             { get; set; }
 
-        /*
-         * Alfeltételek listája.
-         */
+        /// <summary>
+        /// A feltételek listája.
+        /// </summary>
         public List<IExpression> Children
             { get; protected set; }
 
-        /*
-         * A kritérium súlya, vagyis a ténylegesen teljesítendő kritériumok száma
-         */
+        /// <summary>
+        /// A kritérium súlya, vagyis a ténylegesen teljesítendő kritériumok száma
+        /// </summary>
         public int Weight
         {
             get
@@ -85,15 +86,15 @@ namespace Cornelius.Criteria.Expression
             }
         }
 
-        /*
-         * Kiértékelés
-         */
-        public Result Evaluate(Proxy proxy)
+        /// <summary>
+        /// Kiértékelés
+        /// </summary>
+        public Result Evaluate(StudentCourseProxy proxy)
         {
             Result result = new Result(this.Name);
             result.Semester = this.Semester > 0 ? this.Semester : null;
 
-            if (this.Origin != null && proxy.Origin != this.Origin)
+            if (this.OriginalEducationProgram != null && proxy.OriginalEducationProgram != this.OriginalEducationProgram)
             {
                 // Ilyenkor nincs meg a kritérium, mégis úgy számít, mintha meglenne
                 result.Weight = this.Weight;
@@ -139,15 +140,29 @@ namespace Cornelius.Criteria.Expression
             return result;
         }
 
-        public double Order(Proxy source)
+        /// <summary>
+        /// A feltétel rendezőszáma. Ez valósítja meg a jegyalapú súlyozást, így mindig
+        /// a legelőnyösebb kritériumok kerülnek befogadásra.
+        /// </summary>
+        /// <param name="source">A hallgatót és kurzust összekötő proxy.</param>
+        /// <returns>Rendezőszám.</returns>
+        public double Order(StudentCourseProxy source)
         {
             return 0;
         }
 
+        /// <summary>
+        /// A kiértékelhető feltétel súlya.
+        /// </summary>
         public MatchGroup()
         {
             this.Requirement = 1;
             this.Children = new List<IExpression>();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} req:{1}, children:{2}, credit:{3}", Name, Requirement, Children.Count, Credit);
         }
     }
 }

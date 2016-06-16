@@ -5,46 +5,52 @@ using System.Text;
 
 namespace Cornelius.Data
 {
-    /*
-     * Egy szakiránybesorolási fiókot valósít meg, ahová
-     * be lehet sorolni a hallgatókat.
-     */
+    /// <summary>
+    /// Egy specializáción belüli ágazat illetve tanszék, ahová be lehet sorolni a hallgatókat.
+    /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Specialization
     {
-        /*
-         * A képzés, ahol elindul a szakirány.
-         */
-        public string Group;
-
-        /*
-         * A szakirány neve.
-         */
+        /// <summary>
+        /// A specializáció neve.
+        /// </summary>
         public string Name;
 
-        /*
-         * Kezdeti helyek aránya az összes jelentkezőhöz
-         */
-        public double Ratio;
+        /// <summary>
+        /// A csoport, amibe a specializáció (azaz itt ágazat) tartozik, amin belül további
+        /// létszámkövetelményeknek kell megfelelni.
+        /// </summary>
+        public string SpecializationGroup;
 
-        /*
-         * Szabad helyek száma.
-         */
+        /// <summary>
+        /// Kezdeti helyek aránya az összes jelentkezőhöz viszonyítva.
+        /// </summary>
+        public double MaxRatio;
+
+        /// <summary>
+        /// Minimum helyek aránya az összes jelentkezőhöz viszonyítva.
+        /// </summary>
+        public double MinRatio;
+
+        /// <summary>
+        /// A specializáció maximális létszáma.
+        /// </summary>
         public int Capacity;
 
-        /*
-         * Az utolsó besorolt hallgató köre.
-         */
+        /// <summary>
+        /// Az utolsó besorolt hallgató köre.
+        /// </summary>
         public int Round;
 
-        /*
-         * Besorolt hallgatók.
-         */
+        /// <summary>
+        /// Besorolt hallgatók.
+        /// </summary>
         public List<Student> Students = new List<Student>();
 
-        /*
-         * Minimális szakirányátlag.
-         */
-        public double Minimum
+        /// <summary>
+        /// Minimális rangsorátlag, ami a bekerüléshez kell.
+        /// </summary>
+        public double MinimumRankAverage
         {
             get
             {
@@ -59,9 +65,9 @@ namespace Cornelius.Data
             }
         }
 
-        /*
-         * Tele van-e a szakirány?
-         */
+        /// <summary>
+        /// A specializáció megtelt.
+        /// </summary>
         public bool Full
         {
             get
@@ -70,15 +76,43 @@ namespace Cornelius.Data
             }
         }
 
-        /*
-         * Hallgató hozzáadása a szakirányhoz.
-         */
+        /// <summary>
+        /// Hallgató besorolása a specializációra.
+        /// </summary>
+        /// <param name="slot">A specializáció, amire a hallgató besorolódik.</param>
+        /// <param name="student">A hallgató, aki besorolásra kerül.</param>
+        /// <returns>A </returns>
         public static Specialization operator +(Specialization slot, Student student)
         {
             slot.Students.Add(student);
             student.Specialization = slot;
             slot.Round = student.Round;
             return slot;
+        }
+
+        /// <summary>
+        /// A specializációra besorolandó minimális hallgatói számot adja vissza.
+        /// </summary>
+        /// <param name="studentCount">A specilaizációcsoportba besorolható hallgatók minimális száma.</param>
+        /// <returns>A specializációra sorolandó minimális létszám.</returns>
+        public int GetMinCount(int studentCount)
+        {
+            return (int)Math.Floor(studentCount * MinRatio);
+        }
+
+        /// <summary>
+        /// A specializációba besorolható maximális hallgatói számot adja vissza.
+        /// </summary>
+        /// <param name="studentCount">A specilaizációcsoportba besorolható hallgatók maximális száma.</param>
+        /// <returns>A specializációra sorolható maximális létszám.</returns>
+        public int GetMaxCount(int studentCount)
+        {
+            return Math.Min(Capacity, (int)Math.Ceiling(studentCount * MaxRatio));
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}, {2:##%}-{3:##%}/{4}", Name, SpecializationGroup, MinRatio, MaxRatio, Capacity);
         }
     }
 }

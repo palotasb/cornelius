@@ -5,14 +5,15 @@ using Cornelius.Data;
 
 namespace Cornelius.Criteria.Workflow
 {
-    /*
-     * BSc kritériumellenőrzés
-     */
+    /// <summary>
+    /// 2014 előtti BSc szerinti kritériumellenőrzés.
+    /// </summary>
     class BachelorWorkflow : AbstractWorkflow
     {
-        /*
-         * KötVál tárgyak ellenőrzése. Az átlagba nem szabad, hogy beleszámítson.
-         */
+        /// <summary>
+        /// Kötelezően választható tárgyak ellenőrzése. Az átlagba nem szabad, hogy beleszámítsanak.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
         protected override void ProcessGroupCriteria(Student student)
         {
             Result result = new Result("Kötelezően választható tárgyak");
@@ -37,9 +38,10 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Csoportkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        /*
-         * Szumma kreditszám ellenőrzése. Az átlagba nem szabad, hogy beleszámítson.
-         */
+        /// <summary>
+        /// Szumma kreditszám ellenőrzése. Az átlagba nem szabad, hogy beleszámítson.
+        /// </summary>
+        /// <param name="student">A hallgató</param>
         protected override void ProcessSummaCriteria(Student student)
         {
             Result result = new Result("Kreditkritérium");
@@ -50,7 +52,7 @@ namespace Cornelius.Criteria.Workflow
             foreach (var criteria in this.SummaCriteria)
             {
                 // A CamelCase csoportneveket szavakra bontjuk
-                string name = Regex.Matches(criteria.Identifier, @"[A-Z][^A-Z]+").OfType<Match>().Select(match => match.Value).Aggregate((acc, b) => acc + " " + b.ToLower()).TrimStart(' ');
+                string name = Regex.Matches(criteria.Identifier, @"[A-Z][^A-Z]+").OfType<Match>().Select(match => match.Value).Aggregate((acc, b) => acc + " " + b.ToLower()).TrimStart(' ').Replace('_', ' ');
                 Result subresult = new Result(name, true);
 
                 // Következő túlcsorduló elemek
@@ -117,13 +119,15 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Kreditkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        /*
-         * Ez a KötVál tárgyaknál bővíti ki a szűrést oly módon, hogy az átsorolt hallgatók
-         * az eredeti szakjuknak megfelelően tudjanak beszámítani közismeretiket.
-         */
+        /// <summary>
+        /// Ez a kötelezően választható tárgyaknál bővíti ki a szűrést oly módon, hogy az átsorolt hallgatók
+        /// az eredeti szakjuknak megfelelően tudjanak beszámítani közismeretiket.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
+        /// <returns></returns>
         public override IEnumerable<Course> FilterGroupCriteriaCourses(Student student)
         {
-            if (student.Origin == student.Group)
+            if (student.OriginalEducationProgram == student.EducationProgram)
             {
                 return base.FilterGroupCriteriaCourses(student);
             }
@@ -134,15 +138,17 @@ namespace Cornelius.Criteria.Workflow
             }
         }
 
-        /*
-         * A besorolási körök kiszámítása.
-         */
-        protected override void ProcessFinalResult(Student student)
+        /// <summary>
+        /// A besorolási körök kiszámítása.
+        /// </summary>
+        /// <param name="student">A hallgató.</param>
+        /// <param name="_">Nem használt paraméter.</param>
+        protected override void ProcessFinalResult(Student student, IEnumerable<SpecializationGrouping> _)
         {
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount + 1 - student.Result.Weight;
             if (this.CourseCriteria.Requirement < 0) student.MissingCriteria -= this.CourseCriteria.Requirement;
             if (student.MissingCriteria < 0) student.MissingCriteria = 0;
-            if (student.Origin == student.Group)
+            if (student.OriginalEducationProgram == student.EducationProgram)
             {
                 student.Round = 1;
             }

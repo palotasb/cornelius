@@ -148,7 +148,7 @@ namespace Cornelius
 
         protected void ExportUser(Student student)
         {
-            var user = new XUser(student, _associations.ContainsKey(student.GroupKey) ? (int?)_associations[student.GroupKey] : null);
+            var user = new XUser(student, _associations.ContainsKey(student.Key) ? (int?)_associations[student.Key] : null);
             _rows.Add(user);
 
             this.ExportResults(student.Result, null, user, 2);
@@ -199,7 +199,7 @@ namespace Cornelius
         protected void WriteAssociations()
         {
             var driver = new SeparatedTextDriver();
-            TableWriter.Write<XAssociation>(Export.PATH_ASSOCIATIONS, _rows.OfType<XUser>().Select(v => new XAssociation(v.Neptun, v.Group, v.Identifier)), driver);
+            TableWriter.Write<XAssociation>(Export.PATH_ASSOCIATIONS, _rows.OfType<XUser>().Select(v => new XAssociation(v.Neptun, v.EducationProgram, v.Identifier)), driver);
             Log.Write(Export.PATH_ASSOCIATIONS);
         }
 
@@ -237,15 +237,15 @@ namespace Cornelius
             filters["MIND"] = s => true;
             filters["PASS"] = s => s.Specialization != null;
             filters["FAIL"] = s => s.Specialization == null;
-            foreach (var code in students.Select(s => s.Group).Distinct())
+            foreach (var code in students.Select(s => s.EducationProgram).Distinct())
             {
                 foreach (var filter in filters)
                 {
                     Dictionary<string, XHistogram[]> histograms = new Dictionary<string, XHistogram[]>();
-                    string[] groups = students.Where(s => s.Group == code).SelectMany(s => s.CreditPerGroup.Keys).Distinct().ToArray();
+                    string[] groups = students.Where(s => s.EducationProgram == code).SelectMany(s => s.CreditPerGroup.Keys).Distinct().ToArray();
                     foreach (string group in groups)
                     {
-                        var values = students.Where(s => s.Group == code).Where(s => filter.Value(s)).Where(s => s.CreditPerGroup.Sum(e => e.Value) > 0).Select(student => student.CreditPerGroup[group]);
+                        var values = students.Where(s => s.EducationProgram == code).Where(s => filter.Value(s)).Where(s => s.CreditPerGroup.Sum(e => e.Value) > 0).Select(student => student.CreditPerGroup[group]);
                         var histogram = values.GroupBy(i => i).OrderBy(e => e.Key).Select(e => new XHistogram(e.Key, e.Count()));
                         histograms.Add(group, histogram.ToArray());
                     }
@@ -259,11 +259,12 @@ namespace Cornelius
             Log.Write(Export.PATH_HISTOGRAM);
         }
 
-        public static void ExportReports(IEnumerable<Student> students, IEnumerable<Specialization> specializations)
+        public static void ExportReports(IEnumerable<Student> students, IEnumerable<Specialization> specializations, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
             var driver = new ExcelDriver();
             TableWriter.Write<XStudent>(Export.PATH_REPORT, students.Select(student => new XStudent(student)), driver);
-            TableWriter.Write<XSumma>(Export.PATH_REPORT, specializations.Select(specialization => new XSumma(specialization)), driver);
+            TableWriter.Write<XSumma>(Export.PATH_REPORT, specializations.Select(specialization =>
+                new XSumma(specialization, specializationGroupings.First(sg => sg.Contains(specialization)))), driver);
             Log.Write(Export.PATH_REPORT);
         }
     }

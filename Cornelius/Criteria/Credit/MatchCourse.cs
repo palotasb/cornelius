@@ -2,28 +2,35 @@
 
 namespace Cornelius.Criteria.Credit
 {
-    /*
-     * Egyszerű szűrőfeltétel tárgykód és félév alapján,
-     * amennyiben a megadott tartományon belül történt a tárgy teljesítése,
-     * illetve ha a tárgykód megegyezik, akkor a csoportba tartozik a tárgy.
-     */
+    /// <summary>
+    /// Egyszerű szűrőfeltétel tárgykód és félév alapján,
+    /// amennyiben a megadott tartományon belül történt a tárgy teljesítése,
+    /// illetve ha a tárgykód megegyezik, akkor a csoportba tartozik a tárgy.
+    /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class MatchCourse : IGroupMatch
     {
-        /*
-         * Keresett tárgykód
-         */
+        /// <summary>
+        /// Keresett tárgykód
+        /// </summary>
         public string Code;
 
-        /*
-         * Kezdeti félév, vagy null, ha nincs alsó határ
-         */
+        /// <summary>
+        /// Kezdeti félév, vagy null, ha nincs alsó határ
+        /// </summary>
         public Semester? From;
 
-        /*
-         * Végső félév, vagy null, ha nincs felső határ
-         */
+        /// <summary>
+        /// Végső félév, vagy null, ha nincs felső határ
+        /// </summary>
         public Semester? To;
 
+        /// <summary>
+        /// Egyszerű szűrőfeltétel tárgykód és félév alapján.
+        /// </summary>
+        /// <param name="code">Tárgykód</param>
+        /// <param name="from">Félév (-tól)</param>
+        /// <param name="to">Félév (-ig)</param>
         public MatchCourse(string code, Semester? from, Semester? to)
         {
             this.Code = code;
@@ -31,12 +38,19 @@ namespace Cornelius.Criteria.Credit
             this.To = to;
         }
 
-        /*
-         * Feltétel ellenőrzése. 
-         */
+        /// <summary>
+        /// Feltétel ellenőrzése. 
+        /// </summary>
+        /// <param name="course">A kurzus</param>
+        /// <returns>Igazat ad vissza, ha teljesül.</returns>
         public bool Match(Course course)
         {
             return course.Code == this.Code && Semester.InInterval(course.EffectiveSemester, this.From, this.To);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}-{2})", Code, From != null ? From : "", To != null ? To : "");
         }
     }
 }
