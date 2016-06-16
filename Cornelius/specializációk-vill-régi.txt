@@ -1,5 +1,0 @@
-Szak	Csoport	Elokeszito	MinRat	MaxRat	Cap	Mintatanterv neve
-5N-A7	Beágyazott és irányító rendszerek (régi)	Beágy	0.10	0.50	999	2013
-5N-A7	Infokommunikációs rendszerek (régi)	Infokomm	0.10	0.50	999	2013
-5N-A7	Mikroelektronikai tervezés és gyártás (régi)	Mikroel	0.10	0.50	999	2013
-5N-A7	Fenntartható villamos energetika (régi)	Villenerg	0.10	0.50	999	2013
