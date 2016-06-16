@@ -5,7 +5,7 @@ using Cornelius.Data;
 namespace Cornelius.Criteria.Credit
 {
     /// <summary>
-    /// Csoportosítás kreditkritérium ellenőrzéshez
+    /// Csoportosítás kreditkritérium ellenőrzéshez.
     /// Alcsoportok halmaza, amik képesek önállóan vizsgálni, hogy egy adott kurzus beléjük tartozik-e. A vizsgálat
     /// sorrendben történik, és ott áll meg, ahol az első találat van. Egy csoportosítás tehát egy tárgyat csak egy csoportba
     /// tud besorolni.
@@ -17,7 +17,7 @@ namespace Cornelius.Criteria.Credit
         /// </summary>
         /// <param name="course">A keresett kurzus.</param>
         /// <returns>A csoport azonosítója.</returns>
-        public string Match(Course course)
+        protected string Match(Course course)
         {
             return this.First(group => group.Match(course)).Identifier;
         }

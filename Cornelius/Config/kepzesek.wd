@@ -4,17 +4,52 @@
 	 * paraméter a kreditkritériumot definiálja, a legnagyobb közülük lesz az abszolutkritérium.
 	 */
 	
+	/* Régi, 2016 előtt érvényes kritériumok / besorolás */
+
 	/* Mérnök Informatikus BSc képzés */
 	KÉPZÉS BSC (KötelezőenVálasztható => 2, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
-		KÉPZÉSKÓD 5N-A8,
-		KRITÉRIUMOK "kriterium-informatikus-bsc.cd",
+		KÉPZÉSKÓD 5N-A8_2013-ig,
+		KRITÉRIUMOK "kriterium-informatikus-bsc.crd",
 		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc.gd"
 	},
 	
 	/* Villamosmérnöki BSc képzés */
 	KÉPZÉS BSC (KötelezőenVálasztható => 1, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
-		KÉPZÉSKÓD 5N-A7,
-		KRITÉRIUMOK "kriterium-villamosmernok-bsc.cd",
+		KÉPZÉSKÓD 5N-A7_2013-ig,
+		KRITÉRIUMOK "kriterium-villamosmernok-bsc.crd",
 		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
+	},
+
+	/* Új, 2016 nyarától érvényes kritériumok / besorolás */
+
+	/* Mérnök Informatikus BSc képzés */
+	KÉPZÉS BSC2016 (
+		x => 0,
+		Szigorlat => 1,
+		Tanköri => 2,
+		KötelezőenVálasztható => 0,
+		KötelezőenVálasztható4Félév => 0
+	) {
+		KÉPZÉSKÓD 5N-A8_2014,
+		KRITÉRIUMOK "kriterium-informatikus-bsc-2016.crd",
+		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc-2016.gd"
+	},
+	
+	/* Villamosmérnöki BSc képzés */
+	KÉPZÉS BSC2016 (
+		x => 0,
+		Szigorlat => 1,
+		Tanköri => 2,
+		KötelezőenVálasztható => 2,
+		KötelezőenVálasztható4Félév => 2
+	) {
+		KÉPZÉSKÓD 5N-A7_2014,
+		KRITÉRIUMOK "kriterium-villamosmernok-bsc-2016.crd",
+		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc-2016.gd"
 	}
+
+	/**	KÉPZÉS [Workflow Típus] ([Paraméterek])
+	 *		1. paraméter:               workflow.GroupCriteria propertyt határozza meg. 
+	 *		2-x. további paraméterek:   workflow.SummaCriteria paraméterhez adódnak.
+	**/
 };

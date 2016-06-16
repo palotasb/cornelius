@@ -13,6 +13,7 @@ namespace Cornelius
         /// <summary>
         /// A félév belső reprezentációja, 10 * év + félév - 1
         /// </summary>
+        [System.Diagnostics.DebuggerDisplay("{ToString()}")]
         private int _internal;
 
         /// <summary>

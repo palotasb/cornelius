@@ -14,7 +14,7 @@ definition returns [List<AbstractWorkflow> list]
     ;
 
 workflow returns [AbstractWorkflow workflow]
-	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
+	: 'KÉPZÉS' ('BSC' { workflow = new BachelorWorkflow(); } | 'BSC2016' { workflow = new Bachelor2016Workflow(); } ) workflow_parameters[workflow]? workflow_body[workflow]
 	;
 
 workflow_parameters [AbstractWorkflow workflow]
@@ -61,7 +61,7 @@ TOKEN_SEMESTER
 	;
 
 TOKEN_EDUCATION_PROGRAM
-	: ('A'..'Z'|'0'..'9')+ '-' ('A'..'Z'|'0'..'9')+
+	: ('A'..'Z'|'0'..'9')+ '-' ('A'..'Z'|'0'..'9')+ (TOKEN_ID | '-')*
 	;
 
 TOKEN_STRING

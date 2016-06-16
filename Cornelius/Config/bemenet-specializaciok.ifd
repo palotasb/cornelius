@@ -1,0 +1,7 @@
+﻿TÁBLÁZAT ("agazat", "ágazat") {
+	"MinRat" => MinRatio,
+	"MaxRat" => MaxRatio,
+	"Cap" => Capacity,
+	"Specializacio" => Name,
+	"Csoport" => SpecializationGroup
+};

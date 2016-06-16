@@ -52,7 +52,7 @@ namespace Cornelius.Criteria.Workflow
             foreach (var criteria in this.SummaCriteria)
             {
                 // A CamelCase csoportneveket szavakra bontjuk
-                string name = Regex.Matches(criteria.Identifier, @"[A-Z][^A-Z]+").OfType<Match>().Select(match => match.Value).Aggregate((acc, b) => acc + " " + b.ToLower()).TrimStart(' ');
+                string name = Regex.Matches(criteria.Identifier, @"[A-Z][^A-Z]+").OfType<Match>().Select(match => match.Value).Aggregate((acc, b) => acc + " " + b.ToLower()).TrimStart(' ').Replace('_', ' ');
                 Result subresult = new Result(name, true);
 
                 // Következő túlcsorduló elemek
@@ -119,7 +119,6 @@ namespace Cornelius.Criteria.Workflow
             Log.Write("Kreditkritérium " + (result.Value ? "elfogadva" : "elutasítva") + ".");
         }
 
-        // TODO: ennek egy többet mondó nevet adni.
         /// <summary>
         /// Ez a kötelezően választható tárgyaknál bővíti ki a szűrést oly módon, hogy az átsorolt hallgatók
         /// az eredeti szakjuknak megfelelően tudjanak beszámítani közismeretiket.
@@ -143,7 +142,8 @@ namespace Cornelius.Criteria.Workflow
         /// A besorolási körök kiszámítása.
         /// </summary>
         /// <param name="student">A hallgató.</param>
-        protected override void ProcessFinalResult(Student student)
+        /// <param name="_">Nem használt paraméter.</param>
+        protected override void ProcessFinalResult(Student student, IEnumerable<SpecializationGrouping> _)
         {
             student.MissingCriteria = this.CourseCriteria.Weight + this.GroupCriteria.Amount + 1 - student.Result.Weight;
             if (this.CourseCriteria.Requirement < 0) student.MissingCriteria -= this.CourseCriteria.Requirement;

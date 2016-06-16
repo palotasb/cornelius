@@ -20,6 +20,9 @@ namespace Cornelius.IO.Primitives
         [Map(Required = false)]
         public string BaseName;
 
+        [Map(Required = false)]
+        public Curriculum? Curriculum;
+
         public override bool Equals(object obj)
         {
             if (obj is XBase)
@@ -37,14 +40,16 @@ namespace Cornelius.IO.Primitives
             return
                 this.BaseNeptun == obj.BaseNeptun &&
                 this.BaseEducationProgram == obj.BaseEducationProgram &&
-                this.BaseName == obj.BaseName;
+                this.BaseName == obj.BaseName &&
+                this.Curriculum == obj.Curriculum;
         }
 
         public override int GetHashCode()
         {
             return this.BaseNeptun.GetHashCode() ^
                 (this.BaseEducationProgram == null ? 0 : this.BaseEducationProgram.GetHashCode()) ^
-                (this.BaseName == null ? 0 : this.BaseName.GetHashCode());
+                (this.BaseName == null ? 0 : this.BaseName.GetHashCode()) ^
+                (this.Curriculum == null ? 0 : this.Curriculum.GetHashCode());
         }
     }
 }

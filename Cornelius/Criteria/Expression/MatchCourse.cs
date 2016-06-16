@@ -7,6 +7,7 @@ namespace Cornelius.Criteria.Expression
     /// megvan-e a teljesítés vagy az aláírás. Rendezőelvként a kreditsúlyozott
     /// osztályzatot használja, a kizárásos tárgyakat a végére dobva negatív értékekkel.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class MatchCourse : IExpression
     {
         /// <summary>
@@ -119,6 +120,11 @@ namespace Cornelius.Criteria.Expression
         public int Weight
         {
             get { return 1; }
+        }
+
+        public override string ToString()
+        {
+            return LongName;
         }
     }
 }

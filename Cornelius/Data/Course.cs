@@ -9,6 +9,7 @@ namespace Cornelius.Data
     /// <summary>
     /// Egy hallgató által felvett kurzus.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Course
     {
         /// <summary>
@@ -45,5 +46,10 @@ namespace Cornelius.Data
         /// A teljesítés féléve.
         /// </summary>
         public Semester? EffectiveSemester;
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}) {3} {4} Jegy:{5} {2}kr", Name, Code, Credit, HasSignature ? "@" : "-", HasCompleted ? "OK" : "no", Grade);
+        }
     }
 }

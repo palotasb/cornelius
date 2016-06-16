@@ -11,16 +11,42 @@ namespace Cornelius
     {
         public static IEnumerable<Specialization> ExtractSpecializations(Import import)
         {
-            Log.Write("Szakirány elosztás feldolgozása...");
+            Log.Write("Specializációk feldolgozása...");
             Log.EnterBlock();
             foreach (var primitive in import.Specializations)
             {
                 Specialization specialization = new Specialization();
-                specialization.EducationProgram = primitive.EducationProgram;
                 specialization.Name = primitive.Name;
-                specialization.Ratio = primitive.Ratio;
-                Log.Write(specialization.EducationProgram + " - " + specialization.Name + ": " + specialization.Ratio.ToString("#.00%"));
+                specialization.SpecializationGroup = primitive.SpecializationGroup;
+                specialization.MaxRatio = primitive.MaxRatio;
+                specialization.MinRatio = primitive.MinRatio;
+                specialization.Capacity = primitive.Capacity;
+                Log.Write(specialization.Name + " (" + specialization.SpecializationGroup + "): " + specialization.MinRatio + "-" + specialization.MaxRatio.ToString("#.00%"));
                 yield return specialization;
+            }
+            Log.LeaveBlock();
+        }
+
+        public static IEnumerable<SpecializationGrouping> ExtractSpecializationGroupings(Import import, IEnumerable<Specialization> specializations)
+        {
+            Log.Write("Specializációcsoportok feldolgozása...");
+            Log.EnterBlock();
+            var rawSpecGroups = specializations
+                .GroupBy(spec => spec.SpecializationGroup)
+                .Select(specGroup => new SpecializationGrouping(specGroup));
+            foreach (var primitive in import.SpecializationGroupings)
+            {
+                SpecializationGrouping specGroup;
+                if (rawSpecGroups.Any(sg => sg.Key == primitive.Name))
+                    specGroup = rawSpecGroups.First(sg => sg.Key == primitive.Name);
+                else
+                    continue;
+                specGroup.Capacity = primitive.Capacity;
+                specGroup.MinRatio = primitive.MinRatio;
+                specGroup.MaxRatio = primitive.MaxRatio;
+                specGroup.PreSpecializationCourseGroup = primitive.PreSpecializationCourseGroup;
+                specGroup.EducationProgram = primitive.EducationProgram;
+                yield return specGroup;
             }
             Log.LeaveBlock();
         }
@@ -96,7 +122,7 @@ namespace Cornelius
                     .OrderBy(entry => entry.EntryDate)
                     .Take(2)
                 ));
-                Log.Write("A hallgató több, mint egy harmadik vizsgán vett részt.");
+                Log.Write("A hallgató több mint egy harmadik vizsgán vett részt.");
             }
 
             foreach (var byCode in entries.GroupBy(entry => entry.Code))
@@ -124,6 +150,7 @@ namespace Cornelius
                     // Ha aláírás a követelmény, vagy ha 0 kredites a tárgy,
                     // akkor elég az aláírás a teljesítéshez, és végeztünk is
                     course.HasCompleted = course.HasSignature;
+                    course.EffectiveSemester = first.Semester.HasValue ? first.Semester.Value : Semester.FromDate(first.EntryDate);
                 }
                 else
                 {

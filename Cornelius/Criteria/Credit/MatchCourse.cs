@@ -7,6 +7,7 @@ namespace Cornelius.Criteria.Credit
     /// amennyiben a megadott tartományon belül történt a tárgy teljesítése,
     /// illetve ha a tárgykód megegyezik, akkor a csoportba tartozik a tárgy.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class MatchCourse : IGroupMatch
     {
         /// <summary>
@@ -45,6 +46,11 @@ namespace Cornelius.Criteria.Credit
         public bool Match(Course course)
         {
             return course.Code == this.Code && Semester.InInterval(course.EffectiveSemester, this.From, this.To);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}-{2})", Code, From != null ? From : "", To != null ? To : "");
         }
     }
 }

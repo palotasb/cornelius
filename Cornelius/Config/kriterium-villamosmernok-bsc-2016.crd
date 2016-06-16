@@ -1,0 +1,80 @@
+﻿KRITÉRIUM "Villamosmérnöki BSc 1-2. félév" (MIND KELL) {
+    /* Lásd a tantervet itt: http://www.vik.bme.hu/page/799/
+     * Specializációválasztási szabályzat: http://www.vik.bme.hu/document/459/original/Specv%C3%A1l_szab%C3%A1lyzat_BSc.pdf
+     * Dékáni utasítás a végrehajtásáról: http://www.vik.bme.hu/document/460/original/D%C3%A9k%C3%A1ni%20utas%C3%ADt%C3%A1s%20-%20BSc%20specv%C3%A1l.pdf
+     */
+
+	// Itt csak az első két szemeszter tárgyait kell megkövetelni.
+	// A BachelorWorkflow2016-ban kell figyelni rá, hogy vagy ez vagy a szabályzat 2. § (5) c) kiváltható.
+	// A szigorlat nem kiváltható, azt is külön kell ellenőrizni.
+
+	KRITÉRIUM "Matematika A1" (1. FÉLÉV, 6 KREDIT) {
+		BMETE90AX00 "Matematika A1a - Analízis",
+		BMETE901913 "Matematika B1",
+		BMETE90AX00 "Matematika A1"
+	},
+	KRITÉRIUM "Fizika 1" (1. FÉLÉV, 4 KREDIT) {
+		BMETE11AX01 "Fizika 1",
+		BMETE111820 "Fizika C1",
+		BMETE11AX21 "Fizika 1"
+	},
+	KRITÉRIUM "A számítástudomány alapjai" (1. FÉLÉV, 6 KREDIT) {
+		BMEVIMA2025 "A számítástudomány alapjai",
+		BMEVIMA2026 "A számítástudomány alapjai",
+		BMEVISZA105 "A számítástudomány alapjai",
+		BMEVISZAA02 "A számítástudomány alapjai",
+		BMEVISZAA02 "A számítástudomány alapjai"
+	},
+    KRITÉRIUM "Mérnök leszek" (1. FÉLÉV, 2 KREDIT) {
+        BMEGT52A400 "Mérnök leszek"
+    },
+	KRITÉRIUM "A programozás alapjai 1" (1. FÉLÉV, 7 KREDIT) {
+		KRITÉRIUM {
+			BMEVIET1015 "Programtervezés I.",
+			BMEVIMH1506 "Programmplanung I."
+		} &&
+		KRITÉRIUM {
+			BMEVIET1017 "Programtervezés II.",
+			BMEVIMH1507 "Programmplanung II."
+		},
+		BMEVIHIA106 "A programozás alapjai I.",
+		BMEVIHIAA01 "A programozás alapjai 1"
+	},
+	KRITÉRIUM "Digitális technika 1" (1. FÉLÉV, 5 KREDIT) {
+		BMEVIFO1016 "Digitális technika",
+		BMEVIIIA104 "Digitális technika I.",
+		BMEVIIIA105 "Digitális technika 1",
+		BMEVIFO1503 "Digitaltechnik",
+		BMEVIIIAA01 "Digitális technika 1"
+	},
+	KRITÉRIUM "Matematika A2" (2. FÉLÉV, 6 KREDIT) {
+		BMETE90AX02 "Matematika A2a - Vektorfüggvények",
+		BMETE901918 "Matematika B2",
+		BMETE90AX26 "Matematika A2"
+	},
+	KRITÉRIUM "Fizika 2" (2. FÉLÉV, 5 KREDIT) {
+		BMETE111821 "Fizika C2",
+		BMETE11AX02 "Fizika 2",
+		BMETE11AX22 "Fizika 2"
+	},
+	KRITÉRIUM "A programozás alapjai 2" (2. FÉLÉV, 7 KREDIT) {
+		BMEVIAUA116 "A programozás alapjai 2",
+		BMEVIHIA107 "A programozás alapjai 2.",
+		BMEVIAUAA00 "A programozás alapjai 2"
+	},
+	KRITÉRIUM "Digitális technika 2" (2. FÉLÉV, 5 KREDIT) {
+		BMEVIFO1020 "Digitális technika II. (Digital Design)",
+		BMEVIFO1013 "Digitális technika",
+		BMEVIIIA108 "Digitális technika II.",
+		BMEVIIIA106 "Digitális technika 2",
+		BMEVIFO1504 "Digitaltechnik",
+		BMEVIIIAA02 "Digitális technika 2"
+	},
+	KRITÉRIUM "Jelek és rendszerek 1" (2. FÉLÉV, 6 KREDIT) {
+		BMEVIEV1505 "Hálózatok és rendszerek I. (Netzwerke, Signale und Systeme I.)",
+		BMEVIEV1019 "Hálózatok és rendszerek 1. (Networks and Systems 1.)",
+		BMEVIEV1014 "Hálózatok és rendszerek 1. (Networks and Systems 1.)",
+		BMEVIHVA109 "Jelek és rendszerek 1.",
+		BMEVIHVAA00 "Jelek és rendszerek 1"
+	}
+};

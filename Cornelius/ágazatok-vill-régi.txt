@@ -1,0 +1,12 @@
+MinRat	MaxRat	Cap	Specializacio	Csoport
+0.15	0.50	999	Számítógép-alapú rendszerek	Beágyazott és irányító rendszerek (régi)
+0.15	0.50	999	Irányítórendszerek	Beágyazott és irányító rendszerek (régi)
+0.15	0.50	999	Beágyazott információs rendszerek	Beágyazott és irányító rendszerek (régi)
+0.15	0.50	999	Infokommunikációs hálózatok és alkalmazások	Infokommunikációs rendszerek (régi)
+0.15	0.50	999	Nagyfrekvenciás rendszerek és alkalmazások	Infokommunikációs rendszerek (régi)
+0.15	0.50	999	Multimédia technológiák és rendszerek	Infokommunikációs rendszerek (régi)
+0.30	0.70	999	Mikroelektronikai tervezés	Mikroelektronikai tervezés és gyártás (régi)
+0.30	0.70	999	Mikroelektronikai gyártás	Mikroelektronikai tervezés és gyártás (régi)
+0.15	0.50	999	Smart grid	Fenntartható villamos energetika (régi)
+0.15	0.50	999	Villamos gépek és hajtások	Fenntartható villamos energetika (régi)
+0.15	0.50	999	Villamos szigetelési rendszerek	Fenntartható villamos energetika (régi)

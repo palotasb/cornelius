@@ -1,5 +1,13 @@
 ﻿TÁBLÁZAT ("kivetelek") {
 	"Képzés" => BaseEducationProgram,
 	"Neptun kód" => BaseNeptun,
-	"Nyomtatási név" => BaseName
+	"Nyomtatási név" => BaseName,
+	"Mintatanterv neve" => Curriculum
+};
+
+FELSOROLÁS Curriculum {
+	"Alapképzés - 2013-ig felvettek vagy újrafelvettek részére" = Until2013,
+	"Alapképzés - 2014-től felvettek részére" = From2014,
+	"2013" = Until2013,
+	"2014" = From2014
 };
