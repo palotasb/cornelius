@@ -53,6 +53,11 @@ namespace Cornelius.Criteria.Workflow
         private const string CompHumCourseGroup = "KötelezőenVálasztható";
 
         /// <summary>
+        /// Kötelezően választható (compulsory humanities) tárgyak csoportneve.
+        /// </summary>
+        private const string CompHumCourseSemester4Group = "KötelezőenVálasztható4Félév";
+
+        /// <summary>
         /// Szabadon választható tárgyak csoportneve.
         /// </summary>
         private const string FreeChoiceCourseGroup = "SzabadonVálasztható";
@@ -103,7 +108,7 @@ namespace Cornelius.Criteria.Workflow
             // Tanköri alapján mentesség meghatározása
             bool Has26Exemption = Determine26Exemption(student);
             bool Uses26Exemption = false;
-            Log.Write("Info: A hallgató rendelkezik engedményre jogosító két tankörivel: " + (Has26Exemption ? "igen" : "nem"));
+            Log.Write("A hallgató rendelkezik engedményre jogosító két tankörivel: " + (Has26Exemption ? "igen" : "nem"));
             // TODO kreditek logolása tárgycsoportonként.
             student.CreditPerGroup = new Dictionary<string, double>();
             // 2. § (5) b) feldolgozása.
@@ -130,7 +135,7 @@ namespace Cornelius.Criteria.Workflow
             {
                 student.Result.Value = false;
                 student.Result += new Result("Specializációelőkészítők", false);
-                Log.Write("Info: A hallgató egyik specializációra sem sorolható be az előkészítők hiánya miatt.");
+                Log.Write("A hallgató egyik specializációra sem sorolható be az előkészítők hiánya miatt.");
             }
         }
 
@@ -169,7 +174,7 @@ namespace Cornelius.Criteria.Workflow
             {
                 result.Weight = 90 - (int)credits;
             }
-            Log.Write("Info: A kreditkritérium elfogadva: " + (result.Value ? "igen" : "nem"));
+            Log.Write("A kreditkritérium elfogadva: " + (result.Value ? "igen" : "nem"));
 
             student.Result.Weight += result.Weight;
             student.Result += result;
@@ -204,6 +209,7 @@ namespace Cornelius.Criteria.Workflow
                     CompHumResult.Weight = 0;
                 else
                     CompHumResult.Weight = GetCompHumAmount() - CompHumCourses.Count();
+                Log.Write(string.Format("Kötelezően választható tárgyak az első két félévből {0}.", CompHumResult.Value ? "teljesítve" : "nem teljesítve"));
                 // Kötvál aleredmény tárolása
                 student.Result.Weight += CompHumResult.Weight;
                 student.Result += CompHumResult;
@@ -212,7 +218,7 @@ namespace Cornelius.Criteria.Workflow
                 // Ellenőrizzük, hogy a tanköri kedvezmény használható-e.
                 if (student.Result.Value == false)
                 {
-                    Log.Write("Info: A hallgatónak nincs meg minden tantárgya az első két félévből.");
+                    Log.Write("A hallgatónak nincs meg minden tantárgya az első két félévből.");
                     if (has26Exemption && !uses26Exemption)
                     {   // Kiváltható a kritérium
                         uses26Exemption = true;
@@ -221,10 +227,10 @@ namespace Cornelius.Criteria.Workflow
                         {
                             student.Result.Value = true;
                         }
-                        Log.Write("Info: A mentességgel teljesül a követelmény: " + (student.Result.Value ? "igen" : "nem"));
+                        Log.Write("A mentességgel teljesül a követelmény: " + (student.Result.Value ? "igen" : "nem"));
                     }
                 }
-                Log.Write("Info: Első két félév kötelező tárgyai kritérium elfogadva: " + (student.Result.Value ? "igen" : "nem"));
+                Log.Write("Első két félév kötelező tárgyai kritérium elfogadva: " + (student.Result.Value ? "igen" : "nem"));
             }
             else
             {
@@ -235,10 +241,11 @@ namespace Cornelius.Criteria.Workflow
         /// <summary>
         /// Megadja a mintatanterv elején figyelembevételre előírt kötelezően választható tárgymennyiséget.
         /// </summary>
+        /// <param name="all4">Igaz, ha az első négy félév kötelezően választható tárgyainak számát kérdezzük le</param>
         /// <returns>A mintatanterv elején előírt kötelezően választhatók száma</returns>
-        private int GetCompHumAmount()
+        private int GetCompHumAmount(bool all4 = false)
         {
-            return SummaCriteria.FirstOrDefault(gr => gr.Identifier == CompHumCourseGroup).Amount;
+            return SummaCriteria.FirstOrDefault(gr => gr.Identifier == (all4 ? CompHumCourseSemester4Group : CompHumCourseGroup)).Amount;
         }
         
         /// <summary>
@@ -255,7 +262,7 @@ namespace Cornelius.Criteria.Workflow
 
             if (!result)
             {
-                Log.Write("Info: A hallgatónak nincs 20 kreditje a harmadik félév mintatantervi tárgyaiból.");
+                Log.Write("A hallgatónak nincs 20 kreditje a harmadik félév mintatantervi tárgyaiból.");
                 result.Weight = 20 - (int)credits; // Hiányzó kreditek száma
                 if (has26Exemption && !uses26Exemption) // Mentesség
                 {
@@ -267,10 +274,10 @@ namespace Cornelius.Criteria.Workflow
                         result.Weight = 0;
                         result.Value = true;
                     }
-                    Log.Write("Info: A mentességgel teljesül a követelmény: " + (student.Result.Value ? "igen" : "nem"));
+                    Log.Write("A mentességgel teljesül a követelmény: " + (student.Result.Value ? "igen" : "nem"));
                 }
             }
-            Log.Write("Info: A harmadik szemeszterből húsz kredit kritérium elfogadva: " + (result.Value ? "igen" : "nem"));
+            Log.Write("A harmadik szemeszterből húsz kredit kritérium elfogadva: " + (result.Value ? "igen" : "nem"));
 
             // Eredmény tárolása
             student.Result.Weight += result.Weight;
@@ -288,7 +295,7 @@ namespace Cornelius.Criteria.Workflow
             // Ha abban nem szerepel, akkor a követelmény 0.
             var result = new Result("Szigorlat",
                 SummaCriteria.FirstOrDefault(gr => gr.Identifier == ExamGroup).Amount <= FilterCriteriaCourses(student, ExamGroup).Count());
-            Log.Write("Info: Szigorlati kritérium elfogadva: " + (result.Value ? "igen" : "nem"));
+            Log.Write("Szigorlati kritérium elfogadva: " + (result.Value ? "igen" : "nem"));
 
             student.Result.Weight += result.Weight;
             student.Result += result;
@@ -302,7 +309,7 @@ namespace Cornelius.Criteria.Workflow
         /// <returns>Igaz, ha jár a mentesség.</returns>
         private bool Determine26Exemption(Student student)
         {
-            return 2 <= FilterCriteriaCourses(student, StudyGroupGroup).Count();
+            return SummaCriteria.FirstOrDefault(gr => gr.Identifier == StudyGroupGroup).Amount <= FilterCriteriaCourses(student, StudyGroupGroup).Count();
         }
 
         /// <summary>
@@ -321,7 +328,7 @@ namespace Cornelius.Criteria.Workflow
                                                     .Except(student.Choices);
             // Jelentkezési sorrend kiegészítése
             student.Choices = student.Choices.Concat(missingSpecs).ToArray();
-            Log.Write(string.Format("Info: {0} specializációval egészítettük ki a hallgató jelentkezési sorrendjét.", missingSpecs.Count()));
+            Log.Write(string.Format("{0} specializációval egészítettük ki a hallgató jelentkezési sorrendjét.", missingSpecs.Count()));
         }
 
         /// <summary>
@@ -332,7 +339,7 @@ namespace Cornelius.Criteria.Workflow
         /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         private void RemoveUnattainableSpecializations(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
-            List<string> validChoices = new List<string>(30);
+            List<string> validChoices = new List<string>();
             foreach (var specGroup in specializationGroupings.Where(sg => sg.EducationProgram == student.EducationProgram))
             {
                 // Ha a specializációcsoporthoz nincs előírva előkészítő tárgycsoport vagy elő van írva és abból
@@ -346,7 +353,7 @@ namespace Cornelius.Criteria.Workflow
 
             // Jelentkezési sor felülírása.
             student.Choices = student.Choices.Where(choice => validChoices.Contains(choice)).ToArray();
-            Log.Write(string.Format("Info: {0} specializációra sorolható be a hallgató az előkészítő tárgyakat figyelembe véve.", validChoices.Count()));
+            Log.Write(string.Format("{0} specializációra sorolható be a hallgató az előkészítő tárgyakat figyelembe véve.", validChoices.Count()));
         }
 
         /// <summary>
@@ -360,7 +367,7 @@ namespace Cornelius.Criteria.Workflow
             var semester3Courses = FilterCriteriaCourses(student, Semester3CourseGroup);
             var semester4Courses = FilterCriteriaCourses(student, Semester4CourseGroup);
             // Kötelezően választhatóból a mintatanterv elejére ütemezett x darab (legjobb) figyelembe vétele
-            var compHumCourses = FilterCriteriaCourses(student, CompHumCourseGroup).Take(GetCompHumAmount());
+            var compHumCourses = FilterCriteriaCourses(student, CompHumCourseGroup).Take(GetCompHumAmount(true));
             // Előkészítő tárgyakból a három legjobb figyelembevétele
             var preSpecCourses = (from specGroup in specializationGroupings // Ez a szépség a teljesített specializációelőkészítő tárgyakat szedi össze
                                   select FilterCriteriaCourses(student, PreSpecCourseGroup + specGroup.PreSpecializationCourseGroup))
@@ -380,7 +387,7 @@ namespace Cornelius.Criteria.Workflow
             student.Result.Credit = 120;
             student.Round = 1;
 
-            Log.Write(string.Format("Info: A hallgató rangsorátlaga {0}.", student.Result.Avarage));
+            Log.Write(string.Format("A hallgató rangsorátlaga {0}.", student.Result.Avarage));
         }
     }
 }
