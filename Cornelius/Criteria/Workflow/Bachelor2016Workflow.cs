@@ -87,8 +87,6 @@ namespace Cornelius.Criteria.Workflow
                 Log.Write("Kritériumok alól felmentve.");
                 student.Result.Value = true;
             }
-            if (student.Result) Log.Write(student.Round + ". körben besorolható.");
-            else Log.Write("Nem besorolható.");
             Log.LeaveBlock();
         }
 
@@ -106,6 +104,8 @@ namespace Cornelius.Criteria.Workflow
             bool Has26Exemption = Determine26Exemption(student);
             bool Uses26Exemption = false;
             Log.Write("Info: A hallgató rendelkezik engedményre jogosító két tankörivel: " + (Has26Exemption ? "igen" : "nem"));
+            // TODO kreditek logolása tárgycsoportonként.
+            student.CreditPerGroup = new Dictionary<string, double>();
             // 2. § (5) b) feldolgozása.
             // Ez direkt van előbb az a)-nál, mert ez hívja meg az AbstractWorkflow.ProcessCourseRequirements függvényt,
             // ami a student.Result-ot létrehozza.
@@ -117,6 +117,21 @@ namespace Cornelius.Criteria.Workflow
             // 2. § (5) d) feldolgozása.
             ProcessExamRequirements(student);
             // A 2. § (7) feldolgozása külön történik az el nem érhető specializációk eltávolításával a jelentkezési sorból.
+            ProcessSpecializationRequirements(student);
+            // Tanköri engedmény külön rögzítése.
+            student.Result += new Result("Tanköri foglalkozás", Has26Exemption);
+            Log.Write((student.Result ? "Teljesíti" : "Nem teljesíti") + " a jelentkezési kritériumokat a hallgató.");
+        }
+
+        private void ProcessSpecializationRequirements(Student student)
+        {
+            bool result = 0 < student.Choices.Length;
+            if (!result)
+            {
+                student.Result.Value = false;
+                student.Result += new Result("Specializációelőkészítők", false);
+                Log.Write("Info: A hallgató egyik specializációra sem sorolható be az előkészítők hiánya miatt.");
+            }
         }
 
         /// <summary>
@@ -273,6 +288,11 @@ namespace Cornelius.Criteria.Workflow
             // Ha abban nem szerepel, akkor a követelmény 0.
             var result = new Result("Szigorlat",
                 SummaCriteria.FirstOrDefault(gr => gr.Identifier == ExamGroup).Amount <= FilterCriteriaCourses(student, ExamGroup).Count());
+            Log.Write("Info: Szigorlati kritérium elfogadva: " + (result.Value ? "igen" : "nem"));
+
+            student.Result.Weight += result.Weight;
+            student.Result += result;
+            student.Result.Value = student.Result.Value && result.Value;
         }
 
         /// <summary>
@@ -359,6 +379,8 @@ namespace Cornelius.Criteria.Workflow
             student.Result.Points = allCourses.Sum(course => course.Credit * course.Grade);
             student.Result.Credit = 120;
             student.Round = 1;
+
+            Log.Write(string.Format("Info: A hallgató rangsorátlaga {0}.", student.Result.Avarage));
         }
     }
 }

@@ -28,9 +28,9 @@ namespace Cornelius
             **/
 
             var import = Import.LoadAllFiles();
-            var allStudents = Builder.ExtractStudents(import);
-            var specializations = Builder.ExtractSpecializations(import);
-            var specGroupings = Builder.ExtractSpecializationGroupings(import, specializations);
+            var allStudents = Builder.ExtractStudents(import).ToList();
+            var specializations = Builder.ExtractSpecializations(import).ToList();
+            var specGroupings = Builder.ExtractSpecializationGroupings(import, specializations).ToList();
             Evaluator.ProcessStudents(allStudents, import.Exceptions, specGroupings);
             
             var studentsByEduProgram = allStudents.GroupBy(student => student.EducationProgram);

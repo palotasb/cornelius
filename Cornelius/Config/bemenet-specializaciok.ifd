@@ -1,7 +1,7 @@
 ﻿TÁBLÁZAT ("specializaciok") {
 	"MinRat" => MinRatio,
 	"MaxRat" => MaxRatio,
-	"MaxCnt" => MaxCount,
+	"Cap" => Capacity,
 	"Specializacio" => Name,
 	"Csoport" => SpecializationGroup
 };

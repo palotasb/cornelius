@@ -6,27 +6,23 @@
 	
 	/* Régi, 2016 előtt érvényes kritériumok / besorolás */
 
-	/* Mérnök Informatikus BSc képzés */
-	KÉPZÉS BSC (KötelezőenVálasztható => 2, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
-		KÉPZÉSKÓD 5N-A8,
-		KRITÉRIUMOK "kriterium-informatikus-bsc.crd",
-		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc.gd"
-	},
-	
-	/* Villamosmérnöki BSc képzés */
-	KÉPZÉS BSC (KötelezőenVálasztható => 1, Kötelező => 120, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
-		KÉPZÉSKÓD 5N-A7,
-		KRITÉRIUMOK "kriterium-villamosmernok-bsc.crd",
-		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc.gd"
-	}
-
 	/* Új, 2016 nyarától érvényes kritériumok / besorolás */
 
 	/* Mérnök Informatikus BSc képzés */
-	KÉPZÉS BSC2016 (KötelezőenVálasztható => 0, Kötelező => 90, KötelezőenVálasztható => 10, SzabadonVálasztható => 10) {
+	KÉPZÉS BSC2016 (
+		x => 0,
+		Kötelező_1_2_Félév => 60,
+		Kötelező_3_Félév => 20,
+		Kötelező_4_Félév => 0,
+		Kötelező_5_x_Félév => 0,
+		Tanköri => 2,
+		Szigorlat => 0,
+		KötelezőenVálasztható => 1,
+		SzabadonVálasztható => 10
+	) {
 		KÉPZÉSKÓD 5N-A8,
-		KRITÉRIUMOK "kriterium-informatikus-bsc-2016.crd",
-		CSOPORTOSÍTÁS "csoportositas-informatikus-bsc-2016.gd"
+		KRITÉRIUMOK "kriterium-informatikus-regibsc-2016.crd",
+		CSOPORTOSÍTÁS "csoportositas-informatikus-regibsc-2016.gd"
 	},
 	
 	/* Villamosmérnöki BSc képzés */
@@ -37,13 +33,13 @@
 		Kötelező_4_Félév => 0,
 		Kötelező_5_x_Félév => 0,
 		Tanköri => 2,
-		Szigorlat => 1,
+		Szigorlat => 0,
 		KötelezőenVálasztható => 2,
 		SzabadonVálasztható => 10
 	) {
 		KÉPZÉSKÓD 5N-A7,
-		KRITÉRIUMOK "kriterium-villamosmernok-bsc-2016.crd",
-		CSOPORTOSÍTÁS "csoportositas-villamosmernok-bsc-2016.gd"
+		KRITÉRIUMOK "kriterium-villamosmernok-regibsc-2016.crd",
+		CSOPORTOSÍTÁS "csoportositas-villamosmernok-regibsc-2016.gd"
 	}
 
 	/**	KÉPZÉS [Workflow Típus] ([Paraméterek])

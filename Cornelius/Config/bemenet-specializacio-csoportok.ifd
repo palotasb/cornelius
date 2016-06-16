@@ -1,8 +1,8 @@
 ﻿TÁBLÁZAT ("specializacio-csoportok") {
 	"Szak" => EducationProgram,
 	"Csoport" => Name,
-	"Elokeszito" => PrespecializationCourseGroup,
+	"Elokeszito" => PreSpecializationCourseGroup,
 	"MinRat" => MinRatio,
 	"MaxRat" => MaxRatio,
-	"MaxCnt" => MaxCount
+	"Cap" => Capacity
 };

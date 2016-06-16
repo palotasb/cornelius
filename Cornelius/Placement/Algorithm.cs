@@ -76,19 +76,20 @@ namespace Cornelius.Placement
             {
                 tries++;
                 Log.Write("Info: " + tries.ToString() + ". besorolási próbálkozás a képzésen.");
-                Log.EnterBlock();
+                Log.EnterBlock(" => ");
                 if (TryPlaceStudents(studentList, specLimits, out placements, out unplaceableStudent, out restart))
                 {
-                    Log.Write("Info: Sikeresen lefutott a besorolás.");
+                    Log.Write(string.Format("Info: Sikeresen lefutott a besorolás a {0}. próbálkozásra.", tries));
+                    Log.LeaveBlock();
                     return true;
                 }
-                Log.Write("Info: Sikertelen besorolás.");
+                Log.Write(string.Format("Info: Sikertelen próbálkozás a {0}. próbálkozásra.", tries));
                 if (unplaceableStudent != null)
                 {
                     Log.Write("Info: Kritériumhiányos hallgató (" + unplaceableStudent.OriginKey + ") kizárva.");
                     studentList.Remove(unplaceableStudent);
                     unplaceableStudent.Result.Value = false;
-                    unplaceableStudent.Result += new Result("Rangsorolás során kritériumhiányos az összes lehetséges specializáción.", false);
+                    unplaceableStudent.Result += new Result("Specializációelőkészítők (rangsorolás során kizárva).", false);
                 }
                 Log.LeaveBlock();
             }
@@ -120,16 +121,21 @@ namespace Cornelius.Placement
             var specHeadcounts = new Dictionary<Specialization, SpecializationHeadcount>();
             // Besorolható hallgatók száma.
             var totalHeadcount = placeableStudents.Count();
+            Log.Write(totalHeadcount.ToString() + " hallgató besorolása.");
+            Log.EnterBlock();
             foreach (var specGroup in SpecializationGroupings)
             {
                 specGroupHeadcounts.Add(specGroup, new SpecializationGroupingHeadcount(specGroup, totalHeadcount));
+                Log.Write(string.Format("{0} specializáció korlátai: {1}-{2}.", specGroup.Key, specGroupHeadcounts[specGroup].MinimumCount, specGroupHeadcounts[specGroup].MaximumCount));
                 foreach (var spec in specGroup)
                 {
                     specHeadcounts.Add(spec, new SpecializationHeadcount(spec, specGroup, totalHeadcount));
                     if (specLimits.ContainsKey(spec))
                         specHeadcounts[spec].CloseAt(specLimits[spec]);
+                    Log.Write(string.Format("  {0} ágazat korlátai: {1}-{2}{3}.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].Closed ? " (lezárva)" : ""));
                 }
             }
+            Log.LeaveBlock();
 
             // A besorolóalgoritmus. Az első sikertelen besorolás esetén leáll, és jelzi, ha újra kell indítani.
             // A hallgató-specializáció összerendeléseket tartalmazó lista.
@@ -141,9 +147,13 @@ namespace Cornelius.Placement
                 // Preferenciasorrendben ellenőrizzük, hogy besorolható-e, és az első helyre besoroljuk.
                 bool studentPlaced = false;
                 int tries = 0;
+                Log.Write(string.Format("{0} hallgató besorolása...", student.OriginKey));
+                Log.EnterBlock();
                 foreach (var choice in student.Choices)
                 {
                     tries++;
+                    Log.Write(string.Format("Az {0}. megjelölt ágazat a(z) {1}", tries, choice));
+                    Log.EnterBlock();
                     var choiceSpec = Specializations.First(spec => spec.Name == choice);
                     bool reasonSpecMin, reasonSpecGroupMin, reasonMaxSameAvg;
                     if (CanPlaceStudent(choiceSpec, specHeadcounts, specGroupHeadcounts, totalHeadcount, student.Result.Avarage, out reasonSpecMin, out reasonSpecGroupMin, out reasonMaxSameAvg))
@@ -151,7 +161,8 @@ namespace Cornelius.Placement
                         UpdateHeadcountsWithPlacement(choiceSpec, specHeadcounts, specGroupHeadcounts, totalHeadcount, student.Result.Avarage);
                         resultsList.Add(Tuple.Create(student, choiceSpec));
                         studentPlaced = true;
-                        Log.Write(string.Format("Info: Hallgató ({0}) besorolva a jelentkezési sorában {1}. ágazatra ({2}).", student.OriginKey, tries, choice));
+                        Log.Write("Besorolva.");
+                        Log.LeaveBlock();
                         break; // choice in student.Choices
                     }
                     if (reasonSpecMin)  // Ha az ágazaton nem teljesíthető a besorolás esetén a minimum, akkor csak a specializációcsoport ágazatait zárjuk le.
@@ -162,18 +173,23 @@ namespace Cornelius.Placement
                             specGroupHeadcounts[specGroup].Close();
                     if (reasonMaxSameAvg)
                     {   // Ha a maximumkritérium úgy nem teljesíthető, hogy a hallgató az utolsó besorolt hallgatóval azonos átlagú
-                        specLimits.Add(choiceSpec, specHeadcounts[choiceSpec].AboveMinimumCount);
+                        specLimits.Add(choiceSpec, Math.Max(0, specHeadcounts[choiceSpec].CurrentCount - specHeadcounts[choiceSpec].SameRankCount));
                         placements = null;
                         restart = true;
+                        Log.LeaveBlock();
+                        Log.LeaveBlock();
                         return false;
                     }
+                    Log.LeaveBlock();
                 }
+                Log.LeaveBlock();
                 if (!studentPlaced)
                 {
                     if (Specializations.Count() != student.Choices.Count())
                     {   // Ha nem mindenhova próbáltuk besorolni a hallgatót, akkor ő számít kritériumhiányosnak.
                         unplaceableStudent = student;
                         restart = true;
+                        Log.Write("Info: A hallgató kritériumhiányosnak minősítendő, mert nem sorolható be egyik megfelelő ágazatra sem.");
                     }
                     break;  // student in placeableStudents :: A besorolás itt mindenképp véget ért, de kritériumhiányos hallgató esetén újraindítjuk.
                 }
@@ -202,21 +218,29 @@ namespace Cornelius.Placement
         {
             var currSpecGroup = SpecializationGroupings.First(sg => sg.Contains(specialization));
             specGroupHeadcounts[currSpecGroup].CurrentCount++;
+            Log.Write(string.Format("Info: {2}-{3} ({1}): {0} specializáció korlátai és aktuális létszáma.", currSpecGroup.Key, specGroupHeadcounts[currSpecGroup].CurrentCount, specGroupHeadcounts[currSpecGroup].MinimumCount, specGroupHeadcounts[currSpecGroup].MaximumCount));
+
             // A specializációcsoport összes minimuma és maximuma változhat.
+            Log.EnterBlock();
             foreach (var spec in currSpecGroup)
             {
+                // TODO az újraszámolást az összes ágazatra el kell végezni, és talán még úgy is rossz lesz...
+                if (spec == specialization)
+                {   // Ha erre a specializációra (ágazatra) soroltunk éppen be, akkor frissítjük a számokat.
+                    specHeadcounts[spec].CurrentCount++;
+                    specHeadcounts[spec].SameRankCount = (specHeadcounts[spec].MinimumRankAverage <= rankAverage ? specHeadcounts[spec].SameRankCount + 1 : 0);
+                    specHeadcounts[spec].MinimumRankAverage = rankAverage;
+                }
                 if (!specHeadcounts[spec].Closed)
                 {   // Lezárás után már a minimumok és maximumok nem változhatnak, és itt nem szabad, hogy felülírjuk őket.
                     specHeadcounts[spec].MinimumCount = GetSpecMinCount(spec, currSpecGroup, specGroupHeadcounts[currSpecGroup].CurrentCount, totalHeadcount);
                     specHeadcounts[spec].MaximumCount = GetSpecMaxCount(spec, currSpecGroup, specGroupHeadcounts[currSpecGroup].CurrentCount, totalHeadcount, totalHeadcount - specGroupHeadcounts.Sum(kvSpecGroup => kvSpecGroup.Value.CurrentCount));
+                    Log.Write(string.Format("Info: {1}-{2} ({3}): {0} ágazat újraszámolt korlátai és aktuális létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].CurrentCount));
+                    if (spec == specialization) Log.Write(string.Format(" ^^^^ Besorolva ide. Az ágazaton az aktuális rangsorátlaggal ({0}) azonos átlagúak száma: {1}.", specHeadcounts[spec].MinimumRankAverage, specHeadcounts[spec].SameRankCount));
                 }
-                if (spec == specialization)
-                {   // Ha erre a specializációra (ágazatra) soroltunk éppen be, akkor frissítjük a számokat.
-                    specHeadcounts[spec].CurrentCount++;
-                    specHeadcounts[spec].AboveMinimumCount += (rankAverage < specHeadcounts[spec].MinimumRankAverage ? 1 : 0);
-                    specHeadcounts[spec].MinimumRankAverage = rankAverage;
-                }
+                else { Log.Write(string.Format("Info: {1}-{2} ({3}): A lezárt {0} ágazat korlátai és létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].CurrentCount)); }
             }
+            Log.LeaveBlock();
         }
 
         /// <summary>
@@ -260,11 +284,16 @@ namespace Cornelius.Placement
                 unplacedCount - SpecializationGroupings.Where(sg => sg != currSpecGroup).Sum(sg => Math.Max(0, specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount))
                 < currSpecGroup.Sum(spec => Math.Max(0, specHeadcounts[spec].MinimumCount - specHeadcounts[spec].CurrentCount - (spec == specialization ? 1 : 0)));
 
-            bool result = specializationMinimum && specializationGroupMinimum && specializationMaximum && specializationGroupMaximum && specializationMaximumAndSameRank;
-            Log.Write(string.Format("Info: A(z) {0} specializációra (ágazatra) besorolási kísérlet lehetséges: {1}", specialization.Name, result ? "igen" : "nem"));
+            bool result = !specializationMinimum && !specializationGroupMinimum && !specializationMaximum && !specializationGroupMaximum && !specializationMaximumAndSameRank;
+            Log.Write(string.Format("Info: {1} a(z) {0} ágazatra.", specialization.Name, result ? "Besorolható" : "Nem sorolható be"));
             if (!result)
-                Log.Write(string.Format("Info: Kritériumhiány - specializációcsoport (min: {0}, max: {1}), ágazat (min: {2}, max: {3}, átl: {4})",
-                    specializationGroupMinimum, specializationGroupMaximum, specializationMinimum, specializationMaximum, specializationMaximumAndSameRank));
+            {
+                Log.Write(string.Format("Info: {2}-{3} ({1}): {0} specializáció korlátai és aktuális létszáma.", currSpecGroup.Key, specGroupHeadcounts[currSpecGroup].CurrentCount, specGroupHeadcounts[currSpecGroup].MinimumCount, specGroupHeadcounts[currSpecGroup].MaximumCount));
+                Log.Write(string.Format("Info: {2}-{3} ({1}): {0} ágazat korlátai és aktuális létszáma.", specialization.Name, specHeadcounts[specialization].CurrentCount, specHeadcounts[specialization].MinimumCount, specHeadcounts[specialization].MaximumCount));
+                Log.Write(string.Format("Info: Nem-besorolhatóság okai: specializáció-csoport: [{0}, {1}], ágazat: [{2}, {3}, {4}]",
+                      specializationGroupMinimum ? "minimum" : "-", specializationGroupMaximum ? "maximum" : "-",
+                      specializationMinimum ? "minimum" : "-", specializationMaximum ? "maximum" : "-", specializationMaximumAndSameRank ? "nem kisebb rangsorátlag" : "-"));
+            }
             return result;
         }
 
@@ -302,14 +331,14 @@ namespace Cornelius.Placement
         /// <summary>
         /// Alaposztály egy specializációcsoport vagy ágazat létszámainak nyilvántartásához.
         /// </summary>
-        private class Headcount
+        private class HeadCount
         {
             public int MinimumCount;
             public int MaximumCount;
             public int CurrentCount;
             public bool Closed;
 
-            public Headcount()
+            public HeadCount()
             {
                 CurrentCount = 0;
                 Closed = false;
@@ -328,16 +357,16 @@ namespace Cornelius.Placement
         /// <summary>
         /// Egy specializáció (ágazat) létszámait tartja nyilván, figyelembe véve azt, hogy azonos átlagú hallgatók nem szoríthatják ki egymást.
         /// </summary>
-        private class SpecializationHeadcount : Headcount
+        private class SpecializationHeadcount : HeadCount
         {
-            public int AboveMinimumCount;
+            public int SameRankCount;
             public double MinimumRankAverage;
 
             public SpecializationHeadcount(Specialization spec, SpecializationGrouping specGroup, int totalHeadcount)
             {
                 MinimumCount = GetSpecMinCount(spec, specGroup, 0, totalHeadcount);
                 MaximumCount = GetSpecMaxCount(spec, specGroup, 0, totalHeadcount, totalHeadcount);
-                AboveMinimumCount = 0;
+                SameRankCount = 0;
                 MinimumRankAverage = double.MaxValue;
             }
 
@@ -355,7 +384,7 @@ namespace Cornelius.Placement
         /// <summary>
         /// Egy specializációcsoport létszámait tartja nyilván.
         /// </summary>
-        private class SpecializationGroupingHeadcount : Headcount
+        private class SpecializationGroupingHeadcount : HeadCount
         {
             public SpecializationGroupingHeadcount(SpecializationGrouping specGroup, int totalCount)
             {
