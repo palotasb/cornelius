@@ -8,6 +8,7 @@ namespace Cornelius.Criteria.Credit
     /// Alcsoport, ami összefogja az őt alkotó kurzusok szűrőfeltételeit. Elemként szolgál
     /// a csoportosításokhoz.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Subgroup : List<IGroupMatch>
     {
         /// <summary>
@@ -28,6 +29,11 @@ namespace Cornelius.Criteria.Credit
         public bool Match(Course course)
         {
             return this.Any(element => element.Match(course));
+        }
+
+        public override string ToString()
+        {
+            return Identifier + string.Format(" ({0})", this.Count);
         }
     }
 }

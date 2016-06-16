@@ -13,6 +13,7 @@ namespace Cornelius.Data
     /// <summary>
     /// Egy hallgatót reprezentáló osztály.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Student
     {
         /// <summary>
@@ -101,5 +102,10 @@ namespace Cornelius.Data
         /// A besorolás eredménye, a hallgató specializációja (vagy null, ha - még - nem került besorolásra).
         /// </summary>
         public Specialization Specialization;
+
+        public override string ToString()
+        {
+            return OriginKey;
+        }
     }
 }

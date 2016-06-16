@@ -11,6 +11,7 @@ namespace Cornelius.Data
     /// a csoport (specializáció) neve, a benne foglalt <see cref="Specialization"/> objektumok pedig ágazatok illetve tanszékek.
     /// Az osztály a besorolási algoritmus megvalósításához a létszámarányokat és számokat tartja nyilván.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class SpecializationGrouping : IGrouping<string, Specialization>
     {
         /// <summary>
@@ -92,5 +93,9 @@ namespace Cornelius.Data
         /// <returns>A <see cref="IEnumerator{Specialization}"/> objektum.</returns>
         IEnumerator IEnumerable.GetEnumerator() { return Specializations.GetEnumerator(); }
 
+        public override string ToString()
+        {
+            return string.Format("{0} ({1:##%}-{2:##%}/{3})", Key, MinRatio, MaxRatio, Capacity);
+        }
     }
 }

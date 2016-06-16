@@ -8,6 +8,7 @@ namespace Cornelius.Data
     /// <summary>
     /// Egy specializáción belüli ágazat illetve tanszék, ahová be lehet sorolni a hallgatókat.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Specialization
     {
         /// <summary>
@@ -107,6 +108,11 @@ namespace Cornelius.Data
         public int GetMaxCount(int studentCount)
         {
             return Math.Min(Capacity, (int)Math.Ceiling(studentCount * MaxRatio));
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}, {2:##%}-{3:##%}/{4}", Name, SpecializationGroup, MinRatio, MaxRatio, Capacity);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Cornelius.Criteria
     /// Egy kritériumellenőrzés eredményét tárolja 
     /// mindenféle ember által olvasható adattal együtt.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class Result
     {
         /// <summary>

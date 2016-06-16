@@ -7,6 +7,7 @@ namespace Cornelius.Criteria.Expression
     /// Kritériumcsoport, ami akkor igaz, ha a tagkritériumaira teljesül a 
     /// megfelelő feltétel.
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     class MatchGroup : IExpression
     {
         /// <summary>
@@ -157,6 +158,11 @@ namespace Cornelius.Criteria.Expression
         {
             this.Requirement = 1;
             this.Children = new List<IExpression>();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} req:{1}, children:{2}, credit:{3}", Name, Requirement, Children.Count, Credit);
         }
     }
 }
