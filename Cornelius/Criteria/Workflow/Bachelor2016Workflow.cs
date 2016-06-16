@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cornelius.Data;
+using System.Globalization;
 
 namespace Cornelius.Criteria.Workflow
 {
@@ -76,7 +77,6 @@ namespace Cornelius.Criteria.Workflow
         /// <param name="specializationGroupings">A rendelkezésre álló specializációcsoportok.</param>
         public override void ProcessStudent(Student student, bool exception, IEnumerable<SpecializationGrouping> specializationGroupings)
         {
-            // TODO átgondolni, hogy a workflow definition fájlban kell-e SummaCriteria az összes tárgycsoporthoz vagy úgy se használjuk...
             Log.Write(student.OriginKey + ":");
             Log.EnterBlock(" => ");
             // Hiányzó specializációk hozzáadása a jelentkezéshez.
@@ -109,8 +109,8 @@ namespace Cornelius.Criteria.Workflow
             bool Has26Exemption = Determine26Exemption(student);
             bool Uses26Exemption = false;
             Log.Write("A hallgató rendelkezik engedményre jogosító két tankörivel: " + (Has26Exemption ? "igen" : "nem"));
-            // TODO kreditek logolása tárgycsoportonként.
-            student.CreditPerGroup = new Dictionary<string, double>();
+            // Kreditek logolása tárgycsoportonként.
+            LogCreditsByGroups(student, specializationGroupings);
             // 2. § (5) b) feldolgozása.
             // Ez direkt van előbb az a)-nál, mert ez hívja meg az AbstractWorkflow.ProcessCourseRequirements függvényt,
             // ami a student.Result-ot létrehozza.
@@ -126,6 +126,34 @@ namespace Cornelius.Criteria.Workflow
             // Tanköri engedmény külön rögzítése.
             student.Result += new Result("Tanköri foglalkozás", Has26Exemption);
             Log.Write((student.Result ? "Teljesíti" : "Nem teljesíti") + " a jelentkezési kritériumokat a hallgató.");
+        }
+
+        private void LogCreditsByGroups(Student student, IEnumerable<SpecializationGrouping> specializationGroupings)
+        {
+            var semester12Courses = FilterCriteriaCourses(student, Semester12CourseGroup);
+            var semester3Courses = FilterCriteriaCourses(student, Semester3CourseGroup);
+            var semester4Courses = FilterCriteriaCourses(student, Semester4CourseGroup);
+            var semester5xCourses = FilterCriteriaCourses(student, Semester5xCourseGroup);
+            var preSpecCourses = (from specGroup in specializationGroupings // Ez a szépség a teljesített specializációelőkészítő tárgyakat szedi össze
+                                  select FilterCriteriaCourses(student, PreSpecCourseGroup + specGroup.PreSpecializationCourseGroup))
+                                  .SelectMany(courses => courses);
+            var examCourses = FilterCriteriaCourses(student, ExamGroup);
+            var compHumCourses =  FilterCriteriaCourses(student, CompHumCourseGroup);
+            var freeChoiceCourses = FilterCriteriaCourses(student, FreeChoiceCourseGroup);
+            student.CreditPerGroup = new Dictionary<string, double>();
+            int allCredits = (int) (semester12Courses.Sum(c => c.Credit) + semester3Courses.Sum(c => c.Credit) + semester4Courses.Sum(c => c.Credit) + semester5xCourses.Sum(c => c.Credit) + preSpecCourses.Sum(c => c.Credit));
+            student.CreditPerGroup.Add("Kötelező össz.", allCredits);
+            student.CreditPerGroup.Add(RemoveDiacritics(Semester12CourseGroup), semester12Courses.Sum(c => c.Credit));
+            student.CreditPerGroup.Add(RemoveDiacritics(Semester3CourseGroup), semester3Courses.Sum(c => c.Credit));
+            student.CreditPerGroup.Add(RemoveDiacritics(Semester4CourseGroup), semester4Courses.Sum(c => c.Credit));
+            student.CreditPerGroup.Add(RemoveDiacritics(Semester5xCourseGroup), semester5xCourses.Sum(c => c.Credit));
+            student.CreditPerGroup.Add(RemoveDiacritics(PreSpecCourseGroup), preSpecCourses.Sum(c => c.Credit));
+            student.CreditPerGroup.Add(RemoveDiacritics(ExamGroup) + "-OK", FilterCriteriaCourses(student, ExamGroup).Count() != 0 ? allCredits : 0);
+            student.CreditPerGroup.Add(RemoveDiacritics(ExamGroup) + "-NINCS", FilterCriteriaCourses(student, ExamGroup).Count() == 0 ? allCredits : 0);
+            int compHumCredits = compHumCourses.Sum(c => (int)c.Credit);
+            student.CreditPerGroup.Add(RemoveDiacritics(CompHumCourseGroup), Math.Min(10, compHumCredits));
+            int freeChoiceCredits = freeChoiceCourses.Sum(c => (int)c.Credit) + Math.Max(0, compHumCredits - 10);
+            student.CreditPerGroup.Add(RemoveDiacritics(FreeChoiceCourseGroup), freeChoiceCredits);
         }
 
         private void ProcessSpecializationRequirements(Student student)
@@ -165,8 +193,11 @@ namespace Cornelius.Criteria.Workflow
             var credits = allCourses.Sum(course => course.Credit);
 
             // Kötválok és szabválok számítása max 10 kredit értékig.
-            credits += Math.Min(10, FilterCriteriaCourses(student, FreeChoiceCourseGroup).Sum(c => c.Credit));
-            credits += Math.Min(10, FilterCriteriaCourses(student, CompHumCourseGroup).Sum(c => c.Credit));
+            // TODO túlcsorduló kötvál kreditek számolása.
+            int compHumCredits = (int)FilterCriteriaCourses(student, FreeChoiceCourseGroup).Sum(c => c.Credit);
+            credits += Math.Min(10, compHumCredits);
+            int freeChoiceCredits = (int)FilterCriteriaCourses(student, CompHumCourseGroup).Sum(c => c.Credit);
+            credits += Math.Min(10, freeChoiceCredits + Math.Max(0, compHumCredits - 10));
 
             // Eredmény tárolása
             var result = new Result("Kreditkritérium", 90 <= (int)credits);
@@ -196,7 +227,6 @@ namespace Cornelius.Criteria.Workflow
             if (CourseCriteria != null)
             {
                 // Kötelező tárgyak ellenőrzése az első két félévből.
-                // TODO még egyszer ellenőrizni, hogy ez a függvény nem csinál hülyeséget
                 base.ProcessCourseRequirements(student);
 
                 // Mintatanterv szerinti kötelezően választhatók ellenőrzése
@@ -205,10 +235,7 @@ namespace Cornelius.Criteria.Workflow
                 // Összehasonlítás az előírt minimummal szakonként
                 var CompHumResult = new Result(CompHumCourseGroup, GetCompHumAmount() <= CompHumCourses.Count());
                 // Súly kiszámítása (súly == hiányzó kritériumok száma)
-                if (CompHumResult)
-                    CompHumResult.Weight = 0;
-                else
-                    CompHumResult.Weight = GetCompHumAmount() - CompHumCourses.Count();
+                CompHumResult.Weight = GetCompHumAmount();
                 Log.Write(string.Format("Kötelezően választható tárgyak az első két félévből {0}.", CompHumResult.Value ? "teljesítve" : "nem teljesítve"));
                 // Kötvál aleredmény tárolása
                 student.Result.Weight += CompHumResult.Weight;
@@ -218,12 +245,12 @@ namespace Cornelius.Criteria.Workflow
                 // Ellenőrizzük, hogy a tanköri kedvezmény használható-e.
                 if (student.Result.Value == false)
                 {
-                    Log.Write("A hallgatónak nincs meg minden tantárgya az első két félévből.");
+                    //Log.Write("A hallgatónak nincs meg minden tantárgya az első két félévből.");
                     if (has26Exemption && !uses26Exemption)
                     {   // Kiváltható a kritérium
                         uses26Exemption = true;
-                        student.Result.Weight -= 1;
-                        if (student.Result.Weight <= 0) // Ha a mentességnek
+                        student.Result.Weight += 1;
+                        if (student.Result.Subresults.Sum(sr => sr.Weight) <= student.Result.Weight) // Ha a mentességnek
                         {
                             student.Result.Value = true;
                         }
@@ -388,6 +415,23 @@ namespace Cornelius.Criteria.Workflow
             student.Round = 1;
 
             Log.Write(string.Format("A hallgató rangsorátlaga {0}.", student.Result.Avarage));
+        }
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }

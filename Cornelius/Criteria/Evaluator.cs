@@ -45,7 +45,7 @@ namespace Cornelius.Criteria
             Log.EnterBlock();
             foreach (var student in students)
             {
-                Evaluator.Match(student, false).ProcessStudent(student, exceptions.Any(s => s.Key == student.OriginKey), specializationGroupings);
+                Evaluator.Match(student, false).ProcessStudent(student, exceptions.Any(s => s.Key == student.OriginKey), specializationGroupings.Where(sg => sg.EducationProgram == student.EducationProgram));
             }
             Log.LeaveBlock();
         }

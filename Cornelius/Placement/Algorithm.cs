@@ -14,10 +14,7 @@ namespace Cornelius.Placement
          *  - A lista elején lévő besorolatlan hallgatót a számára legelőnyösebb specializációra besoroljuk.
          *      - A jelentkezési sorrendjében ellenőrizzük, hogy besorolható-e az adott specializációra (ágazatra). Ez a Létszámellenőrzés*.
          *      - Minimumkritérium nem teljesülése esetén a többi specializációcsoportot illetve ágazatot le kell zárni.
-         *      - Maximumkritérium nem teljesülése esetén, ha a hallgató azonos átlaggal rendelkezik már bekerült hallgatóval, akkor a többi azonos átlagú
-         *      hallgatót is kivesszük, és úgy indítjuk újra a besorolást, hogy épp előttük érjük el a kapacitáshatárt.
-         *          - Megjegyzés: ezzel minimumkritériumot sérthetünk.
-         *          TODO alternatív megoldásként megfontolandó, hogy (biztosan kritériumokat megsértve) besoroljuk az összes hallgatót, ahogy eddig is.
+         *      - Maximumkritérium nem teljesülése esetén, ha a hallgató azonos átlaggal rendelkezik már bekerült hallgatóval, akkor besorolható.
          *      - Ha besorolható, akkor besoroljuk.
          *      - Ha sehova nem sorolható be a jelentkezései közül:
          *          - Ha minden specilaizáció benne volt a jelentkezései közt, akkor senki nem sorolható már be, az algoritmus véget ér.
@@ -79,10 +76,12 @@ namespace Cornelius.Placement
                 Log.EnterBlock(" => ");
                 if (TryPlaceStudents(studentList, specLimits, out placements, out unplaceableStudent, out restart))
                 {
-                    Log.Write(string.Format("Sikeresen lefutott a besorolás a {0}. próbálkozásra.", tries));
+                    Log.Write();
+                    Log.Write(string.Format("Sikeresen lefutott a besorolás a {0}. próbálkozásra. {1} hallgatót soroltunk be összesen.", tries, placements.Count()));
                     Log.LeaveBlock();
                     return true;
                 }
+                Log.Write();
                 Log.Write(string.Format("Sikertelen besorolás a {0}. próbálkozásra.", tries));
                 if (unplaceableStudent != null)
                 {
@@ -240,7 +239,6 @@ namespace Cornelius.Placement
             {
                 foreach (var spec in specGroup)
                 {
-                    // TODO az újraszámolást az összes ágazatra el kell végezni, és talán még úgy is rossz lesz...
                     if (spec == specialization)
                     {   // Ha erre a specializációra (ágazatra) soroltunk éppen be, akkor frissítjük a számokat.
                         specHeadcounts[spec].CurrentCount++;

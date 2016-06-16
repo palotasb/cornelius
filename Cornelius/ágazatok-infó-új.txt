@@ -1,0 +1,12 @@
+MinRat	MaxRat	Cap	Specializacio	Csoport
+0.15	0.50	999	Rendszertervezés/AUT	Rendszertervezés (új)
+0.15	0.50	999	Rendszertervezés/MIT	Rendszertervezés (új)
+0.15	0.50	999	Rendszertervezés/IIT	Rendszertervezés (új)
+0.30	0.70	999	Infokommunikáció/TMIT	Infokommunikáció (új)
+0.30	0.70	999	Infokommunikáció/HIT	Infokommunikáció (új)
+0.15	0.50	999	Szoftverfejlesztés/AUT	Szoftverfejlesztés (új)
+0.15	0.50	999	Szoftverfejlesztés/IIT	Szoftverfejlesztés (új)
+0.15	0.50	999	Szoftverfejlesztés/MIT	Szoftverfejlesztés (új)
+0.15	0.50	999	Vállalati információs rendszerek/ETT	Vállalati információs rendszerek (új)
+0.15	0.50	999	Vállalati információs rendszerek/SZIT	Vállalati információs rendszerek (új)
+0.15	0.50	999	Vállalati információs rendszerek/TMIT	Vállalati információs rendszerek (új)

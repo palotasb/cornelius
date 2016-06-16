@@ -1,4 +1,4 @@
-﻿TÁBLÁZAT ("specializaciok") {
+﻿TÁBLÁZAT ("agazat", "ágazat") {
 	"MinRat" => MinRatio,
 	"MaxRat" => MaxRatio,
 	"Cap" => Capacity,

@@ -100,6 +100,7 @@
     <Compile Include="IO\Mapping\Recognizer.cs" />
     <Compile Include="IO\Primitives\XBase.cs" />
     <Compile Include="IO\Primitives\XChoice.cs" />
+    <Compile Include="IO\Primitives\XCurriculum.cs" />
     <Compile Include="IO\Primitives\XEntry.cs" />
     <Compile Include="IO\Primitives\XIdentity.cs" />
     <Compile Include="IO\Drivers\IInputDriver.cs" />
@@ -160,6 +161,9 @@
     </Antlr3>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\bemenet-mintatantervek.ifd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config\bemenet-specializacio-csoportok.ifd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -187,7 +191,9 @@
     <None Include="Config\csoportositas-informatikus-regibsc-2016.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd" />
+    <None Include="Config\csoportositas-villamosmernok-bsc-2016.gd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config\csoportositas-villamosmernok-bsc.gd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -215,6 +221,36 @@
     <None Include="Config\kriterium-villamosmernok-regibsc-2016.crd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Bemenet\mintatantervek.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-infó-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-infó-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-vill-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\specializációk-vill-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-infó-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-infó-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-vill-régi.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bemenet\ágazatok-vill-új.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

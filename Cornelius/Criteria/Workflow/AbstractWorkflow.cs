@@ -102,7 +102,6 @@ namespace Cornelius.Criteria.Workflow
         /// <returns>Igaz, ha a hallgatóra az adott kritériumrendszer vonatkozik.</returns>
         public bool Match(Student student, bool original = false)
         {
-            // TODO frissíteni a régi és az új képzés kezeléséhez (vagy nem? ha külön futtatjuk, OK?)
             return (original ? student.OriginalEducationProgram : student.EducationProgram) == this.EducationProgram && Semester.InInterval(student.EffectiveSemester, this.From, this.To);
         }
 

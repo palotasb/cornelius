@@ -34,7 +34,7 @@ namespace Cornelius.IO.Reports
             this.Capacity = specialization.Capacity;
             this.NumberOfStudents = specialization.Students.Count;
             this.MinimumAvarage = specialization.MinimumRankAverage;
-            this.Avarage = specialization.Students.Average(s => s.Result.Avarage);
+            this.Avarage = specialization.Students.Count != 0 ? specialization.Students.Average(s => s.Result.Avarage) : 0;
         }
     }
 }

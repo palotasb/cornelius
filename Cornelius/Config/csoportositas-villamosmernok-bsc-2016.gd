@@ -31,12 +31,7 @@
 		BMETE11AX21, // Fizika 1
 
 		BMEGT52A400, // Mérnök leszek
-
-		// Bevezető tárgyak
-
-		BMETE11AX12, // Bevezető fizika
-		BMETE90AX40, // Bevezető matematika
-
+		
 		// 2. félév
 
 		BMEVIFO1020, // Digitális technika II. (Digital Design)
@@ -199,6 +194,12 @@
 	},
 
 	TÚLCSORDULÓ CSOPORT KötelezőenVálasztható {
+		
+		// Bevezető tárgyak
+
+		BMETE11AX12, // Bevezető fizika
+		BMETE90AX40, // Bevezető matematika
+
 		// 2007/2008/1 félévig számító kötelezően választható tárgyak
 		BMEGT20A002 (       - 2007/1), // Marketing
 		BMEGT20A017 (       - 2007/1), // Innovációmenedzsment

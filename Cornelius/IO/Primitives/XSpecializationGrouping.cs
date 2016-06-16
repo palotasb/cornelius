@@ -25,6 +25,9 @@ namespace Cornelius.IO.Primitives
         [Map]
         public int Capacity;
 
+        [Map]
+        public Curriculum Curriculum;
+
         public override bool Equals(object obj)
         {
             if (obj is XSpecializationGrouping)

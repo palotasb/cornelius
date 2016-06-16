@@ -1,8 +1,6 @@
-﻿TÁBLÁZAT ("kivetelek") {
-	"Képzés" => BaseEducationProgram,
-	"Neptun kód" => BaseNeptun,
-	"Nyomtatási név" => BaseName,
-	"Mintatanterv neve" => Curriculum
+﻿TÁBLÁZAT ("tanterv") {
+	"Mintatanterv neve" => Curriculum,
+	"Képzéskód kiegészítés" => EducationProgramPostfix
 };
 
 FELSOROLÁS Curriculum {
