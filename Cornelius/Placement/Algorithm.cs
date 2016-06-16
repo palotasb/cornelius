@@ -75,18 +75,18 @@ namespace Cornelius.Placement
             while (restart && tries < Students.Count())
             {
                 tries++;
-                Log.Write("Info: " + tries.ToString() + ". besorolási próbálkozás a képzésen.");
+                Log.Write(tries.ToString() + ". besorolási próbálkozás a képzésen.");
                 Log.EnterBlock(" => ");
                 if (TryPlaceStudents(studentList, specLimits, out placements, out unplaceableStudent, out restart))
                 {
-                    Log.Write(string.Format("Info: Sikeresen lefutott a besorolás a {0}. próbálkozásra.", tries));
+                    Log.Write(string.Format("Sikeresen lefutott a besorolás a {0}. próbálkozásra.", tries));
                     Log.LeaveBlock();
                     return true;
                 }
-                Log.Write(string.Format("Info: Sikertelen próbálkozás a {0}. próbálkozásra.", tries));
+                Log.Write(string.Format("Sikertelen besorolás a {0}. próbálkozásra.", tries));
                 if (unplaceableStudent != null)
                 {
-                    Log.Write("Info: Kritériumhiányos hallgató (" + unplaceableStudent.OriginKey + ") kizárva.");
+                    Log.Write("Kritériumhiányos hallgató (" + unplaceableStudent.OriginKey + ") kizárva.");
                     studentList.Remove(unplaceableStudent);
                     unplaceableStudent.Result.Value = false;
                     unplaceableStudent.Result += new Result("Specializációelőkészítők (rangsorolás során kizárva).", false);
@@ -131,7 +131,10 @@ namespace Cornelius.Placement
                 {
                     specHeadcounts.Add(spec, new SpecializationHeadcount(spec, specGroup, totalHeadcount));
                     if (specLimits.ContainsKey(spec))
+                    {
                         specHeadcounts[spec].CloseAt(specLimits[spec]);
+                        Log.Write("  Ágazat korlátai újraindítás után felülbírálva:");
+                    }
                     Log.Write(string.Format("  {0} ágazat korlátai: {1}-{2}{3}.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].Closed ? " (lezárva)" : ""));
                 }
             }
@@ -142,12 +145,14 @@ namespace Cornelius.Placement
             var resultsList = new List<Tuple<Student, Specialization>>(totalHeadcount);
             unplaceableStudent = null;
             restart = false;
+            int studentCount = 0;
             foreach (var student in placeableStudents)
             {
                 // Preferenciasorrendben ellenőrizzük, hogy besorolható-e, és az első helyre besoroljuk.
                 bool studentPlaced = false;
+                studentCount++;
                 int tries = 0;
-                Log.Write(string.Format("{0} hallgató besorolása...", student.OriginKey));
+                Log.Write(string.Format("{0} hallgató (sorrend: {2}, átlag: {1}) besorolása...", student.OriginKey, student.Result.Avarage, studentCount));
                 Log.EnterBlock();
                 foreach (var choice in student.Choices)
                 {
@@ -173,7 +178,10 @@ namespace Cornelius.Placement
                             specGroupHeadcounts[specGroup].Close();
                     if (reasonMaxSameAvg)
                     {   // Ha a maximumkritérium úgy nem teljesíthető, hogy a hallgató az utolsó besorolt hallgatóval azonos átlagú
-                        specLimits.Add(choiceSpec, Math.Max(0, specHeadcounts[choiceSpec].CurrentCount - specHeadcounts[choiceSpec].SameRankCount));
+                        if (specLimits.ContainsKey(choiceSpec))
+                            specLimits[choiceSpec] = Math.Max(0, specHeadcounts[choiceSpec].CurrentCount - specHeadcounts[choiceSpec].SameRankCount - 1);
+                        else
+                            specLimits.Add(choiceSpec, Math.Max(0, specHeadcounts[choiceSpec].CurrentCount - specHeadcounts[choiceSpec].SameRankCount - 1));
                         placements = null;
                         restart = true;
                         Log.LeaveBlock();
@@ -189,13 +197,19 @@ namespace Cornelius.Placement
                     {   // Ha nem mindenhova próbáltuk besorolni a hallgatót, akkor ő számít kritériumhiányosnak.
                         unplaceableStudent = student;
                         restart = true;
-                        Log.Write("Info: A hallgató kritériumhiányosnak minősítendő, mert nem sorolható be egyik megfelelő ágazatra sem.");
+                        Log.Write("A hallgató kritériumhiányosnak minősítendő, mert nem sorolható be egyik megfelelő ágazatra sem.");
                     }
                     break;  // student in placeableStudents :: A besorolás itt mindenképp véget ért, de kritériumhiányos hallgató esetén újraindítjuk.
                 }
             }
 
             // Ha nincs konkrét kritériumhiányos hallgató, akkor több hallgató egyáltalán nem sorolható be és sikerrel zártuk az algoritmust.
+            foreach (var specGroup in SpecializationGroupings)
+            {
+                Log.Write(string.Format("{1}-{2}{3} ({4}): {0} specializáció korlátai és létszáma.", specGroup.Key, specGroupHeadcounts[specGroup].MinimumCount, specGroupHeadcounts[specGroup].MaximumCount, specGroupHeadcounts[specGroup].Closed ? " (lezárva)" : "", specGroupHeadcounts[specGroup].CurrentCount));
+                foreach (var spec in specGroup)
+                    Log.Write(string.Format("  {1}-{2}{3} ({4}): {0} ágazat korlátai és létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].Closed ? " (lezárva)" : "", specHeadcounts[spec].CurrentCount));
+            }
             placements =    (unplaceableStudent == null) ? resultsList : null;
             restart =       (unplaceableStudent != null);
             return          (unplaceableStudent == null);
@@ -218,27 +232,30 @@ namespace Cornelius.Placement
         {
             var currSpecGroup = SpecializationGroupings.First(sg => sg.Contains(specialization));
             specGroupHeadcounts[currSpecGroup].CurrentCount++;
-            Log.Write(string.Format("Info: {2}-{3} ({1}): {0} specializáció korlátai és aktuális létszáma.", currSpecGroup.Key, specGroupHeadcounts[currSpecGroup].CurrentCount, specGroupHeadcounts[currSpecGroup].MinimumCount, specGroupHeadcounts[currSpecGroup].MaximumCount));
+            Log.Write(string.Format("{2}-{3} ({1}): {0} specializáció korlátai és aktuális létszáma.", currSpecGroup.Key, specGroupHeadcounts[currSpecGroup].CurrentCount, specGroupHeadcounts[currSpecGroup].MinimumCount, specGroupHeadcounts[currSpecGroup].MaximumCount));
 
             // A specializációcsoport összes minimuma és maximuma változhat.
             Log.EnterBlock();
-            foreach (var spec in currSpecGroup)
+            foreach (var specGroup in SpecializationGroupings)
             {
-                // TODO az újraszámolást az összes ágazatra el kell végezni, és talán még úgy is rossz lesz...
-                if (spec == specialization)
-                {   // Ha erre a specializációra (ágazatra) soroltunk éppen be, akkor frissítjük a számokat.
-                    specHeadcounts[spec].CurrentCount++;
-                    specHeadcounts[spec].SameRankCount = (specHeadcounts[spec].MinimumRankAverage <= rankAverage ? specHeadcounts[spec].SameRankCount + 1 : 0);
-                    specHeadcounts[spec].MinimumRankAverage = rankAverage;
+                foreach (var spec in specGroup)
+                {
+                    // TODO az újraszámolást az összes ágazatra el kell végezni, és talán még úgy is rossz lesz...
+                    if (spec == specialization)
+                    {   // Ha erre a specializációra (ágazatra) soroltunk éppen be, akkor frissítjük a számokat.
+                        specHeadcounts[spec].CurrentCount++;
+                        specHeadcounts[spec].SameRankCount = (specHeadcounts[spec].MinimumRankAverage <= rankAverage ? specHeadcounts[spec].SameRankCount + 1 : 0);
+                        specHeadcounts[spec].MinimumRankAverage = rankAverage;
+                    }
+                    if (!specHeadcounts[spec].Closed)
+                    {   // Lezárás után már a minimumok és maximumok nem változhatnak, és itt nem szabad, hogy felülírjuk őket.
+                        specHeadcounts[spec].MinimumCount = GetSpecMinCount(spec, specGroup, specGroupHeadcounts[specGroup].CurrentCount, totalHeadcount);
+                        specHeadcounts[spec].MaximumCount = GetSpecMaxCount(spec, specGroup, specGroupHeadcounts[specGroup].CurrentCount, totalHeadcount, totalHeadcount - specGroupHeadcounts.Sum(kvSpecGroup => kvSpecGroup.Value.CurrentCount));
+                        Log.Write(string.Format("{1}-{2} ({3}): {0} ágazat újraszámolt korlátai és aktuális létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].CurrentCount));
+                    }
+                    else { Log.Write(string.Format("{1}-{2} ({3}): A lezárt {0} ágazat korlátai és létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].CurrentCount)); }
+                    if (spec == specialization) Log.Write(string.Format(" ^<-- Besorolva ide. Az ágazaton az aktuális rangsorátlaggal ({0}) azonos átlagúak száma: {1}.", specHeadcounts[spec].MinimumRankAverage, specHeadcounts[spec].SameRankCount));
                 }
-                if (!specHeadcounts[spec].Closed)
-                {   // Lezárás után már a minimumok és maximumok nem változhatnak, és itt nem szabad, hogy felülírjuk őket.
-                    specHeadcounts[spec].MinimumCount = GetSpecMinCount(spec, currSpecGroup, specGroupHeadcounts[currSpecGroup].CurrentCount, totalHeadcount);
-                    specHeadcounts[spec].MaximumCount = GetSpecMaxCount(spec, currSpecGroup, specGroupHeadcounts[currSpecGroup].CurrentCount, totalHeadcount, totalHeadcount - specGroupHeadcounts.Sum(kvSpecGroup => kvSpecGroup.Value.CurrentCount));
-                    Log.Write(string.Format("Info: {1}-{2} ({3}): {0} ágazat újraszámolt korlátai és aktuális létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].CurrentCount));
-                    if (spec == specialization) Log.Write(string.Format(" ^^^^ Besorolva ide. Az ágazaton az aktuális rangsorátlaggal ({0}) azonos átlagúak száma: {1}.", specHeadcounts[spec].MinimumRankAverage, specHeadcounts[spec].SameRankCount));
-                }
-                else { Log.Write(string.Format("Info: {1}-{2} ({3}): A lezárt {0} ágazat korlátai és létszáma.", spec.Name, specHeadcounts[spec].MinimumCount, specHeadcounts[spec].MaximumCount, specHeadcounts[spec].CurrentCount)); }
             }
             Log.LeaveBlock();
         }
@@ -266,34 +283,53 @@ namespace Cornelius.Placement
             out bool specializationMaximumAndSameRank)
         {
             var currSpecGroup = SpecializationGroupings.First(sg => sg.Contains(specialization));
+            bool specGroupMinimumOverride = specGroupHeadcounts[currSpecGroup].MinimumCount <= specGroupHeadcounts[currSpecGroup].CurrentCount;
+            bool specMinimumOverride = specHeadcounts[specialization].MinimumCount <= specHeadcounts[specialization].CurrentCount;
             // Maximumkritérium akkor nem teljesíthető, ha [max létszám <= aktuális], ezen felül az átlagot is ellenőrizzük.
-            var specializationGroupMaximum = specGroupHeadcounts[currSpecGroup].MaximumCount <= specGroupHeadcounts[currSpecGroup].CurrentCount;
-            var specializationMaximum = specHeadcounts[specialization].MaximumCount <= specHeadcounts[specialization].CurrentCount;
+            var specializationGroupMaximum = specGroupHeadcounts[currSpecGroup].MaximumCount <= specGroupHeadcounts[currSpecGroup].CurrentCount && specGroupMinimumOverride && specMinimumOverride;
+            var specializationMaximum = specHeadcounts[specialization].MaximumCount <= specHeadcounts[specialization].CurrentCount && specMinimumOverride;
+#if (STRICT_CAPACITY)
             specializationMaximumAndSameRank = specializationMaximum && specHeadcounts[specialization].MinimumRankAverage <= rankAverage;
+#else
+            specializationMaximumAndSameRank = false;
+#endif
 
             var unplacedCount = totalHeadcount - specGroupHeadcounts.Sum(kvSpecGroup => kvSpecGroup.Value.CurrentCount);
             // Specializációcsoportoknál a minimum akkor nem teljesíthető, ha [be nem sorolt hallgatók száma < a minimumra töltéshez szükséges létszám]
             // Figyelembe véve azt az esetet is, ha már minimumlétszám felett van egy specializáció és azt is, ha épp minimumlétszám alattira sorolnánk be a hallgatót.
-            specializationGroupMinimum =
-                unplacedCount
-                < SpecializationGroupings.Sum(sg => Math.Max(0, specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount - (sg == currSpecGroup ? 1 : 0)));
+            int fillSpecGroupToMin = SpecializationGroupings.Sum(sg => Math.Max(Math.Max(0,
+                sg.Sum(spec => Math.Max(0, specHeadcounts[spec].MinimumCount - specHeadcounts[spec].CurrentCount - (spec == specialization ? 1 : 0)))),
+                specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount - (sg == currSpecGroup ? 1 : 0)));
+            specializationGroupMinimum = unplacedCount < fillSpecGroupToMin && specGroupMinimumOverride && specMinimumOverride;
             // Ágazatoknál a minimum akkor nem teljesíthető, ha [ágazatokra még besorolható hallgatók száma < ágazatok minimumra töltéséhez szükséges létszám]
             //  - [Ágazatokra még besorolható hallgatók száma == be nem sorolt hallgatók száma - többi specializációcsoport minimumra töltéséhez szükséges létszám]
             //  - Ágazat minimumra töltéséhez szükséges létszámnál figyelembe véve, hogy melyikre sorolnánk éppen a hallgatót
-            specializationMinimum =
-                unplacedCount - SpecializationGroupings.Where(sg => sg != currSpecGroup).Sum(sg => Math.Max(0, specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount))
-                < currSpecGroup.Sum(spec => Math.Max(0, specHeadcounts[spec].MinimumCount - specHeadcounts[spec].CurrentCount - (spec == specialization ? 1 : 0)));
+            int leftForSpecs = unplacedCount - SpecializationGroupings.Where(sg => sg != currSpecGroup).Sum(sg => Math.Max(Math.Max(0,
+                sg.Sum(spec => Math.Max(0, specHeadcounts[spec].MinimumCount - specHeadcounts[spec].CurrentCount))),
+                specGroupHeadcounts[sg].MinimumCount - specGroupHeadcounts[sg].CurrentCount));
+            int fillSpecToMin = currSpecGroup.Sum(spec => Math.Max(0, specHeadcounts[spec].MinimumCount - specHeadcounts[spec].CurrentCount - (spec == specialization ? 1 : 0)));
+            specializationMinimum = leftForSpecs < fillSpecToMin && specMinimumOverride;
 
             bool result = !specializationMinimum && !specializationGroupMinimum && !specializationMaximum && !specializationGroupMaximum && !specializationMaximumAndSameRank;
-            Log.Write(string.Format("Info: {1} a(z) {0} ágazatra.", specialization.Name, result ? "Besorolható" : "Nem sorolható be"));
+            Log.Write(string.Format("{1} a(z) {0} ágazatra.", specialization.Name, result ? "Besorolható" : "Nem sorolható be"));
             if (!result)
             {
-                Log.Write(string.Format("Info: {2}-{3} ({1}): {0} specializáció korlátai és aktuális létszáma.", currSpecGroup.Key, specGroupHeadcounts[currSpecGroup].CurrentCount, specGroupHeadcounts[currSpecGroup].MinimumCount, specGroupHeadcounts[currSpecGroup].MaximumCount));
-                Log.Write(string.Format("Info: {2}-{3} ({1}): {0} ágazat korlátai és aktuális létszáma.", specialization.Name, specHeadcounts[specialization].CurrentCount, specHeadcounts[specialization].MinimumCount, specHeadcounts[specialization].MaximumCount));
-                Log.Write(string.Format("Info: Nem-besorolhatóság okai: specializáció-csoport: [{0}, {1}], ágazat: [{2}, {3}, {4}]",
+                Log.Write(string.Format("{2}-{3} ({1}): {0} specializáció korlátai és aktuális létszáma.", currSpecGroup.Key, specGroupHeadcounts[currSpecGroup].CurrentCount, specGroupHeadcounts[currSpecGroup].MinimumCount, specGroupHeadcounts[currSpecGroup].MaximumCount));
+                Log.Write(string.Format("{2}-{3} ({1}): {0} ágazat korlátai és aktuális létszáma.", specialization.Name, specHeadcounts[specialization].CurrentCount, specHeadcounts[specialization].MinimumCount, specHeadcounts[specialization].MaximumCount));
+                Log.Write(string.Format("    Minimális rangsorátlag: {0} ({1} fő)", specHeadcounts[specialization].MinimumRankAverage, specHeadcounts[specialization].SameRankCount));
+                Log.Write(string.Format("Nem-besorolhatóság okai: specializáció-csoport: [{0}, {1}], ágazat: [{2}, {3}, {4}]",
                       specializationGroupMinimum ? "minimum" : "-", specializationGroupMaximum ? "maximum" : "-",
                       specializationMinimum ? "minimum" : "-", specializationMaximum ? "maximum" : "-", specializationMaximumAndSameRank ? "nem kisebb rangsorátlag" : "-"));
+                if (specializationGroupMinimum) Log.Write(string.Format("Maradék hallgató: {0}, Minimumra töltéshez: {1}", unplacedCount, fillSpecGroupToMin));
+                if (specializationMinimum) Log.Write(string.Format("Maradék hallgató: {0}, Specializációra: {1}, Minimumra töltéshez: {2}", unplacedCount, leftForSpecs, fillSpecToMin));
             }
+#if !(STRICT_CAPACITY)
+            if (specHeadcounts[specialization].MinimumRankAverage <= rankAverage)
+            {
+                result = true;
+                Log.Write(string.Format("A hallgató az utolsó besorolt hallgatóval azonos átlagú ({0}), mindenképp besorolható.", rankAverage));
+            }
+#endif
             return result;
         }
 
