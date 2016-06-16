@@ -71,8 +71,6 @@
 
 		// 3. félév
 
-		BMEVIETAB00, // Elektronikai technológia és anyagismeret
-
 		BMETE90AX09, // Matematika A3 villamosmérnököknek
 		BMETE922246, // Matematika B3*
 		BMETE901919, // Matematika B3

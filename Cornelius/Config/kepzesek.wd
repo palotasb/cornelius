@@ -11,14 +11,10 @@
 	/* Mérnök Informatikus BSc képzés */
 	KÉPZÉS BSC2016 (
 		x => 0,
-		Kötelező_1_2_Félév => 60,
-		Kötelező_3_Félév => 20,
-		Kötelező_4_Félév => 0,
-		Kötelező_5_x_Félév => 0,
-		Tanköri => 2,
 		Szigorlat => 0,
+		Tanköri => 2,
 		KötelezőenVálasztható => 1,
-		SzabadonVálasztható => 10
+		KötelezőenVálasztható4Félév => 4
 	) {
 		KÉPZÉSKÓD 5N-A8,
 		KRITÉRIUMOK "kriterium-informatikus-regibsc-2016.crd",
@@ -28,14 +24,10 @@
 	/* Villamosmérnöki BSc képzés */
 	KÉPZÉS BSC2016 (
 		x => 0,
-		Kötelező_1_2_Félév => 60,
-		Kötelező_3_Félév => 20,
-		Kötelező_4_Félév => 0,
-		Kötelező_5_x_Félév => 0,
-		Tanköri => 2,
 		Szigorlat => 0,
-		KötelezőenVálasztható => 2,
-		SzabadonVálasztható => 10
+		Tanköri => 2,
+		KötelezőenVálasztható => 1,
+		KötelezőenVálasztható4Félév => 1
 	) {
 		KÉPZÉSKÓD 5N-A7,
 		KRITÉRIUMOK "kriterium-villamosmernok-regibsc-2016.crd",
