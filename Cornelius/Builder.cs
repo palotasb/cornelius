@@ -150,6 +150,7 @@ namespace Cornelius
                     // Ha aláírás a követelmény, vagy ha 0 kredites a tárgy,
                     // akkor elég az aláírás a teljesítéshez, és végeztünk is
                     course.HasCompleted = course.HasSignature;
+                    course.EffectiveSemester = first.Semester.HasValue ? first.Semester.Value : Semester.FromDate(first.EntryDate);
                 }
                 else
                 {
