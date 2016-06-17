@@ -109,7 +109,7 @@
 	 * A KÉPZÉS azokra szűkíti a kritérium alkalmazását, akiknek ez az eredeti
 	 * képzésük. Az átsoroltaknak így alanyi jogon jár az 1 kritériumhiány. 
 	 */
-	KRITÉRIUM "Tanköri foglalkozás" (3 KELL, KÉPZÉS 5N-A7)
+	KRITÉRIUM "Tanköri foglalkozás" (3 KELL, KÉPZÉS 5N-A7_2013-ig)
 	{
 		BMEVIDHKONV "Tanköri foglalkozás 1.",
 		BMEVIDHKONI "Tanköri foglalkozás 1.",

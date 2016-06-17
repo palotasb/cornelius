@@ -58,7 +58,7 @@ type_education_program returns [string value]
 	;
 
 TOKEN_EDUCATION_PROGRAM
-	: ('A'..'Z'|'0'..'9')+ '-' ('A'..'Z'|'0'..'9')+
+	: ('A'..'Z'|'0'..'9')+ '-' ('A'..'Z'|'0'..'9')+ (TOKEN_ID | '-')*
 	;
 
 TOKEN_STRING
