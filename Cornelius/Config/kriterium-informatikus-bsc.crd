@@ -20,13 +20,15 @@
 		BMEVIEE1239 "A programozás alapjai I.",
 		BMEVIMH1506 "Programmplanung I.",
 		BMEVIEE1226 "A programozás alapjai I.",
-		BMEVIEEA100 "A programozás alapjai I."
+		BMEVIEEA100 "A programozás alapjai I.",
+		BMEVIEEAA00 "A programozás alapjai 1"
 	},
 	KRITÉRIUM "Szoftver laboratórium 1" (1. FÉLÉV, 2 KREDIT) {
 		BMEVIMH1506 "Programmplanung I.",
 		BMEVIEE1233 "Számítógép-laboratórium I.",
 		BMEVIEE1238 "Számítógépek programozása laboratórium l.",
-		BMEVIEEA101 "Szoftver Labor I."
+		BMEVIEEA101 "Szoftver Labor I.",
+		BMEVIEEAA00 "A programozás alapjai 1"
 	},
 	KRITÉRIUM "Analízis 2" (2. FÉLÉV, 7 KREDIT) {
 		BMETE901918 "Matematika B2",
@@ -58,13 +60,15 @@
 		BMEVIIIA114 "A programozás alapjai 2",
 		BMEVIEE1227 "A programozás alapjai II.",
 		BMEVIMH1507 "Programmplanung II.",
-		BMEVIEEA112 "A programozás alapjai II."
+		BMEVIEEA112 "A programozás alapjai II.",
+		BMEVIIIAA00 "A programozás alapjai 2"
 	},
 	KRITÉRIUM "Szoftver laboratórium 2" (2. FÉLÉV, 2 KREDIT) {
 		BMEVIEEA113 "Szoftver Labor II",
 		BMEVIEE1234 "Számítógép-laboratórium II.",
 		BMEVIEE1237 "Számítógép-laboratórium II.",
-		BMEVIIIA115 "Szoftver laboratórium 2"
+		BMEVIIIA115 "Szoftver laboratórium 2",
+		BMEVIIIAA00 "A programozás alapjai 2"
 	},
 	KRITÉRIUM "Valószínűségszámítás" (3. FÉLÉV, 4 KREDIT) {
 		BMEVISZA208 "Valószínűségszámítás",
@@ -120,7 +124,7 @@
 	 * A KÉPZÉS azokra szűkíti a kritérium alkalmazását, akiknek ez az eredeti
 	 * képzésük. Az átsoroltaknak így alanyi jogon jár az 1 kritériumhiány. 
 	 */
-	KRITÉRIUM "Tanköri foglalkozás" (3 KELL, KÉPZÉS 5N-A8)
+	KRITÉRIUM "Tanköri foglalkozás" (3 KELL, KÉPZÉS 5N-A8_2013-ig)
 	{
 		BMEVIDHKONV "Tanköri foglalkozás 1.",
 		BMEVIDHKONI "Tanköri foglalkozás 1.",
