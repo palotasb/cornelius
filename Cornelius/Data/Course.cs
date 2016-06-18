@@ -43,6 +43,11 @@ namespace Cornelius.Data
         public bool HasSignature;
 
         /// <summary>
+        /// A tantárgyat az átlagszámítás során nem vesszük figyelembe.
+        /// </summary>
+        public bool ExcludeFromAverage;
+
+        /// <summary>
         /// A teljesítés féléve.
         /// </summary>
         public Semester? EffectiveSemester;

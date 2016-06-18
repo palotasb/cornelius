@@ -89,6 +89,7 @@ namespace Cornelius.Placement
                     studentList.Remove(unplaceableStudent);
                     unplaceableStudent.Result.Value = false;
                     unplaceableStudent.Result += new Result("Specializációelőkészítők (rangsorolás során kizárva).", false);
+                    unplaceableStudent.MissingCriteria += 1;
                 }
                 Log.LeaveBlock();
             }

@@ -98,7 +98,7 @@ namespace Cornelius
 
         protected void ExportAvarages(Student student, XUser owner)
         {
-            foreach (var course in student.Result.Courses.Where(c => c.Credit > 0))
+            foreach (var course in student.Result.Courses.Where(c => c.Credit > 0 || !c.ExcludeFromAverage))
             {
                 _rows.Add(new XAvarage(owner, course));
             }
@@ -264,7 +264,7 @@ namespace Cornelius
             var driver = new ExcelDriver();
             TableWriter.Write<XStudent>(Export.PATH_REPORT, students.Select(student => new XStudent(student)), driver);
             TableWriter.Write<XSumma>(Export.PATH_REPORT, specializations.Select(specialization =>
-                new XSumma(specialization, specializationGroupings.First(sg => sg.Contains(specialization)))), driver);
+                new XSumma(specialization, specializationGroupings)), driver);
             Log.Write(Export.PATH_REPORT);
         }
     }
