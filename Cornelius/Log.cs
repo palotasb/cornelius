@@ -11,7 +11,7 @@ namespace Cornelius
         static Log()
         {
             Log.AddConsole();
-            Log.AddTarget(new StreamWriter("cornelius.log"));
+            Log.AddTarget(new StreamWriter(Program.OUTPUT_DIRECTORY + "/cornelius.log"));
             Log.Write("Cornelius Specializációbesoroló Rendszer");
             Log.Write("Copyright 2011-2013 Jánvári Bálint");
             Log.Write("Copyright 2016 BME VIK Hallgatói Képviselet");

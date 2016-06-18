@@ -97,7 +97,7 @@ namespace Cornelius.Data
         /// <returns>A specializációra sorolandó minimális létszám.</returns>
         public int GetMinCount(int studentCount)
         {
-            return (int)Math.Floor(studentCount * MinRatio);
+            return Math.Max(1, (int)Math.Round(studentCount * MinRatio));
         }
 
         /// <summary>
