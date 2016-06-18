@@ -16,7 +16,7 @@ namespace Cornelius.IO.Tables
             }
         }
 
-        [Column(Name = "educationprogram", Number = 2)]
+        [Column(Name = "group", Number = 2)]
         public string EducationProgram;
 
         [Column(Name = "neptun", Number = 3)]

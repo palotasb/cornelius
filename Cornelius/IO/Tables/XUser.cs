@@ -21,7 +21,7 @@ namespace Cornelius.IO.Tables
         [Column(Name = "name", Number = 5)]
         public string Name;
 
-        [Column(Name = "educationprogram", Number = 6)]
+        [Column(Name = "group", Number = 6)]
         public string EducationProgram;
 
         [Column(Name = "accepted", Number = 7)]
