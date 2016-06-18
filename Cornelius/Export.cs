@@ -103,7 +103,7 @@ namespace Cornelius
                 _rows.Add(new XAvarage(owner, course));
             }
 
-            double missing = student.Result.Credit - student.Result.Courses.Sum(course => course.Credit);
+            double missing = student.Result.Credit - student.Result.Courses.Where(course => !course.ExcludeFromAverage).Sum(course => course.Credit);
             if (missing > 0)
             {
                 _rows.Add(new XAvarage(owner, missing));
