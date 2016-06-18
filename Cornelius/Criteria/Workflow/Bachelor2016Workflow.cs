@@ -222,7 +222,7 @@ namespace Cornelius.Criteria.Workflow
             credits += Math.Min(10, freeChoiceCredits + Math.Max(0, compHumCredits - 10));
 
             // Eredmény tárolása
-            var result = new Result("Kreditkritérium (90 kredit a mintatanterv szerint)", 90 <= (int)credits);
+            var result = new Result("Kreditkritérium (90 kredit)", 90 <= (int)credits);
             result.Courses.AddRange(allCourses);
             result.Courses.AddRange(compHumCourses);
             result.Courses.AddRange(freeChoiceCourses);
@@ -256,7 +256,7 @@ namespace Cornelius.Criteria.Workflow
                 // Teljesített kötelezően választhatók leszűrése
                 var compHumCourses = FilterCriteriaCourses(student, CompHumCourseGroup).Take(GetCompHumAmount());
                 // Összehasonlítás az előírt minimummal szakonként
-                var compHumResult = new Result("Kötelezően választhatók az első két félévből", GetCompHumAmount() <= compHumCourses.Count());
+                var compHumResult = new Result("Kötelezően választhatók", GetCompHumAmount() <= compHumCourses.Count());
                 // Súly kiszámítása (súly == hiányzó kritériumok száma)
                 compHumResult.Weight = GetCompHumAmount();
                 compHumResult.Courses.AddRange(compHumCourses);
@@ -311,7 +311,7 @@ namespace Cornelius.Criteria.Workflow
             var courses = FilterCriteriaCourses(student, Semester3CourseGroup);
             var credits = courses.Sum(course => course.Credit);
             // Követelmény ellenőrzése: legalább 20 kredit
-            var result = new Result("Harmadik félévre vonatközó kritérium", 20 <= (int)credits);
+            var result = new Result("Harmadik félév", 20 <= (int)credits);
             result.Courses.AddRange(courses);
 
             if (!result)

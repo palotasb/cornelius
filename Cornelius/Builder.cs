@@ -142,8 +142,7 @@ namespace Cornelius
                 // Követelmény eldöntése
                 EntryType? requirement = relevant.Select(e => e.Requirement).Where(r => r.HasValue).FirstOrDefault();
 
-                // Szigorlat esetén 5 kreditnek számít
-                course.Credit = (requirement.HasValue ? requirement == EntryType.Szigorlat : first.EntryType == EntryType.Szigorlat) ? 5 : first.Credit;
+               course.Credit = first.Credit;
 
                 if (requirement.HasValue ? requirement == EntryType.Alairas : course.Credit == 0)
                 {
