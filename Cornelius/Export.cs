@@ -98,12 +98,12 @@ namespace Cornelius
 
         protected void ExportAvarages(Student student, XUser owner)
         {
-            foreach (var course in student.Result.Courses.Where(c => c.Credit > 0 || !c.ExcludeFromAverage))
+            foreach (var course in student.Result.Courses.Where(course => !course.ExcludeFromAverage && 0 < course.Credit))
             {
                 _rows.Add(new XAvarage(owner, course));
             }
 
-            double missing = student.Result.Credit - student.Result.Courses.Where(course => !course.ExcludeFromAverage).Sum(course => course.Credit);
+            double missing = student.Result.Credit - student.Result.Courses.Where(course => !course.ExcludeFromAverage && 0 < course.Credit).Sum(course => course.Credit);
             if (missing > 0)
             {
                 _rows.Add(new XAvarage(owner, missing));
