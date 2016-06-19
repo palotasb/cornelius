@@ -128,7 +128,7 @@ namespace Cornelius
             foreach (var byCode in entries.GroupBy(entry => entry.Code))
             {
                 Course course = new Course();
-                var relevant = byCode.OrderByDescending(entry => entry.EntryDate);
+                var relevant = byCode.OrderByDescending(entry => entry.EntryDate).ThenByDescending(entry => entry.Timestamp);
 
                 // Alapadatok kinyerése
                 var first = relevant.First();
