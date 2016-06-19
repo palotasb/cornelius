@@ -46,6 +46,9 @@ namespace Cornelius.IO.Primitives
         public DateTime EntryDate;
 
         [Map(Required = false)]
+        public DateTime Timestamp;
+
+        [Map(Required = false)]
         public EntryType? Requirement;
 
         [Map(Required = false)]
