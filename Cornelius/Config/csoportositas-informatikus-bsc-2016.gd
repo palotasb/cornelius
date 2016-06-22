@@ -323,13 +323,12 @@
 		BMEGT20V100 (2011/2 -       ), /* Innovatív vállalkozások indítása és működtetése */
 		BMEGT35A003 (2011/2 -       ), /* Gazdaságpolitika */
 		BMEGT42A001 (2011/2 -       ), /* Környezetgazdaságtan */
-		BMEGT52A013	(2011/2 -       ), /* Szociális készségfejlesztés */
 		BMEGT35A002 (2011/2 -       ), /* Számvitel */
 		BMEVITMAK47 (2011/2 -       ), /* Mérnöki menedzsment módszerek */
 		BMEGT20A002 (2011/2 -       ), /* Marketing */
-		BMEGT52A002 (2011/2 -       ), /* Pszichológia */
 		BMEGT52A001 (2011/2 -       ), /* Ergonómia */
 		BMEGT43A002 (2011/2 -       ), /* Szociológia */
+		BMEGT43A001 (2014/1 -       ), // Kommunikáció (2014-től!)
 		BMEVIETAK49 (2011/2 -       ), /* Adatvédelem és információszabadság */
 		BMEVIVEAK48 (2011/2 -       ), /* Mérnöki problémamegoldás */
 		BMEVITMAK48 (2011/2 -       ), /* Érzelmek logikája */
